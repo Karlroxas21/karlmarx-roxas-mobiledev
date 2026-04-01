@@ -29,7 +29,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. `babel.config.js` has both `unstable_transformImportMeta: true` and `unstable_transformProfile: 'hermes-stable'` set, and the app compiles without BigInt errors
   3. `@walletconnect/react-native-compat` is the first import in `lib/appkit.ts` and the AppKit singleton initializes without errors visible in the Metro log
   4. All three environment variables (Reown Project ID, Etherscan API key, RPC URL) are readable from `config/env.ts` in the running app
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 Plans:
 - [ ] 01-01-PLAN.md — Install packages, create Babel/Metro configs, set up env vars
 - [ ] 01-02-PLAN.md — Create AppKit singleton, wire provider, build smoke test screen, verify on device
@@ -81,7 +81,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Polyfills | 0/2 | Planning complete | - |
+| 1. Foundation & Polyfills | 1/2 | In Progress|  |
 | 2. Wallet Connection | 0/? | Not started | - |
 | 3. Balance Display | 0/? | Not started | - |
 | 4. Transaction History | 0/? | Not started | - |

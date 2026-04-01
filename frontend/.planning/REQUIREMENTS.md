@@ -9,9 +9,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Foundation
 
-- [ ] **FOUND-01**: App bootstraps with correct polyfill import order (WalletConnect compat, crypto shims)
-- [ ] **FOUND-02**: EAS development build configured and runnable on device/emulator
-- [ ] **FOUND-03**: Environment variables configured (Reown Project ID, Etherscan API key, RPC URL)
+- [x] **FOUND-01**: App bootstraps with correct polyfill import order (WalletConnect compat, crypto shims)
+- [x] **FOUND-02**: EAS development build configured and runnable on device/emulator
+- [x] **FOUND-03**: Environment variables configured (Reown Project ID, Etherscan API key, RPC URL)
 
 ### Wallet Connection
 
@@ -70,9 +70,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Pending |
-| FOUND-02 | Phase 1 | Pending |
-| FOUND-03 | Phase 1 | Pending |
+| FOUND-01 | Phase 1 | Complete |
+| FOUND-02 | Phase 1 | Complete |
+| FOUND-03 | Phase 1 | Complete |
 | WALLET-01 | Phase 2 | Pending |
 | WALLET-02 | Phase 2 | Pending |
 | WALLET-03 | Phase 2 | Pending |
