@@ -89,5 +89,8 @@ export const appKit = createAppKit({
     description: 'View your ETH balance and transactions',
     url: 'https://ethereum-wallet-viewer.app',
     icons: [],
+    redirect: {
+      native: 'frontend://',
+    },
   },
 });
