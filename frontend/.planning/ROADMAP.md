@@ -13,7 +13,7 @@ Five phases built in strict dependency order. Phase 1 installs polyfills and con
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Polyfills** - Wire polyfills, Babel/Metro config, and EAS dev build so the app boots on device without errors (completed 2026-04-01)
-- [ ] **Phase 2: Wallet Connection** - User can connect, persist, and disconnect an Ethereum wallet via WalletConnect v2 and MetaMask deep-link
+- [x] **Phase 2: Wallet Connection** - User can connect, persist, and disconnect an Ethereum wallet via WalletConnect v2 and MetaMask deep-link (completed 2026-04-01)
 - [ ] **Phase 3: Balance Display** - Connected user sees their ETH balance formatted in ETH at the top of the wallet screen
 - [ ] **Phase 4: Transaction History** - Connected user sees their last 10 transactions with direction, amount, counterparty, and timestamp
 - [ ] **Phase 5: Error Handling & Polish** - All error states surface with retry affordances; pull-to-refresh, address copy, and visual polish are applied
@@ -43,7 +43,7 @@ Plans:
   2. User can connect via the MetaMask deep-link path and is returned to the app with their address displayed after approving in MetaMask
   3. After connecting, the user closes and reopens the app and their wallet address is still shown without needing to reconnect
   4. User taps "Disconnect" and their session is cleared — the app returns to the disconnected state
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 Plans:
 - [ ] 02-01-PLAN.md — Install deps, configure wallet detection (app.json, queries.js), build data layer (types, store, hooks), wire AppProvider
 - [ ] 02-02-PLAN.md — Build wallet UI components (6 components), replace smoke test with wallet screen, verify on device
@@ -85,7 +85,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Polyfills | 2/2 | Complete   | 2026-04-01 |
-| 2. Wallet Connection | 0/2 | Planning complete | - |
+| 2. Wallet Connection | 2/2 | Complete   | 2026-04-01 |
 | 3. Balance Display | 0/? | Not started | - |
 | 4. Transaction History | 0/? | Not started | - |
 | 5. Error Handling & Polish | 0/? | Not started | - |

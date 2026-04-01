@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 02-wallet-connection-02-01-PLAN.md
-last_updated: "2026-04-01T15:07:31.327Z"
+stopped_at: "Checkpoint: 02-wallet-connection-02-02 Task 3 human-verify"
+last_updated: "2026-04-01T15:15:31.507Z"
 last_activity: 2026-04-01 — Roadmap created for milestone v1.0
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 4
-  completed_plans: 3
+  completed_plans: 4
   percent: 0
 ---
 
@@ -53,6 +53,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-foundation-polyfills P01 | 4 | 3 tasks | 7 files |
 | Phase 01-foundation-polyfills P02 | 5min | 2 tasks | 3 files |
 | Phase 02-wallet-connection P01 | 3min | 2 tasks | 9 files |
+| Phase 02-wallet-connection P02 | 2min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,9 @@ Recent decisions affecting current work:
 - [Phase 02-wallet-connection]: useDisconnect() deprecated; disconnect() from useAppKit() used per AppKit v2 API
 - [Phase 02-wallet-connection]: WalletSyncBridge: sibling component inside AppKitProvider boundary to satisfy useAppKitAccount context requirement
 - [Phase 02-wallet-connection]: isOpen transition used instead of isLoading to detect modal dismissal without connection (AppKit bug #4677 workaround)
+- [Phase 02-wallet-connection]: ConnectionError splits message and retry hint into two separate Text nodes to avoid punctuation collision
+- [Phase 02-wallet-connection]: ConnectedScreen casts address to 0x-typed string at call site for BlockieIdenticon prop compatibility
+- [Phase 02-wallet-connection]: ConnectScreen wraps content in ScrollView with contentContainerClassName for vertical centering with overflow scroll
 
 ### Pending Todos
 
@@ -84,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-01T15:07:31.325Z
-Stopped at: Completed 02-wallet-connection-02-01-PLAN.md
+Last session: 2026-04-01T15:15:31.504Z
+Stopped at: Checkpoint: 02-wallet-connection-02-02 Task 3 human-verify
 Resume file: None
