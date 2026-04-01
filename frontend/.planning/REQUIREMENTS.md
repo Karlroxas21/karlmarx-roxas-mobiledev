@@ -70,25 +70,25 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | — | Pending |
-| FOUND-02 | — | Pending |
-| FOUND-03 | — | Pending |
-| WALLET-01 | — | Pending |
-| WALLET-02 | — | Pending |
-| WALLET-03 | — | Pending |
-| WALLET-04 | — | Pending |
-| BAL-01 | — | Pending |
-| TX-01 | — | Pending |
-| TX-02 | — | Pending |
-| ERR-01 | — | Pending |
-| ERR-02 | — | Pending |
-| ERR-03 | — | Pending |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Pending |
+| WALLET-01 | Phase 2 | Pending |
+| WALLET-02 | Phase 2 | Pending |
+| WALLET-03 | Phase 2 | Pending |
+| WALLET-04 | Phase 2 | Pending |
+| BAL-01 | Phase 3 | Pending |
+| TX-01 | Phase 4 | Pending |
+| TX-02 | Phase 4 | Pending |
+| ERR-01 | Phase 5 | Pending |
+| ERR-02 | Phase 5 | Pending |
+| ERR-03 | Phase 5 | Pending |
 
 **Coverage:**
 - v1.0 requirements: 13 total
-- Mapped to phases: 0
-- Unmapped: 13 ⚠️
+- Mapped to phases: 13
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-01*
-*Last updated: 2026-04-01 after initial definition*
+*Last updated: 2026-04-01 after roadmap creation*
