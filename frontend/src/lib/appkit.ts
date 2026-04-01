@@ -13,6 +13,29 @@ import 'react-native-get-random-values';
 import { createAppKit } from '@reown/appkit-react-native';
 import { EthersAdapter } from '@reown/appkit-ethers-react-native';
 import { type AppKitNetwork } from '@reown/appkit-common-react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { Storage } from '@reown/appkit-common-react-native';
+
+const appKitStorage: Storage = {
+  getItem: async (key) => {
+    const value = await AsyncStorage.getItem(key);
+    return value ? JSON.parse(value) : undefined;
+  },
+  setItem: async (key, value) => {
+    await AsyncStorage.setItem(key, JSON.stringify(value));
+  },
+  removeItem: async (key) => {
+    await AsyncStorage.removeItem(key);
+  },
+  getKeys: async () => {
+    return await AsyncStorage.getAllKeys() as string[];
+  },
+  getEntries: async () => {
+    const keys = await AsyncStorage.getAllKeys();
+    const pairs = await AsyncStorage.multiGet(keys as string[]);
+    return pairs.map(([k, v]) => [k, v ? JSON.parse(v) : undefined]);
+  },
+};
 
 // 4. Env config (imported AFTER polyfills)
 import { ENV } from '@/src/config/env';
@@ -60,6 +83,7 @@ export const appKit = createAppKit({
   projectId: ENV.REOWN_PROJECT_ID,
   networks: [mainnet],
   adapters: [new EthersAdapter()],
+  storage: appKitStorage,
   metadata: {
     name: 'Ethereum Wallet Viewer',
     description: 'View your ETH balance and transactions',
