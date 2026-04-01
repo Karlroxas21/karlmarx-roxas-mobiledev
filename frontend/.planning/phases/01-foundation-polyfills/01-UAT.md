@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 01-foundation-polyfills
 source: 01-01-SUMMARY.md, 01-02-SUMMARY.md
 started: 2026-04-01T12:00:00Z
@@ -45,7 +45,10 @@ skipped: 0
   reason: "User reported: i see status ok but the text is not green"
   severity: cosmetic
   test: 2
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "NativeWind text-green-600 class in ternary conditional not rendering on device. Possible Metro/NativeWind cache issue. Screen is temporary — replaced in Phase 2."
+  artifacts:
+    - path: "src/app/index.tsx"
+      issue: "text-green-600 class not rendering despite correct className at line 49"
+  missing:
+    - "Clear Metro cache or use inline style fallback for color"
   debug_session: ""
