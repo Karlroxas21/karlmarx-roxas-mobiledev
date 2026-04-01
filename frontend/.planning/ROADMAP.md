@@ -43,7 +43,10 @@ Plans:
   2. User can connect via the MetaMask deep-link path and is returned to the app with their address displayed after approving in MetaMask
   3. After connecting, the user closes and reopens the app and their wallet address is still shown without needing to reconnect
   4. User taps "Disconnect" and their session is cleared — the app returns to the disconnected state
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 02-01-PLAN.md — Install deps, configure wallet detection (app.json, queries.js), build data layer (types, store, hooks), wire AppProvider
+- [ ] 02-02-PLAN.md — Build wallet UI components (6 components), replace smoke test with wallet screen, verify on device
 
 ### Phase 3: Balance Display
 **Goal**: A connected user can see their ETH balance formatted in human-readable ETH on the wallet screen
@@ -82,7 +85,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Polyfills | 2/2 | Complete   | 2026-04-01 |
-| 2. Wallet Connection | 0/? | Not started | - |
+| 2. Wallet Connection | 0/2 | Planning complete | - |
 | 3. Balance Display | 0/? | Not started | - |
 | 4. Transaction History | 0/? | Not started | - |
 | 5. Error Handling & Polish | 0/? | Not started | - |
