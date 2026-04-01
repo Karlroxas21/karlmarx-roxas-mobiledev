@@ -1,5 +1,6 @@
 // src/app/index.tsx — temporary smoke test (replaced in Phase 2)
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { ENV } from '../config/env';
 
 function maskValue(value: string | undefined, isSensitive: boolean): string {
   if (!value || value.startsWith('your_')) return 'NOT SET';
@@ -25,9 +26,9 @@ export default function SmokeTestScreen() {
     };
   }
 
-  const reownId = process.env.EXPO_PUBLIC_REOWN_PROJECT_ID;
-  const etherscanKey = process.env.EXPO_PUBLIC_ETHERSCAN_API_KEY;
-  const rpcUrl = process.env.EXPO_PUBLIC_INFURA_RPC_URL;
+  const reownId = ENV.REOWN_PROJECT_ID;
+  const etherscanKey = ENV.ETHERSCAN_API_KEY;
+  const rpcUrl = ENV.INFURA_RPC_URL;
 
   return (
     <SafeAreaView className="flex-1 bg-white">

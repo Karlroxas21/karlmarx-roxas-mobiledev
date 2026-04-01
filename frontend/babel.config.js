@@ -6,6 +6,7 @@ module.exports = function (api) {
       [
         'babel-preset-expo',
         {
+          jsxImportSource: 'nativewind',
           // Required: AppKit's valtio uses import.meta
           // Source: https://docs.reown.com/appkit/react-native/core/installation
           unstable_transformImportMeta: true,
@@ -14,6 +15,7 @@ module.exports = function (api) {
           unstable_transformProfile: 'hermes-stable',
         },
       ],
+      'nativewind/babel',
     ],
   };
 };
