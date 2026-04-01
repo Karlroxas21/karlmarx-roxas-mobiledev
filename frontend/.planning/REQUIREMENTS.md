@@ -15,10 +15,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Wallet Connection
 
-- [ ] **WALLET-01**: User can connect Ethereum wallet via WalletConnect v2 modal (supports MetaMask + 300 wallets)
-- [ ] **WALLET-02**: User can connect directly via MetaMask deep link
-- [ ] **WALLET-03**: User's wallet session persists across app restarts
-- [ ] **WALLET-04**: User can disconnect their wallet
+- [x] **WALLET-01**: User can connect Ethereum wallet via WalletConnect v2 modal (supports MetaMask + 300 wallets)
+- [x] **WALLET-02**: User can connect directly via MetaMask deep link
+- [x] **WALLET-03**: User's wallet session persists across app restarts
+- [x] **WALLET-04**: User can disconnect their wallet
 
 ### Balance
 
@@ -73,10 +73,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOUND-01 | Phase 1 | Complete |
 | FOUND-02 | Phase 1 | Complete |
 | FOUND-03 | Phase 1 | Complete |
-| WALLET-01 | Phase 2 | Pending |
-| WALLET-02 | Phase 2 | Pending |
-| WALLET-03 | Phase 2 | Pending |
-| WALLET-04 | Phase 2 | Pending |
+| WALLET-01 | Phase 2 | Complete |
+| WALLET-02 | Phase 2 | Complete |
+| WALLET-03 | Phase 2 | Complete |
+| WALLET-04 | Phase 2 | Complete |
 | BAL-01 | Phase 3 | Pending |
 | TX-01 | Phase 4 | Pending |
 | TX-02 | Phase 4 | Pending |

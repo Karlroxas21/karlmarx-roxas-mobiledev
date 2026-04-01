@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 2 context gathered
-last_updated: "2026-04-01T14:34:36.572Z"
+stopped_at: Completed 02-wallet-connection-02-01-PLAN.md
+last_updated: "2026-04-01T15:07:31.327Z"
 last_activity: 2026-04-01 — Roadmap created for milestone v1.0
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  total_plans: 4
+  completed_plans: 3
   percent: 0
 ---
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01-foundation-polyfills P01 | 4 | 3 tasks | 7 files |
 | Phase 01-foundation-polyfills P02 | 5min | 2 tasks | 3 files |
+| Phase 02-wallet-connection P01 | 3min | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,10 @@ Recent decisions affecting current work:
 - [Phase 01-foundation-polyfills]: assertEnv(name, value) pattern used instead of requireEnv(name) to comply with expo/no-dynamic-env-var ESLint rule — static process.env.EXPO_PUBLIC_* reads passed as second argument
 - [Phase 01-foundation-polyfills]: Defined Ethereum mainnet AppKitNetwork inline — @reown/appkit (web package) not installed; only appkit-react-native packages present
 - [Phase 01-foundation-polyfills]: Merged duplicate appkit import in app-provider.tsx; named import already executes module-scope side effects
+- [Phase 02-wallet-connection]: No persist middleware on wallet store — AppKit owns session persistence via AsyncStorage adapter
+- [Phase 02-wallet-connection]: useDisconnect() deprecated; disconnect() from useAppKit() used per AppKit v2 API
+- [Phase 02-wallet-connection]: WalletSyncBridge: sibling component inside AppKitProvider boundary to satisfy useAppKitAccount context requirement
+- [Phase 02-wallet-connection]: isOpen transition used instead of isLoading to detect modal dismissal without connection (AppKit bug #4677 workaround)
 
 ### Pending Todos
 
@@ -79,6 +84,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-01T14:34:36.570Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-wallet-connection/02-CONTEXT.md
+Last session: 2026-04-01T15:07:31.325Z
+Stopped at: Completed 02-wallet-connection-02-01-PLAN.md
+Resume file: None
