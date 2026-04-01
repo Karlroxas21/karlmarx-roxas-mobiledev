@@ -110,6 +110,8 @@ Components new to Phase 2. Each maps to a file in `features/wallet/components/`.
 
 ### Disconnected Hero Screen (ConnectScreen)
 
+**Focal point:** The Connect Wallet button is the primary visual anchor. It is the only interactive element on the screen. All preceding content — title, bullet list — exists to establish context and justify the action. The 64px gap above the button isolates it visually, making it the terminal destination of the user's eye path.
+
 ```
 SafeAreaView [bg-white flex-1]
   ScrollView [flex-1]
@@ -129,6 +131,8 @@ SafeAreaView [bg-white flex-1]
 ```
 
 ### Connected Screen (ConnectedScreen)
+
+**Focal point:** The address card is the primary visual anchor. It is the content the user connected to see, and the Copy button inside it is the only actionable element. The blockie identicon above it serves as a visual identity marker leading the eye downward to the address.
 
 ```
 SafeAreaView [bg-white flex-1]
@@ -154,7 +158,7 @@ Modal [transparent animationType="fade"]
       ActivityIndicator [color="#2563EB"]
       Text "Waiting for approval in MetaMask..."  [text-base text-gray-900 text-center]
       TouchableOpacity [h-11]
-        Text "Cancel"  [text-sm text-gray-500]
+        Text "Cancel Connection"  [text-sm text-gray-500]
 ```
 
 ---
@@ -186,7 +190,7 @@ Source: All interaction behaviors derived from CONTEXT.md `## Implementation Dec
 | Bullet 3 | "Read-only & safe" | CONTEXT.md Specifics |
 | Primary CTA | "Connect Wallet" | CONTEXT.md Connect Flow UX |
 | Loading overlay heading | "Waiting for approval in MetaMask..." | CONTEXT.md Connect Flow UX |
-| Loading overlay cancel | "Cancel" | default |
+| Loading overlay cancel | "Cancel Connection" | checker revision — verb + noun communicates consequence |
 | Network label | "Connected to Ethereum Mainnet" | CONTEXT.md Address Display |
 | Copy button idle | "Copy" | default |
 | Copy button success feedback | "Copied!" | default |
