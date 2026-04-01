@@ -55,10 +55,10 @@ completed: 2026-04-01
 
 ## Performance
 
-- **Duration:** ~5 min
+- **Duration:** ~5 min (automated) + device verification
 - **Started:** 2026-04-01T08:21:26Z
-- **Completed:** 2026-04-01T08:25:31Z
-- **Tasks:** 2 of 3 complete (Task 3 is a blocking human-verify checkpoint)
+- **Completed:** 2026-04-01T08:27:04Z
+- **Tasks:** 3 of 3 complete
 - **Files modified:** 3
 
 ## Accomplishments
@@ -72,7 +72,7 @@ completed: 2026-04-01
 
 1. **Task 1: Create AppKit singleton and wire into AppProvider** - `fe6ee9a` (feat)
 2. **Task 2: Build temporary smoke test screen on index route** - `884f46c` (feat)
-3. **Task 3: Verify app builds on physical Android device** — awaiting human verification checkpoint
+3. **Task 3: Verify app builds and boots on physical Android device** — human-verified (approved)
 
 ## Files Created/Modified
 
@@ -117,11 +117,16 @@ None beyond the two auto-fixed deviations above.
 
 ## User Setup Required
 
-Task 3 requires manual device verification. See the checkpoint message for full instructions:
+Task 3 device verification was completed successfully:
 
-- Android Studio + JDK 17 + USB debugging setup (one-time)
-- Real API keys needed in `.env`: Reown Project ID, Etherscan API Key, Infura RPC URL
-- Run `npx expo run:android` and verify 6 on-screen checks
+- App launched on physical Android device without crash
+- Smoke test screen visible with title "Smoke Test"
+- AppKit section showed "Status: OK" in green text
+- All three env vars displayed masked values (not "NOT SET")
+- Metro log clean of WalletConnect/polyfill errors
+- No TextEncoder or crypto errors
+
+External service accounts (Reown, Etherscan, Infura) configured in `.env` prior to verification.
 
 ## Self-Check: PASSED
 
@@ -138,8 +143,9 @@ Commits verified:
 ## Next Phase Readiness
 
 - AppKit singleton and provider wiring are complete — Phase 2 wallet connection flows have a working foundation
+- App confirmed booting on physical Android device without polyfill or crypto errors
 - Smoke test screen will be replaced in Phase 2 with the actual wallet UI
-- **Blocker:** Task 3 human verification must pass before Phase 1 is marked complete
+- Phase 1 is fully complete — Phase 2 wallet connection work can begin
 
 ---
 *Phase: 01-foundation-polyfills*

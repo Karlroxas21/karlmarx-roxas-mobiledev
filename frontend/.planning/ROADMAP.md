@@ -31,8 +31,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. All three environment variables (Reown Project ID, Etherscan API key, RPC URL) are readable from `config/env.ts` in the running app
 **Plans:** 2/2 plans complete
 Plans:
-- [ ] 01-01-PLAN.md — Install packages, create Babel/Metro configs, set up env vars
-- [ ] 01-02-PLAN.md — Create AppKit singleton, wire provider, build smoke test screen, verify on device
+- [x] 01-01-PLAN.md — Install packages, create Babel/Metro configs, set up env vars
+- [x] 01-02-PLAN.md — Create AppKit singleton, wire provider, build smoke test screen, verify on device
 
 ### Phase 2: Wallet Connection
 **Goal**: Users can connect their Ethereum wallet, have their session survive app restarts, and disconnect when needed
