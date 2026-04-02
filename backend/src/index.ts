@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import 'dotenv/config';
 import { createServer } from './wire';
 import { logger } from './config';
 
