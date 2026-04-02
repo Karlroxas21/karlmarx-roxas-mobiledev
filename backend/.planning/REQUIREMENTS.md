@@ -19,21 +19,21 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Etherscan Integration
 
 - [x] **ETH-01**: Gas price, block number, and balance are fetched from Etherscan API in parallel via `Promise.all`
-- [ ] **ETH-02**: Etherscan response validation checks `status !== "1"` (not just HTTP status)
+- [x] **ETH-02**: Etherscan response validation checks `status !== "1"` (not just HTTP status)
 - [x] **ETH-03**: Etherscan failures return 502 with structured error to client
 - [x] **ETH-04**: Etherscan API key and base URL are configured via environment variables
 
 ### Caching
 
-- [ ] **CACHE-01**: Gas price and block number are cached in Redis with ~15s TTL
+- [x] **CACHE-01**: Gas price and block number are cached in Redis with ~15s TTL
 - [ ] **CACHE-02**: Cache hit skips Etherscan calls for gas/block (balance always fetched live)
-- [ ] **CACHE-03**: Redis failure degrades gracefully — fallback to live Etherscan fetch, not 500
+- [x] **CACHE-03**: Redis failure degrades gracefully — fallback to live Etherscan fetch, not 500
 
 ### Database
 
-- [ ] **DB-01**: Account balance is stored in PostgreSQL on each request (historical log, not upsert)
+- [x] **DB-01**: Account balance is stored in PostgreSQL on each request (historical log, not upsert)
 - [ ] **DB-02**: Database insert is non-blocking (fire-and-forget, does not slow response)
-- [ ] **DB-03**: PostgreSQL failure degrades gracefully — response still returned, insert skipped with warning log
+- [x] **DB-03**: PostgreSQL failure degrades gracefully — response still returned, insert skipped with warning log
 
 ### Architecture
 
@@ -87,15 +87,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CORE-05 | Phase 2 | Complete |
 | CORE-06 | Phase 2 | Complete |
 | ETH-01 | Phase 2 | Complete |
-| ETH-02 | Phase 3 | Pending |
+| ETH-02 | Phase 3 | Complete |
 | ETH-03 | Phase 2 | Complete |
 | ETH-04 | Phase 1 | Complete |
-| CACHE-01 | Phase 3 | Pending |
+| CACHE-01 | Phase 3 | Complete |
 | CACHE-02 | Phase 3 | Pending |
-| CACHE-03 | Phase 3 | Pending |
-| DB-01 | Phase 3 | Pending |
+| CACHE-03 | Phase 3 | Complete |
+| DB-01 | Phase 3 | Complete |
 | DB-02 | Phase 3 | Pending |
-| DB-03 | Phase 3 | Pending |
+| DB-03 | Phase 3 | Complete |
 | ARCH-01 | Phase 2 | Complete |
 | ARCH-02 | Phase 3 | Pending |
 | ARCH-03 | Phase 4 | Pending |
