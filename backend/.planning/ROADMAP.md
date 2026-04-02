@@ -36,13 +36,13 @@ Plans:
 ### Phase 2: Component Layer
 **Goal**: The ethereum component's port interfaces, DTOs, and EthereumService are defined — the service orchestrates cache-check, parallel Etherscan calls, and fire-and-forget DB insert, all against interfaces (no concrete adapters yet)
 **Depends on**: Phase 1
-**Requirements**: CORE-01, CORE-02, CORE-03, CORE-04, CORE-05, CORE-06, ETH-01, ETH-02, ETH-03, ARCH-01
+**Requirements**: CORE-01, CORE-02, CORE-03, CORE-04, CORE-05, CORE-06, ETH-01, ETH-03, ARCH-01
 **Success Criteria** (what must be TRUE):
   1. `component/ethereum/interfaces.ts` defines three port interfaces: `IEthereumProvider`, `ICacheStore`, and `IBalanceRepository`
   2. Response DTO carries dual units (wei + gwei for gas price, wei + eth for balance) and all Wei values are typed as `string` — never `number` or `bigint`
   3. Response DTO includes an ISO 8601 `timestamp` field on every successful response
   4. All responses (success and error) use the structured envelope `{ "data": ... }` / `{ "error": ... }`
-  5. `EthereumService` calls all three Etherscan data points via `Promise.all` and the service API surface is finalized (method signatures settled)
+  5. `EthereumService` fetches gas price and block number in parallel via `Promise.all` on cache miss; balance is always fetched live after the cache check; service API surface is finalized (method signatures settled)
 **Plans:** 2 plans
 Plans:
 - [ ] 02-01-PLAN.md — Port interfaces, DTOs, error classes, constants, and Wave 0 test scaffold
@@ -51,7 +51,7 @@ Plans:
 ### Phase 3: Adapters
 **Goal**: EtherscanAdapter, RedisAdapter, and TypeOrmBalanceRepository implement their respective port interfaces — each adapter handles its own failure mode without propagating errors to the service
 **Depends on**: Phase 2
-**Requirements**: CACHE-01, CACHE-02, CACHE-03, DB-01, DB-02, DB-03, ARCH-02
+**Requirements**: ETH-02, CACHE-01, CACHE-02, CACHE-03, DB-01, DB-02, DB-03, ARCH-02
 **Success Criteria** (what must be TRUE):
   1. EtherscanAdapter checks `data.status !== '1'` on every Etherscan response and throws an upstream error — never relies on HTTP status code alone
   2. Redis cache stores gas price and block number with a 15-second TTL; a cache hit skips the corresponding Etherscan calls
