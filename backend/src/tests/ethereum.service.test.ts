@@ -1,3 +1,7 @@
+jest.mock('../config', () => ({
+    logger: { warn: jest.fn(), info: jest.fn(), error: jest.fn() },
+}));
+
 import { EthereumService } from '../component/ethereum/service';
 import {
     IEthereumProvider,
