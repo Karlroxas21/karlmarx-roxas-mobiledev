@@ -13,7 +13,7 @@ Build a clean `GET /api/ethereum/:address` endpoint on top of the existing Expre
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Infrastructure Foundations** - Dependencies installed, TypeORM and Redis clients initialized, env config validated at startup (completed 2026-04-02)
-- [ ] **Phase 2: Component Layer** - Port interfaces, response/request DTOs, and EthereumService with full business logic
+- [x] **Phase 2: Component Layer** - Port interfaces, response/request DTOs, and EthereumService with full business logic (completed 2026-04-02)
 - [ ] **Phase 3: Adapters** - EtherscanAdapter, RedisAdapter, and TypeOrmBalanceRepository implementing their port interfaces
 - [ ] **Phase 4: HTTP Layer and Docker** - EthereumController, async wire.ts, health endpoint, and Docker Compose
 
@@ -43,7 +43,7 @@ Plans:
   3. Response DTO includes an ISO 8601 `timestamp` field on every successful response
   4. All responses (success and error) use the structured envelope `{ "data": ... }` / `{ "error": ... }`
   5. `EthereumService` fetches gas price and block number in parallel via `Promise.all` on cache miss; balance is always fetched live after the cache check; service API surface is finalized (method signatures settled)
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [ ] 02-01-PLAN.md — Port interfaces, DTOs, error classes, constants, and Wave 0 test scaffold
 - [ ] 02-02-PLAN.md — EthereumService implementation with full business logic
@@ -79,6 +79,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Infrastructure Foundations | 1/1 | Complete   | 2026-04-02 |
-| 2. Component Layer | 1/2 | In Progress|  |
+| 2. Component Layer | 2/2 | Complete   | 2026-04-02 |
 | 3. Adapters | 0/TBD | Not started | - |
 | 4. HTTP Layer and Docker | 0/TBD | Not started | - |

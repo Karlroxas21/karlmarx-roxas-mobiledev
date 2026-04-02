@@ -9,16 +9,16 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Core Endpoint
 
-- [ ] **CORE-01**: User can call `GET /api/ethereum/:address` and receive gas price, block number, and balance in JSON
+- [x] **CORE-01**: User can call `GET /api/ethereum/:address` and receive gas price, block number, and balance in JSON
 - [x] **CORE-02**: Response includes dual-unit values (wei + gwei for gas, wei + eth for balance)
 - [x] **CORE-03**: Response includes ISO 8601 timestamp indicating when data was fetched
 - [x] **CORE-04**: Response uses structured JSON envelope (`{ "data": { ... } }` for success, `{ "error": { ... } }` for failure)
-- [ ] **CORE-05**: Invalid Ethereum address returns 400 with structured error body
-- [ ] **CORE-06**: Ethereum addresses are normalized to EIP-55 checksum format before processing
+- [x] **CORE-05**: Invalid Ethereum address returns 400 with structured error body
+- [x] **CORE-06**: Ethereum addresses are normalized to EIP-55 checksum format before processing
 
 ### Etherscan Integration
 
-- [ ] **ETH-01**: Gas price, block number, and balance are fetched from Etherscan API in parallel via `Promise.all`
+- [x] **ETH-01**: Gas price, block number, and balance are fetched from Etherscan API in parallel via `Promise.all`
 - [ ] **ETH-02**: Etherscan response validation checks `status !== "1"` (not just HTTP status)
 - [x] **ETH-03**: Etherscan failures return 502 with structured error to client
 - [x] **ETH-04**: Etherscan API key and base URL are configured via environment variables
@@ -80,13 +80,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CORE-01 | Phase 2 | Pending |
+| CORE-01 | Phase 2 | Complete |
 | CORE-02 | Phase 2 | Complete |
 | CORE-03 | Phase 2 | Complete |
 | CORE-04 | Phase 2 | Complete |
-| CORE-05 | Phase 2 | Pending |
-| CORE-06 | Phase 2 | Pending |
-| ETH-01 | Phase 2 | Pending |
+| CORE-05 | Phase 2 | Complete |
+| CORE-06 | Phase 2 | Complete |
+| ETH-01 | Phase 2 | Complete |
 | ETH-02 | Phase 3 | Pending |
 | ETH-03 | Phase 2 | Complete |
 | ETH-04 | Phase 1 | Complete |
