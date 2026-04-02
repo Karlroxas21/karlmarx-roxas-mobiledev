@@ -7,11 +7,15 @@ import {
 } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import { useWalletConnection } from '../hooks/use-wallet-connection';
+import { useBalance } from '../hooks/use-balance';
+import { BalanceDisplay } from './BalanceDisplay';
+import { BalanceSkeleton } from './BalanceSkeleton';
 import { BlockieIdenticon } from './BlockieIdenticon';
 
 export function ConnectedScreen() {
   const { address, disconnect } = useWalletConnection();
   const [copied, setCopied] = useState(false);
+  const { balance, isLoading, error } = useBalance();
 
   const handleCopy = async () => {
     if (!address) return;
@@ -36,6 +40,8 @@ export function ConnectedScreen() {
         <Text className="text-xs text-green-600 text-center">
           Connected to Ethereum Mainnet
         </Text>
+
+        {isLoading ? <BalanceSkeleton /> : <BalanceDisplay balance={balance} error={error} />}
 
         <View className="bg-gray-100 rounded-xl p-4 w-full flex-row items-center gap-2">
           <Text className="text-base text-gray-900 font-normal flex-1">
