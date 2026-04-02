@@ -80,7 +80,9 @@ Plans:
   1. When wallet connection fails, the user sees a readable error message (not a raw exception) explaining what went wrong
   2. When the ETH balance or transaction history fetch fails, the user sees an error message specific to that section
   3. User can tap a retry button on any failed section and the app re-attempts the failed operation without requiring a full restart
-**Plans**: TBD
+**Plans:** 1 plan
+Plans:
+- [ ] 05-01-PLAN.md — Create ErrorState component, polish ConnectionError copy, wire balance/transaction error states with retry in ConnectedScreen
 
 ## Progress
 
@@ -93,4 +95,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Wallet Connection | 2/2 | Complete   | 2026-04-01 |
 | 3. Balance Display | 1/1 | Complete   | 2026-04-02 |
 | 4. Transaction History | 2/2 | Complete   | 2026-04-02 |
-| 5. Error Handling & Polish | 0/? | Not started | - |
+| 5. Error Handling & Polish | 0/1 | Not started | - |
