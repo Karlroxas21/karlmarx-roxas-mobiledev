@@ -55,7 +55,9 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. After connecting a wallet, the user sees their ETH balance displayed in ETH (not Wei) with 4-6 decimal places on the wallet screen
   2. While the balance is loading, a loading indicator is visible in place of the balance value
-**Plans**: TBD
+**Plans:** 1 plan
+Plans:
+- [ ] 03-01-PLAN.md — Create useBalance hook, BalanceSkeleton/BalanceDisplay components, wire into ConnectedScreen
 
 ### Phase 4: Transaction History
 **Goal**: A connected user can see their last 10 Ethereum transactions with enough detail to understand each one
@@ -86,6 +88,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Foundation & Polyfills | 2/2 | Complete   | 2026-04-01 |
 | 2. Wallet Connection | 2/2 | Complete   | 2026-04-01 |
-| 3. Balance Display | 0/? | Not started | - |
+| 3. Balance Display | 0/1 | Not started | - |
 | 4. Transaction History | 0/? | Not started | - |
 | 5. Error Handling & Polish | 0/? | Not started | - |
