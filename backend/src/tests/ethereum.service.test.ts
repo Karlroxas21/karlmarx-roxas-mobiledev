@@ -49,8 +49,8 @@ describe('EthereumService', () => {
 
         const err = await service
             .getEthereumData('not-an-address')
-            .catch((e) => e);
-        expect(err.code).toBe('VALIDATION_ERROR');
+            .catch((e: unknown) => e);
+        expect((err as ValidationError).code).toBe('VALIDATION_ERROR');
         expect(mockProvider.getGasPrice).not.toHaveBeenCalled();
     });
 
@@ -147,8 +147,8 @@ describe('EthereumService', () => {
 
         const err = await service
             .getEthereumData(TEST_ADDRESS_LOWER)
-            .catch((e) => e);
-        expect(err.code).toBe('UPSTREAM_ERROR');
+            .catch((e: unknown) => e);
+        expect((err as EtherscanApiError).code).toBe('UPSTREAM_ERROR');
     });
 
     it('fires and forgets DB insert without awaiting', async () => {
