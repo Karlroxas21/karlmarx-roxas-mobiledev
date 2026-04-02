@@ -35,7 +35,7 @@ export function ConnectScreen() {
 
         <View className="w-full mt-16">
           <ConnectButton />
-          <ConnectionError message={error} />
+          <ConnectionError hasError={!!error} />
         </View>
 
         <LoadingOverlay
