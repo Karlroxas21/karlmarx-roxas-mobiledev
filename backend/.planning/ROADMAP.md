@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. `reflect-metadata` is the first import in `index.ts` and `experimentalDecorators`/`emitDecoratorMetadata` are set in `tsconfig.json`
 **Plans:** 1/1 plans complete
 Plans:
-- [ ] 01-01-PLAN.md — Install deps, env var validation, TypeORM + Redis initialization
+- [x] 01-01-PLAN.md — Install deps, env var validation, TypeORM + Redis initialization
 
 ### Phase 2: Component Layer
 **Goal**: The ethereum component's port interfaces, DTOs, and EthereumService are defined — the service orchestrates cache-check, parallel Etherscan calls, and fire-and-forget DB insert, all against interfaces (no concrete adapters yet)
@@ -43,7 +43,10 @@ Plans:
   3. Response DTO includes an ISO 8601 `timestamp` field on every successful response
   4. All responses (success and error) use the structured envelope `{ "data": ... }` / `{ "error": ... }`
   5. `EthereumService` calls all three Etherscan data points via `Promise.all` and the service API surface is finalized (method signatures settled)
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 02-01-PLAN.md — Port interfaces, DTOs, error classes, constants, and Wave 0 test scaffold
+- [ ] 02-02-PLAN.md — EthereumService implementation with full business logic
 
 ### Phase 3: Adapters
 **Goal**: EtherscanAdapter, RedisAdapter, and TypeOrmBalanceRepository implement their respective port interfaces — each adapter handles its own failure mode without propagating errors to the service
@@ -71,11 +74,11 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Infrastructure Foundations | 1/1 | Complete   | 2026-04-02 |
-| 2. Component Layer | 0/TBD | Not started | - |
+| 2. Component Layer | 0/2 | Not started | - |
 | 3. Adapters | 0/TBD | Not started | - |
 | 4. HTTP Layer and Docker | 0/TBD | Not started | - |
