@@ -16,13 +16,13 @@ created: 2026-04-02
 
 ## Design System
 
-| Property | Value |
-|----------|-------|
-| Tool | none |
-| Preset | not applicable |
+| Property          | Value                                                                |
+| ----------------- | -------------------------------------------------------------------- |
+| Tool              | none                                                                 |
+| Preset            | not applicable                                                       |
 | Component library | none — NativeWind v4 (Tailwind for React Native) with default tokens |
-| Icon library | none — text-only UI in this phase |
-| Font | System default (no custom font declared in tailwind.config.js) |
+| Icon library      | none — text-only UI in this phase                                    |
+| Font              | System default (no custom font declared in tailwind.config.js)       |
 
 **Note:** This is an Expo React Native project. shadcn is a web-only tool and does not apply. NativeWind v4 is the styling layer using standard Tailwind utility classes via `className` prop.
 
@@ -32,17 +32,18 @@ created: 2026-04-02
 
 Declared values (must be multiples of 4). Mapped to NativeWind Tailwind equivalents:
 
-| Token | Value | NativeWind Class | Usage |
-|-------|-------|-----------------|-------|
-| xs | 4px | `gap-1` / `p-1` | Icon gaps, hairline padding |
-| sm | 8px | `gap-2` / `p-2` | Compact element spacing |
-| md | 16px | `gap-4` / `p-4` | Default element spacing, card padding |
-| lg | 24px | `gap-6` / `p-6` | Vertical gap between stacked elements in ConnectedScreen |
-| xl | 32px | `px-8` | Horizontal screen padding (existing pattern) |
-| 2xl | 48px | `mt-12` | Vertical offset for content groups (existing pattern) |
-| 3xl | 64px | `mt-16` | Large vertical offset (existing pattern) |
+| Token | Value | NativeWind Class | Usage                                                    |
+| ----- | ----- | ---------------- | -------------------------------------------------------- |
+| xs    | 4px   | `gap-1` / `p-1`  | Icon gaps, hairline padding                              |
+| sm    | 8px   | `gap-2` / `p-2`  | Compact element spacing                                  |
+| md    | 16px  | `gap-4` / `p-4`  | Default element spacing, card padding                    |
+| lg    | 24px  | `gap-6` / `p-6`  | Vertical gap between stacked elements in ConnectedScreen |
+| xl    | 32px  | `px-8`           | Horizontal screen padding (existing pattern)             |
+| 2xl   | 48px  | `mt-12`          | Vertical offset for content groups (existing pattern)    |
+| 3xl   | 64px  | `mt-16`          | Large vertical offset (existing pattern)                 |
 
 Exceptions:
+
 - Touch targets: minimum 44px (`h-11 w-11`) — already established in Phase 2 for copy button. No new touch targets introduced in this phase (balance display is read-only).
 - Skeleton height: 36px (`h-9`) — sized to match the rendered height of the balance Display text at 28px with padding.
 
@@ -52,12 +53,12 @@ Exceptions:
 
 Source: CONTEXT.md decisions + existing component patterns scouted from codebase.
 
-| Role | Size | NativeWind Class | Weight | Weight Class | Line Height |
-|------|------|-----------------|--------|-------------|-------------|
-| Body | 16px | `text-base` | Regular (400) | `font-normal` | 1.5 |
-| Label | 12px | `text-xs` | Regular (400) | `font-normal` | 1.5 |
-| Heading | 20px | `text-xl` | Semibold (600) | `font-semibold` | 1.2 |
-| Display | 28px | `text-3xl` | Semibold (600) | `font-semibold` | 1.2 |
+| Role    | Size | NativeWind Class | Weight         | Weight Class    | Line Height |
+| ------- | ---- | ---------------- | -------------- | --------------- | ----------- |
+| Body    | 16px | `text-base`      | Regular (400)  | `font-normal`   | 1.5         |
+| Label   | 12px | `text-xs`        | Regular (400)  | `font-normal`   | 1.5         |
+| Heading | 20px | `text-xl`        | Semibold (600) | `font-semibold` | 1.2         |
+| Display | 28px | `text-3xl`       | Semibold (600) | `font-semibold` | 1.2         |
 
 **Balance number:** Display role — `text-3xl font-semibold` — this is the hero element.
 
@@ -71,16 +72,16 @@ Source for Display size: CONTEXT.md — "Hero number: large bold text (~28pt)". 
 
 All values are Tailwind default palette classes (NativeWind). No custom hex tokens.
 
-| Role | Tailwind Value | Usage |
-|------|---------------|-------|
-| Dominant (60%) | `bg-white` / `#ffffff` | Screen background, SafeAreaView |
-| Secondary (30%) | `bg-gray-100` / `#f3f4f6` | Address card, skeleton placeholder background |
-| Accent (10%) | `text-blue-600` / `#2563eb` | Copy button label only |
-| Destructive | `text-red-600` / `#dc2626` | Disconnect button only |
-| Status / positive | `text-green-600` / `#16a34a` | "Connected to Ethereum Mainnet" label only |
-| Body text | `text-gray-900` / `#111827` | Balance number, address text |
-| Secondary text | `text-gray-500` / `#6b7280` | Subtext, captions |
-| Skeleton | `bg-gray-200` / `#e5e7eb` | Skeleton placeholder fill |
+| Role              | Tailwind Value               | Usage                                         |
+| ----------------- | ---------------------------- | --------------------------------------------- |
+| Dominant (60%)    | `bg-white` / `#ffffff`       | Screen background, SafeAreaView               |
+| Secondary (30%)   | `bg-gray-100` / `#f3f4f6`    | Address card, skeleton placeholder background |
+| Accent (10%)      | `text-blue-600` / `#2563eb`  | Copy button label only                        |
+| Destructive       | `text-red-600` / `#dc2626`   | Disconnect button only                        |
+| Status / positive | `text-green-600` / `#16a34a` | "Connected to Ethereum Mainnet" label only    |
+| Body text         | `text-gray-900` / `#111827`  | Balance number, address text                  |
+| Secondary text    | `text-gray-500` / `#6b7280`  | Subtext, captions                             |
+| Skeleton          | `bg-gray-200` / `#e5e7eb`    | Skeleton placeholder fill                     |
 
 Accent (`text-blue-600`) reserved for: **copy button label only**. It must not be applied to the balance number, the ETH label, or any new element introduced in this phase.
 
@@ -96,10 +97,10 @@ New components to create in `src/features/wallet/components/`:
 
 A read-only display element. Not interactive.
 
-| State | Appearance |
-|-------|-----------|
-| Loading | `BalanceSkeleton` replaces this component |
-| Loaded | `"1.2345 ETH"` in Display typography, centered |
+| State         | Appearance                                                   |
+| ------------- | ------------------------------------------------------------ |
+| Loading       | `BalanceSkeleton` replaces this component                    |
+| Loaded        | `"1.2345 ETH"` in Display typography, centered               |
 | Error (basic) | `"Balance unavailable"` in `text-sm text-gray-500`, centered |
 
 **Layout:** Centered (`items-center`). Placed as a direct child inside the `gap-6` column in `ConnectedScreen`, between the network label (`text-xs text-green-600`) and the address card (`bg-gray-100 rounded-xl`).
@@ -107,6 +108,7 @@ A read-only display element. Not interactive.
 **Copy:** Balance value + unit inline: `{formattedBalance} ETH`
 
 **Formatting rules (from CONTEXT.md):**
+
 - Fixed 4 decimal places: `"1.2300 ETH"`, `"0.0000 ETH"`
 - Very small: `"< 0.0001 ETH"`
 - No thousand separators
@@ -115,41 +117,41 @@ A read-only display element. Not interactive.
 
 Skeleton placeholder shown while `useBalance` is in loading state.
 
-| Property | Value |
-|----------|-------|
-| Shape | Rounded rectangle |
-| Width | `w-40` (160px) — approximates the width of "0.0000 ETH" at Display size |
-| Height | `h-9` (36px) — matches Display line-height envelope |
-| Color | `bg-gray-200` |
-| Border radius | `rounded-lg` |
-| Animation | `animate-pulse` (NativeWind Tailwind utility) |
-| Position | Centered, same position as BalanceDisplay |
+| Property      | Value                                                                   |
+| ------------- | ----------------------------------------------------------------------- |
+| Shape         | Rounded rectangle                                                       |
+| Width         | `w-40` (160px) — approximates the width of "0.0000 ETH" at Display size |
+| Height        | `h-9` (36px) — matches Display line-height envelope                     |
+| Color         | `bg-gray-200`                                                           |
+| Border radius | `rounded-lg`                                                            |
+| Animation     | `animate-pulse` (NativeWind Tailwind utility)                           |
+| Position      | Centered, same position as BalanceDisplay                               |
 
 ---
 
 ## Interaction Contract
 
-| Interaction | Behavior |
-|-------------|---------|
+| Interaction              | Behavior                                                             |
+| ------------------------ | -------------------------------------------------------------------- |
 | Screen mount (connected) | `useBalance` hook fires immediately; skeleton renders until resolved |
-| Balance loaded | Skeleton unmounts, BalanceDisplay mounts with formatted value |
-| Balance fetch error | Skeleton unmounts, error copy renders: "Balance unavailable" |
-| No new tap interactions | Balance is read-only; no CTA, no copy-to-clipboard in this phase |
+| Balance loaded           | Skeleton unmounts, BalanceDisplay mounts with formatted value        |
+| Balance fetch error      | Skeleton unmounts, error copy renders: "Balance unavailable"         |
+| No new tap interactions  | Balance is read-only; no CTA, no copy-to-clipboard in this phase     |
 
 ---
 
 ## Copywriting Contract
 
-| Element | Copy |
-|---------|------|
-| Primary CTA | None — balance is fetched automatically on mount; no user-triggered action |
-| Loading state | (no text — skeleton only, per CONTEXT.md decision) |
-| Loaded state | `"{value} ETH"` — e.g. `"1.2345 ETH"` |
-| Very small balance | `"< 0.0001 ETH"` |
-| Zero balance | `"0.0000 ETH"` |
-| Error state (basic) | `"Balance unavailable"` |
-| Empty state | Not applicable — zero balance has defined display (`"0.0000 ETH"`); no empty concept |
-| Destructive confirmation | Not applicable — no destructive actions in this phase |
+| Element                  | Copy                                                                                 |
+| ------------------------ | ------------------------------------------------------------------------------------ |
+| Primary CTA              | None — balance is fetched automatically on mount; no user-triggered action           |
+| Loading state            | (no text — skeleton only, per CONTEXT.md decision)                                   |
+| Loaded state             | `"{value} ETH"` — e.g. `"1.2345 ETH"`                                                |
+| Very small balance       | `"< 0.0001 ETH"`                                                                     |
+| Zero balance             | `"0.0000 ETH"`                                                                       |
+| Error state (basic)      | `"Balance unavailable"`                                                              |
+| Empty state              | Not applicable — zero balance has defined display (`"0.0000 ETH"`); no empty concept |
+| Destructive confirmation | Not applicable — no destructive actions in this phase                                |
 
 **Source:** Number formatting rules from CONTEXT.md. Error copy is intentionally minimal — Phase 5 adds polish per REQUIREMENTS.md ERR-02.
 
@@ -157,10 +159,10 @@ Skeleton placeholder shown while `useBalance` is in loading state.
 
 ## Registry Safety
 
-| Registry | Blocks Used | Safety Gate |
-|----------|-------------|-------------|
+| Registry        | Blocks Used                                  | Safety Gate  |
+| --------------- | -------------------------------------------- | ------------ |
 | shadcn official | none — not applicable (React Native project) | not required |
-| third-party | none | not required |
+| third-party     | none                                         | not required |
 
 No component registry is used in this project. NativeWind utility classes are applied directly.
 

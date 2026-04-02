@@ -2,7 +2,8 @@
 phase: 02-wallet-connection
 plan: 01
 subsystem: wallet
-tags: [appkit, walletconnect, zustand, react-native, blo, expo-clipboard, deep-link]
+tags:
+  [appkit, walletconnect, zustand, react-native, blo, expo-clipboard, deep-link]
 
 # Dependency graph
 requires:
@@ -43,13 +44,13 @@ key-files:
     - package.json (blo, expo-clipboard)
 
 key-decisions:
-  - "No persist middleware on wallet store — AppKit owns session persistence via AsyncStorage adapter already wired in appkit.ts"
-  - "useDisconnect() deprecated; disconnect() used from useAppKit() directly per AppKit v2 API"
-  - "WalletSyncBridge rendered as sibling inside AppKitProvider (not in AppProvider body) to satisfy useAppKitAccount context requirement"
-  - "isOpen transition used instead of isLoading to detect modal dismissal without connection (workaround for AppKit bug #4677)"
+  - 'No persist middleware on wallet store — AppKit owns session persistence via AsyncStorage adapter already wired in appkit.ts'
+  - 'useDisconnect() deprecated; disconnect() used from useAppKit() directly per AppKit v2 API'
+  - 'WalletSyncBridge rendered as sibling inside AppKitProvider (not in AppProvider body) to satisfy useAppKitAccount context requirement'
+  - 'isOpen transition used instead of isLoading to detect modal dismissal without connection (workaround for AppKit bug #4677)'
 
 patterns-established:
-  - "WalletSyncBridge: separate null-rendering component inside provider to call provider-dependent hooks at tree root"
+  - 'WalletSyncBridge: separate null-rendering component inside provider to call provider-dependent hooks at tree root'
   - "Manual connecting status: set to 'connecting' on open(), transition to 'connected' via sync hook, reset on isOpen false transition"
 
 requirements-completed: [WALLET-01, WALLET-02, WALLET-03, WALLET-04]
@@ -123,5 +124,6 @@ None - no external service configuration required.
 - Deep-link return path requires a Development Build to test (not Expo Go) — documented in RESEARCH.md Pitfall 5.
 
 ---
-*Phase: 02-wallet-connection*
-*Completed: 2026-04-01*
+
+_Phase: 02-wallet-connection_
+_Completed: 2026-04-01_

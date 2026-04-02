@@ -2,7 +2,8 @@
 phase: 04-transaction-history
 plan: 02
 subsystem: ui
-tags: [react-native, flatlist, nativewind, pull-to-refresh, etherscan, transactions]
+tags:
+  [react-native, flatlist, nativewind, pull-to-refresh, etherscan, transactions]
 
 requires:
   - phase: 04-transaction-history-01
@@ -31,12 +32,12 @@ key-files:
     - src/features/wallet/components/ConnectedScreen.tsx
 
 key-decisions:
-  - "txError from useTransactions not destructured in ConnectedScreen — error display is Phase 5 scope per copywriting contract"
-  - "FlatList<Transaction> generic used for type-safe renderItem — preferred over runtime casting"
+  - 'txError from useTransactions not destructured in ConnectedScreen — error display is Phase 5 scope per copywriting contract'
+  - 'FlatList<Transaction> generic used for type-safe renderItem — preferred over runtime casting'
 
 patterns-established:
-  - "Unused destructured hook return values are omitted (not renamed with underscore) to satisfy no-unused-vars lint rule"
-  - "RefreshControl spinner shows during pull-to-refresh; skeleton only shows on initial load (data={txLoading ? [] : transactions} pattern)"
+  - 'Unused destructured hook return values are omitted (not renamed with underscore) to satisfy no-unused-vars lint rule'
+  - 'RefreshControl spinner shows during pull-to-refresh; skeleton only shows on initial load (data={txLoading ? [] : transactions} pattern)'
 
 requirements-completed: [TX-01, TX-02]
 
@@ -88,6 +89,7 @@ Each task was committed atomically:
 ### Auto-fixed Issues
 
 **1. [Rule 2 - Missing Critical] Removed unused txError destructure to satisfy lint**
+
 - **Found during:** Task 2 (ConnectedScreen restructure)
 - **Issue:** Plan included `error: txError` in useTransactions destructure but lint warned on unused variable; underscore prefix `_txError` also triggered warning (no ignore rule configured)
 - **Fix:** Omitted `error` from the useTransactions destructure entirely — consistent with plan intent that error display is Phase 5 scope
@@ -115,5 +117,6 @@ None - no external service configuration required.
 - Phase 5 (polish/error UX) can add transaction error display by destructuring `error` from `useTransactions` in ConnectedScreen and rendering it below the section header
 
 ---
-*Phase: 04-transaction-history*
-*Completed: 2026-04-02*
+
+_Phase: 04-transaction-history_
+_Completed: 2026-04-02_

@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useAppKitAccount, useAppKitState } from '@reown/appkit-react-native';
+import { useAccount, useAppKitState } from '@reown/appkit-react-native';
 import { useWalletStore } from '../stores/wallet-store';
 
 export function useWalletSync() {
-  const { address, isConnected } = useAppKitAccount();
+  const { address, isConnected } = useAccount();
   const { isOpen } = useAppKitState();
   const { setWallet, clearWallet, status, setStatus } = useWalletStore();
 

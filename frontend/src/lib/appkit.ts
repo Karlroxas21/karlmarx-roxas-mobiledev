@@ -28,7 +28,7 @@ const appKitStorage: Storage = {
     await AsyncStorage.removeItem(key);
   },
   getKeys: async () => {
-    return await AsyncStorage.getAllKeys() as string[];
+    return (await AsyncStorage.getAllKeys()) as string[];
   },
   getEntries: async () => {
     const keys = await AsyncStorage.getAllKeys();

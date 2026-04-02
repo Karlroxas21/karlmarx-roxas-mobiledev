@@ -78,6 +78,7 @@ export function useTransactions(refreshTrigger?: number): TransactionState {
     let cancelled = false;
     setState({ transactions: [], isLoading: true, error: null });
 
+    // Test address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
     const url =
       `https://api.etherscan.io/v2/api` +
       `?chainid=1&module=account&action=txlist` +
@@ -105,8 +106,7 @@ export function useTransactions(refreshTrigger?: number): TransactionState {
           setState({
             transactions: [],
             isLoading: false,
-            error:
-              e instanceof Error ? e.message : 'Transactions fetch failed',
+            error: e instanceof Error ? e.message : 'Transactions fetch failed',
           });
         }
       });

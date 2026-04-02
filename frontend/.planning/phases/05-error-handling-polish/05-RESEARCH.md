@@ -5,9 +5,11 @@
 **Confidence:** HIGH
 
 <user_constraints>
+
 ## User Constraints (from CONTEXT.md)
 
 ### Locked Decisions
+
 - **Error display style**: Inline replacement — error message + retry button replaces content in the same position (no banners, no toasts)
 - **Balance error**: Replaces the balance text area (between network label and address box)
 - **Transaction error**: Replaces the transaction list area (below "Transactions" header, which stays visible)
@@ -24,23 +26,27 @@
 - **Connection error polish**: Keep existing `ConnectionError` pattern (error message + "Tap Connect Wallet to try again" hint); replace raw technical error string with "Couldn't connect wallet"; no new retry button
 
 ### Claude's Discretion
+
 - Whether to extract a shared `ErrorState` component for balance and transaction errors, or keep them inline
 - Warning icon choice (emoji vs custom icon)
 - Exact spacing and padding within error states
 - Whether `ConnectionError` component needs structural changes or just a copy update
 
 ### Deferred Ideas (OUT OF SCOPE)
+
 None — discussion stayed within phase scope.
 </user_constraints>
 
 <phase_requirements>
+
 ## Phase Requirements
 
-| ID | Description | Research Support |
-|----|-------------|-----------------|
-| ERR-01 | User sees clear error message when wallet connection fails | `ConnectionError.tsx` copy update; `useWalletConnection` already sets `error` string in store |
-| ERR-02 | User sees clear error message when API/RPC calls fail | `BalanceDisplay.tsx` prop extension + `useTransactions` error destructuring in `ConnectedScreen.tsx` |
-| ERR-03 | User can retry failed operations via a retry button | `onRetry` prop on `BalanceDisplay`; inline retry for tx errors in `ConnectedScreen`; both call `setRefreshTrigger(n => n + 1)` |
+| ID     | Description                                                | Research Support                                                                                                               |
+| ------ | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| ERR-01 | User sees clear error message when wallet connection fails | `ConnectionError.tsx` copy update; `useWalletConnection` already sets `error` string in store                                  |
+| ERR-02 | User sees clear error message when API/RPC calls fail      | `BalanceDisplay.tsx` prop extension + `useTransactions` error destructuring in `ConnectedScreen.tsx`                           |
+| ERR-03 | User can retry failed operations via a retry button        | `onRetry` prop on `BalanceDisplay`; inline retry for tx errors in `ConnectedScreen`; both call `setRefreshTrigger(n => n + 1)` |
+
 </phase_requirements>
 
 ---
@@ -58,21 +64,24 @@ Every change in this phase is additive — no refactoring of hooks or state mana
 ## Standard Stack
 
 ### Core
-| Library | Version | Purpose | Why Standard |
-|---------|---------|---------|--------------|
-| React Native `View`, `Text`, `TouchableOpacity` | Bundled with RN 0.81 | Error state UI primitives | Already used throughout the codebase for all interactive and layout elements |
-| NativeWind v4 `className` | `^4.2.3` | Tailwind-based styling | Project convention — all styling uses `className`, never inline `style` objects |
-| Zustand `useWalletStore` | `^5.0.12` | Read `error` from wallet store for connection errors | Already wired; no changes needed |
+
+| Library                                         | Version              | Purpose                                              | Why Standard                                                                    |
+| ----------------------------------------------- | -------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------- |
+| React Native `View`, `Text`, `TouchableOpacity` | Bundled with RN 0.81 | Error state UI primitives                            | Already used throughout the codebase for all interactive and layout elements    |
+| NativeWind v4 `className`                       | `^4.2.3`             | Tailwind-based styling                               | Project convention — all styling uses `className`, never inline `style` objects |
+| Zustand `useWalletStore`                        | `^5.0.12`            | Read `error` from wallet store for connection errors | Already wired; no changes needed                                                |
 
 ### Supporting
-| Library | Version | Purpose | When to Use |
-|---------|---------|---------|-------------|
+
+| Library          | Version  | Purpose                                           | When to Use        |
+| ---------------- | -------- | ------------------------------------------------- | ------------------ |
 | `expo-clipboard` | `~8.0.8` | Already in use for copy — no role in error states | N/A for this phase |
 
 ### Alternatives Considered
-| Instead of | Could Use | Tradeoff |
-|------------|-----------|----------|
-| Inline text retry button | Toast / snackbar library | Toasts are transient and non-retryable — explicitly rejected by user decisions |
+
+| Instead of                              | Could Use                      | Tradeoff                                                                                             |
+| --------------------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| Inline text retry button                | Toast / snackbar library       | Toasts are transient and non-retryable — explicitly rejected by user decisions                       |
 | Fixed error string in `ConnectionError` | Pass friendly copy from caller | Either works; fixed string in component is simpler since there is only one connection error scenario |
 
 **Installation:** No new packages needed.
@@ -100,6 +109,7 @@ src/features/wallet/components/
 **When to use:** Any section that can load independently and fail independently. Both balance and transaction sections qualify.
 
 **Example — BalanceDisplay with retry:**
+
 ```typescript
 // Follows existing BalanceDisplay structure; adds onRetry prop
 type BalanceDisplayProps = {
@@ -132,6 +142,7 @@ export function BalanceDisplay({ balance, error, onRetry }: BalanceDisplayProps)
 **When to use:** Any retry in `ConnectedScreen` — balance retry and transaction retry both use the same trigger, which is intentional (both data sources reload together on manual refresh already).
 
 **Example — retry callback in ConnectedScreen:**
+
 ```typescript
 const handleRetry = useCallback(() => {
   setRefreshTrigger((n) => n + 1);
@@ -147,6 +158,7 @@ Both `<BalanceDisplay onRetry={handleRetry} ... />` and the transaction error's 
 **When to use:** When two or more sections share the same error UI shape — which is true here (balance error and transaction error are structurally identical: one line of text + one blue text button).
 
 **Example:**
+
 ```typescript
 // src/features/wallet/components/ErrorState.tsx
 type ErrorStateProps = {
@@ -175,12 +187,14 @@ export function ErrorState({ message, onRetry }: ErrorStateProps) {
 **When to use:** When the component has a single responsibility and the caller always passes the same semantic type of error.
 
 **Options for implementation:**
+
 1. Remove the `message` prop entirely and hard-code the string inside the component — simplest, since there is no other connection error scenario.
 2. Keep the `message` prop as a boolean/existence signal but always render fixed copy — maintains the existing null-guard pattern.
 
 Option 1 is cleanest. The prop currently only signals "an error occurred" (not the content), and the caller (`ConnectScreen`) already has a boolean-equivalent check via `error` from the store.
 
 **Example:**
+
 ```typescript
 // ConnectionError.tsx — simplified
 export function ConnectionError({ hasError }: { hasError: boolean }) {
@@ -199,6 +213,7 @@ export function ConnectionError({ hasError }: { hasError: boolean }) {
 ```
 
 Caller in `ConnectScreen.tsx`:
+
 ```typescript
 <ConnectionError hasError={!!error} />
 ```
@@ -214,11 +229,11 @@ Caller in `ConnectScreen.tsx`:
 
 ## Don't Hand-Roll
 
-| Problem | Don't Build | Use Instead | Why |
-|---------|-------------|-------------|-----|
-| Retry state coordination | A separate `retryCount` or `lastRetried` state per section | Increment `refreshTrigger` | The counter already drives both hooks via `useEffect` dependency — adding parallel state creates two sources of truth |
-| Error boundary | A React `ErrorBoundary` class component | Inline `error` from hook | Hook errors are already caught in `.catch()` and returned as strings — they never propagate as thrown exceptions to ErrorBoundary |
-| Toast/snackbar | A custom overlay notification system | The inline replacement pattern | User decision explicitly rejects banners and toasts |
+| Problem                  | Don't Build                                                | Use Instead                    | Why                                                                                                                               |
+| ------------------------ | ---------------------------------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| Retry state coordination | A separate `retryCount` or `lastRetried` state per section | Increment `refreshTrigger`     | The counter already drives both hooks via `useEffect` dependency — adding parallel state creates two sources of truth             |
+| Error boundary           | A React `ErrorBoundary` class component                    | Inline `error` from hook       | Hook errors are already caught in `.catch()` and returned as strings — they never propagate as thrown exceptions to ErrorBoundary |
+| Toast/snackbar           | A custom overlay notification system                       | The inline replacement pattern | User decision explicitly rejects banners and toasts                                                                               |
 
 **Key insight:** The retry mechanism is already implemented — `refreshTrigger` in `ConnectedScreen` drives both hooks. This phase only needs to expose retry affordances to the user, not build new plumbing.
 
@@ -233,6 +248,7 @@ Caller in `ConnectScreen.tsx`:
 **Why it happens:** `txError` is not yet destructured in `ConnectedScreen`, so there is no error branch in `renderEmpty`.
 
 **How to avoid:** Destructure `error: txError` from `useTransactions`. In `renderEmpty`, add a branch before the empty-state check:
+
 ```typescript
 const renderEmpty = () => {
   if (txLoading) return <TransactionSkeleton />;
@@ -252,6 +268,7 @@ const renderEmpty = () => {
 ### Pitfall 3: Skeleton shown during retry but `refreshTrigger` increment does not immediately flip `isLoading`
 
 **What goes wrong:** `setRefreshTrigger` is a state setter — the effect re-runs asynchronously on next render. If the component conditionally renders skeleton only when `isLoading` is true AND the error was previously shown, the transition is:
+
 1. User taps Retry
 2. React schedules re-render with incremented `refreshTrigger`
 3. On next render, `useEffect` inside hook runs → sets `isLoading: true`
@@ -274,6 +291,7 @@ This is a two-render transition, which is fine and expected. There is no race co
 Verified patterns from the existing codebase:
 
 ### Existing text button pattern (blue, no border)
+
 ```typescript
 // Source: ConnectedScreen.tsx — "Copy" button
 <TouchableOpacity
@@ -287,6 +305,7 @@ Verified patterns from the existing codebase:
 The retry button follows the same `text-sm text-blue-600` pattern without a wrapping fixed-size View (since it is not positioned absolutely).
 
 ### Existing conditional rendering pattern (skeleton → content)
+
 ```typescript
 // Source: ConnectedScreen.tsx — balance section
 {balanceLoading ? (
@@ -297,6 +316,7 @@ The retry button follows the same `text-sm text-blue-600` pattern without a wrap
 ```
 
 After this phase, the pattern extends to three branches:
+
 ```typescript
 {balanceLoading ? (
   <BalanceSkeleton />
@@ -310,6 +330,7 @@ After this phase, the pattern extends to three branches:
 Or equivalently, keep `BalanceDisplay` and pass `onRetry` as a prop — both approaches are valid.
 
 ### Hook error already captured
+
 ```typescript
 // Source: use-balance.ts
 .catch((e) => {
@@ -326,6 +347,7 @@ Or equivalently, keep `BalanceDisplay` and pass `onRetry` as a prop — both app
 The `error` field is already a non-null string on failure. No changes to the hooks are needed.
 
 ### refreshTrigger increment — existing onRefresh
+
 ```typescript
 // Source: ConnectedScreen.tsx
 const onRefresh = useCallback(() => {
@@ -335,6 +357,7 @@ const onRefresh = useCallback(() => {
 ```
 
 The retry handler is the same increment, minus the `setRefreshing(true)` (pull-to-refresh indicator is not needed for button-triggered retry):
+
 ```typescript
 const handleRetry = useCallback(() => {
   setRefreshTrigger((n) => n + 1);
@@ -345,13 +368,14 @@ const handleRetry = useCallback(() => {
 
 ## State of the Art
 
-| Old Approach | Current Approach | When Changed | Impact |
-|--------------|------------------|--------------|--------|
-| `ConnectionError` shows raw JS error message | Fixed friendly copy "Couldn't connect wallet" | Phase 5 | User never sees internal error strings |
-| `BalanceDisplay` silently shows grey "Balance unavailable" | Explicit error copy + retry button | Phase 5 | Meets ERR-02 and ERR-03 |
-| `txError` unread in `ConnectedScreen` | Destructured and rendered as inline error state | Phase 5 | Meets ERR-02 and ERR-03 for transaction section |
+| Old Approach                                               | Current Approach                                | When Changed | Impact                                          |
+| ---------------------------------------------------------- | ----------------------------------------------- | ------------ | ----------------------------------------------- |
+| `ConnectionError` shows raw JS error message               | Fixed friendly copy "Couldn't connect wallet"   | Phase 5      | User never sees internal error strings          |
+| `BalanceDisplay` silently shows grey "Balance unavailable" | Explicit error copy + retry button              | Phase 5      | Meets ERR-02 and ERR-03                         |
+| `txError` unread in `ConnectedScreen`                      | Destructured and rendered as inline error state | Phase 5      | Meets ERR-02 and ERR-03 for transaction section |
 
 **Deliberately not changing:**
+
 - Hook internals (`use-balance.ts`, `use-transactions.ts`) — error capture is already correct
 - `refreshTrigger` coordination — already works for pull-to-refresh; retry reuses it
 - `TransactionSkeleton` / `BalanceSkeleton` — no changes; shown as-is during retry
@@ -377,46 +401,53 @@ const handleRetry = useCallback(() => {
 > `workflow.nyquist_validation` key is absent from `.planning/config.json` — treating as enabled.
 
 ### Test Framework
-| Property | Value |
-|----------|-------|
-| Framework | None installed — no Jest, Vitest, or other test runner in `package.json` |
-| Config file | None |
-| Quick run command | N/A |
-| Full suite command | N/A |
+
+| Property           | Value                                                                    |
+| ------------------ | ------------------------------------------------------------------------ |
+| Framework          | None installed — no Jest, Vitest, or other test runner in `package.json` |
+| Config file        | None                                                                     |
+| Quick run command  | N/A                                                                      |
+| Full suite command | N/A                                                                      |
 
 ### Phase Requirements → Test Map
-| Req ID | Behavior | Test Type | Automated Command | File Exists? |
-|--------|----------|-----------|-------------------|-------------|
-| ERR-01 | `ConnectionError` renders fixed friendly copy when `hasError` is true | unit | N/A — no test runner | ❌ Wave 0 |
-| ERR-02 | `BalanceDisplay` renders error copy + retry button when `error` is non-null | unit | N/A — no test runner | ❌ Wave 0 |
-| ERR-02 | Transaction error state renders in `ConnectedScreen` when `txError` is non-null | unit | N/A — no test runner | ❌ Wave 0 |
-| ERR-03 | Tapping retry button increments `refreshTrigger` | integration | N/A — no test runner | ❌ Wave 0 |
+
+| Req ID | Behavior                                                                        | Test Type   | Automated Command    | File Exists? |
+| ------ | ------------------------------------------------------------------------------- | ----------- | -------------------- | ------------ |
+| ERR-01 | `ConnectionError` renders fixed friendly copy when `hasError` is true           | unit        | N/A — no test runner | ❌ Wave 0    |
+| ERR-02 | `BalanceDisplay` renders error copy + retry button when `error` is non-null     | unit        | N/A — no test runner | ❌ Wave 0    |
+| ERR-02 | Transaction error state renders in `ConnectedScreen` when `txError` is non-null | unit        | N/A — no test runner | ❌ Wave 0    |
+| ERR-03 | Tapping retry button increments `refreshTrigger`                                | integration | N/A — no test runner | ❌ Wave 0    |
 
 ### Sampling Rate
+
 - **Per task commit:** Manual visual verification on device/emulator
 - **Per wave merge:** Manual visual verification of all three error paths
 - **Phase gate:** All three error UIs visible and retry triggers loading state before `/gsd:verify-work`
 
 ### Wave 0 Gaps
+
 No test framework is installed. This phase does not introduce tests — all verification is manual visual/functional testing.
 
 - [ ] No test runner detected — automated tests cannot be written without installing Jest + `@testing-library/react-native`
 - [ ] Manual test checklist covers ERR-01, ERR-02, ERR-03
 
-*(Recommendation: Accept manual testing for this phase. Installing a test framework is out of scope per CONTEXT.md.)*
+_(Recommendation: Accept manual testing for this phase. Installing a test framework is out of scope per CONTEXT.md.)_
 
 ---
 
 ## Sources
 
 ### Primary (HIGH confidence)
+
 - Direct codebase read — `ConnectedScreen.tsx`, `BalanceDisplay.tsx`, `ConnectionError.tsx`, `use-balance.ts`, `use-transactions.ts`, `use-wallet-connection.ts`, `BalanceSkeleton.tsx`, `TransactionSkeleton.tsx`
 - `CONTEXT.md` — all implementation decisions locked by user
 
 ### Secondary (MEDIUM confidence)
+
 - `package.json` — confirmed no test framework present
 
 ### Tertiary (LOW confidence)
+
 - None
 
 ---
@@ -424,6 +455,7 @@ No test framework is installed. This phase does not introduce tests — all veri
 ## Metadata
 
 **Confidence breakdown:**
+
 - Standard stack: HIGH — all libraries are already in use; no new dependencies
 - Architecture: HIGH — error paths already exist in hooks; only UI wiring needed; patterns read directly from source
 - Pitfalls: HIGH — identified from direct code reading (txError not destructured, BalanceDisplay silent error)

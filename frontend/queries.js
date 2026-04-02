@@ -1,4 +1,7 @@
-const { withAndroidManifest, createRunOncePlugin } = require('expo/config-plugins');
+const {
+  withAndroidManifest,
+  createRunOncePlugin,
+} = require('expo/config-plugins');
 
 const queries = {
   package: [

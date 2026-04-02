@@ -26,6 +26,7 @@ Additions required are: `@reown/appkit-react-native` + `@reown/appkit-ethers-rea
 Transaction history cannot be fetched via ethers.js v6 — `provider.getHistory()` was removed in v6 and there is no equivalent RPC method. The Etherscan API v2 (`https://api.etherscan.io/v2/api`) is the correct data source, called via `axios` or the existing `api-client.ts`.
 
 **Core technologies:**
+
 - `@reown/appkit-react-native` v2.x: WalletConnect v2 wallet connection and session management — official successor to web3modal, Expo SDK 54 explicitly supported
 - `@reown/appkit-ethers-react-native`: Bridges AppKit sessions to an ethers `BrowserProvider` — use over wagmi adapter since wagmi is not in the existing stack
 - `ethers` v6.x: Balance fetching, ETH/Wei formatting — actively maintained, typed, native BigInt, React Native cookbook in official docs
@@ -39,6 +40,7 @@ Transaction history cannot be fetched via ethers.js v6 — `provider.getHistory(
 ### Expected Features
 
 **Must have (table stakes) — v1 launch:**
+
 - Wallet connection (WalletConnect + MetaMask deep-link) — entry point; nothing else works without it
 - ETH balance display formatted in ETH, not Wei — `ethers.formatEther()`, 4-6 decimal places
 - Transaction history list (last 10) with direction, amount, counterparty address, timestamp
@@ -49,6 +51,7 @@ Transaction history cannot be fetched via ethers.js v6 — `provider.getHistory(
 - Empty state for transaction list
 
 **Should have (competitive differentiators) — v1.x polish pass:**
+
 - Pull-to-refresh on balance and transaction list
 - Copy-to-clipboard on wallet address with toast confirmation
 - Relative timestamps ("3 hours ago") using `date-fns`
@@ -56,6 +59,7 @@ Transaction history cannot be fetched via ethers.js v6 — `provider.getHistory(
 - Wallet address QR code (`react-native-qrcode-svg`)
 
 **Defer (v2+):**
+
 - Fiat conversion (USD display) — requires price API, second network dependency
 - ERC-20 token balances — multiplies API calls significantly
 - Multi-chain support — separate RPC endpoints, chain UI, different block explorers
@@ -69,6 +73,7 @@ Transaction history cannot be fetched via ethers.js v6 — `provider.getHistory(
 The app follows a 3-layer Bulletproof React structure: thin screen routes in `src/app/` compose from feature modules in `src/features/`, which consume shared infrastructure in `src/lib/` and `src/providers/`. Two feature modules are needed: `features/wallet/` (connection, balance, Zustand wallet-store) and `features/transactions/` (Etherscan API, tx-store, list UI). AppKit is initialized as a singleton in `src/lib/appkit.ts` at module scope — never inside a component. Zustand stores act as derived caches of AppKit state, synced via a single `useWalletSync` hook called once in `app-provider.tsx`. Features must not import from each other; address flows from the screen layer down as a prop.
 
 **Major components:**
+
 1. `src/lib/appkit.ts` — AppKit singleton (`createAppKit()` at module scope); first import must be `@walletconnect/react-native-compat`
 2. `src/providers/app-provider.tsx` — Root provider tree; wraps with `AppKitProvider`, calls `useWalletSync` once
 3. `src/features/wallet/` — Connection hook, wallet-store (address, balance, status), `ConnectButton`, `WalletBalance`, `ConnectionStatus`
@@ -95,6 +100,7 @@ The app follows a 3-layer Bulletproof React structure: thin screen routes in `sr
 Based on combined research, the build order is strictly dependency-driven. Five phases are recommended.
 
 ### Phase 1: Foundation and Polyfills
+
 **Rationale:** Polyfills, Babel config, Metro config, and the EAS Development Build are prerequisites for every other phase. No blockchain library can be imported without them. Discover and fix setup issues here before any feature code is written — retrofit is expensive.
 **Delivers:** App boots on a physical device without polyfill errors. AppKit singleton and provider are in the tree. `babel.config.js` has both `unstable_transformImportMeta` and `unstable_transformProfile: 'hermes-stable'`. EAS development build runs.
 **Addresses features:** None directly, but unblocks all of them.
@@ -102,6 +108,7 @@ Based on combined research, the build order is strictly dependency-driven. Five 
 **Key tasks:** Install all packages via `npx expo install`, create `babel.config.js`, update `metro.config.js` with `extraNodeModules`, extend `config/env.ts`, create `lib/appkit.ts` singleton, modify `providers/app-provider.tsx`, configure EAS build profile.
 
 ### Phase 2: Wallet Connection
+
 **Rationale:** ETH balance and transaction history both require a connected wallet address. Nothing data-facing can be built until this is established and verified on a real device.
 **Delivers:** User can tap "Connect Wallet", wallet modal opens (WalletConnect QR + MetaMask deep-link), address appears on screen. Session persists across app restarts. Disconnect clears session.
 **Addresses features:** Wallet connection, address display (truncated), disconnect wallet, connection persistence.
@@ -109,6 +116,7 @@ Based on combined research, the build order is strictly dependency-driven. Five 
 **Key tasks:** Build `features/wallet/` (connection hook, `useWalletSync`, wallet-store, `ConnectButton`, `ConnectionStatus`). Update `app/index.tsx` connection gate. Test full connect → approve → return on physical iOS and Android.
 
 ### Phase 3: Balance Display
+
 **Rationale:** ETH balance is the primary data value and validates that the ethers.js provider works correctly through the WalletConnect session. Simpler than transaction history (single RPC call vs. external REST API). Build this before transactions to confirm the ethers integration is solid.
 **Delivers:** Connected user sees their ETH balance formatted in ETH (not Wei) at the top of the wallet screen.
 **Addresses features:** ETH balance display, loading state for balance fetch, error message for balance failure.
@@ -116,6 +124,7 @@ Based on combined research, the build order is strictly dependency-driven. Five 
 **Key tasks:** Create `lib/ethers.ts` provider factory. Build `use-eth-balance` hook and `WalletBalance` component. Create `app/wallet.tsx` dashboard screen.
 
 ### Phase 4: Transaction History
+
 **Rationale:** Requires connected address (Phase 2) and a working dashboard screen to mount onto (Phase 3). The Etherscan API integration is entirely independent of ethers.js balance fetching — these are two separate data sources. Separating them into distinct phases keeps scope manageable.
 **Delivers:** Last 10 transactions visible below balance with direction indicator (in/out), ETH amount, counterparty address (truncated), and timestamp.
 **Addresses features:** Transaction history list, transaction direction indicator, loading state, empty state, error handling for API failures.
@@ -123,6 +132,7 @@ Based on combined research, the build order is strictly dependency-driven. Five 
 **Key tasks:** Build `features/transactions/` (Etherscan API call, `use-transactions` hook, tx-store, `TransactionList`, `TransactionItem`). Configure Etherscan base URL in `env.ts`. Pass `address` from `wallet.tsx` as a prop, not via cross-feature store import.
 
 ### Phase 5: Error Handling and Polish
+
 **Rationale:** Error handling is a cross-cutting concern that is most efficiently applied after the happy path is confirmed working. The v1.x polish features (pull-to-refresh, copy-to-clipboard, relative timestamps, color-coding) are low-effort and high-impact — grouping them into a single pass avoids interrupting feature development.
 **Delivers:** All error states surfaced with user-readable messages and retry affordances. Pull-to-refresh on balance and transactions. Copy wallet address to clipboard. Relative timestamps. ETH amount color-coded by direction.
 **Addresses features:** All P2 (competitive differentiator) features. Complete error handling for all async paths.
@@ -140,10 +150,12 @@ Based on combined research, the build order is strictly dependency-driven. Five 
 ### Research Flags
 
 Phases needing deeper research during planning:
+
 - **Phase 1 (Foundation):** EAS build profile configuration and `eas.json` setup may require project-specific research if the project has not used EAS before. The `babel.config.js` double-flag requirement (`unstable_transformImportMeta` + `unstable_transformProfile`) should be validated against the exact versions installed.
 - **Phase 2 (Wallet Connection):** Deep-link round-trip behavior is device-specific and underdocumented. Physical device testing on both iOS and Android is mandatory — this cannot be validated in planning.
 
 Phases with standard patterns (skip research-phase):
+
 - **Phase 3 (Balance Display):** `ethers.JsonRpcProvider` + `provider.getBalance()` + `formatEther()` is a single well-documented call. No surprises.
 - **Phase 4 (Transaction History):** Etherscan API v2 is a straightforward REST GET with documented parameters. The integration pattern is entirely standard.
 - **Phase 5 (Polish):** `RefreshControl`, `Clipboard`, `date-fns`, conditional NativeWind classes — all fully standard React Native patterns.
@@ -152,12 +164,12 @@ Phases with standard patterns (skip research-phase):
 
 ## Confidence Assessment
 
-| Area | Confidence | Notes |
-|------|------------|-------|
-| Stack | MEDIUM | Core recommendations verified against official Reown, ethers.js, and Etherscan docs. Version compatibility matrix for Expo SDK 54 + RN 0.81 confirmed. MEDIUM rather than HIGH due to rapid ecosystem churn — Reown package names changed once already (web3modal → appkit) and could change again. |
-| Features | MEDIUM-HIGH | Table stakes derived from competitor analysis (MetaMask, Rainbow, Zerion) and official UX guides. Feature dependency graph is reliable. Deferral decisions (fiat conversion, tokens, multi-chain) are well-supported by complexity analysis. |
-| Architecture | MEDIUM-HIGH | Bulletproof React feature-scoped structure is well-established. AppKit singleton pattern is the mandated Reown approach per official docs. Zustand-as-derived-cache pattern is community consensus with documented pitfalls. |
-| Pitfalls | HIGH | All critical pitfalls verified against official sources (Reown docs, Hermes issue tracker, Etherscan deprecation notice, Expo Linking docs). Import order requirements confirmed against multiple independent sources. |
+| Area         | Confidence  | Notes                                                                                                                                                                                                                                                                                               |
+| ------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Stack        | MEDIUM      | Core recommendations verified against official Reown, ethers.js, and Etherscan docs. Version compatibility matrix for Expo SDK 54 + RN 0.81 confirmed. MEDIUM rather than HIGH due to rapid ecosystem churn — Reown package names changed once already (web3modal → appkit) and could change again. |
+| Features     | MEDIUM-HIGH | Table stakes derived from competitor analysis (MetaMask, Rainbow, Zerion) and official UX guides. Feature dependency graph is reliable. Deferral decisions (fiat conversion, tokens, multi-chain) are well-supported by complexity analysis.                                                        |
+| Architecture | MEDIUM-HIGH | Bulletproof React feature-scoped structure is well-established. AppKit singleton pattern is the mandated Reown approach per official docs. Zustand-as-derived-cache pattern is community consensus with documented pitfalls.                                                                        |
+| Pitfalls     | HIGH        | All critical pitfalls verified against official sources (Reown docs, Hermes issue tracker, Etherscan deprecation notice, Expo Linking docs). Import order requirements confirmed against multiple independent sources.                                                                              |
 
 **Overall confidence:** MEDIUM-HIGH
 
@@ -173,6 +185,7 @@ Phases with standard patterns (skip research-phase):
 ## Sources
 
 ### Primary (HIGH confidence)
+
 - https://docs.reown.com/appkit/react-native/core/installation — AppKit Expo installation, polyfill requirements, import order
 - https://docs.ethers.org/v6/cookbook/react-native/ — ethers v6 React Native quick-crypto registration
 - https://docs.etherscan.io/etherscan-v2/get-an-addresss-full-transaction-history — Etherscan v2 txlist endpoint
@@ -183,6 +196,7 @@ Phases with standard patterns (skip research-phase):
 - https://docs.expo.dev/linking/into-your-app/ — scheme registration, createURL pattern
 
 ### Secondary (MEDIUM confidence)
+
 - https://www.callstack.com/blog/build-modern-web3-dapps-on-ethereum-with-react-native-and-viem — viem + React Native patterns
 - https://github.com/alan2207/bulletproof-react — Bulletproof React feature-scoped structure conventions
 - https://medium.com/@alimuradbukhari12345/optimizing-wallet-creation-in-react-native-a-guide-using-react-native-quick-crypto-and-ethers-js-767695e57166 — quick-crypto + ethers performance benchmarks (verified against official ethers v6 docs)
@@ -190,10 +204,11 @@ Phases with standard patterns (skip research-phase):
 - https://www.cryptowisser.com/guides/crypto-wallet-ux-guide-2025/ — UX benchmarking
 
 ### Tertiary (LOW confidence)
+
 - https://github.com/pmndrs/zustand/issues/394 — Zustand persist with AsyncStorage in React Native (community pattern, not official)
 - https://community.metamask.io/t/walletconnect-v2-deep-linking-with-metamask-mobile/24657 — deep-link round-trip configuration (community, needs physical device validation)
 
 ---
 
-*Research completed: 2026-04-01*
-*Ready for roadmap: yes*
+_Research completed: 2026-04-01_
+_Ready for roadmap: yes_

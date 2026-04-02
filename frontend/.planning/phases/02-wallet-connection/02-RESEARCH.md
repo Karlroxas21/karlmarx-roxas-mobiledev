@@ -7,32 +7,38 @@
 ---
 
 <user_constraints>
+
 ## User Constraints (from CONTEXT.md)
 
 ### Locked Decisions
 
 **Screen Layout**
+
 - Hero + features landing for disconnected state: app icon at top, bullet list of capabilities (view balance, see transactions, read-only & safe), "Connect Wallet" button at bottom
 - Minimal connected state: just the connected address and disconnect — no placeholder sections for future features
 - Single route: replace `app/index.tsx` smoke test with the wallet screen (connected/disconnected states on same page)
 
 **Connect Flow UX**
+
 - Use AppKit's built-in WalletConnect v2 modal (QR code + wallet list). Tap "Connect Wallet" opens the modal
 - Custom loading overlay: show "Waiting for approval in MetaMask..." while waiting for wallet approval, with cancel option
 - Connection rejection/timeout: show inline error message below the Connect button on the disconnected screen. Dismisses on next tap
 
 **Address Display**
+
 - Full 42-character address displayed (not truncated)
 - "Connected to Ethereum Mainnet" label shown above the address
 - Ethereum-style blockies identicon (pixelated colored squares) generated from the address
 - Copy-to-clipboard button next to the address (pulled forward from Phase 5 scope)
 
 **Disconnect Behavior**
+
 - Instant disconnect — no confirmation dialog. Reconnecting is easy
 - Disconnect button placed in top-right corner of the connected screen (small icon or text link)
 - Silent transition: just flip back to the disconnected hero screen, no "Disconnected" message
 
 ### Claude's Discretion
+
 - Wallet feature module structure (`features/wallet/` layout)
 - Zustand store design for wallet connection state
 - AppKit hook usage and session persistence implementation
@@ -48,14 +54,16 @@ None — discussion stayed within phase scope.
 ---
 
 <phase_requirements>
+
 ## Phase Requirements
 
-| ID | Description | Research Support |
-|----|-------------|-----------------|
-| WALLET-01 | User can connect Ethereum wallet via WalletConnect v2 modal (supports MetaMask + 300 wallets) | AppKit `useAppKit().open()` triggers built-in modal; `app.json` wallet scheme configuration enables wallet detection |
-| WALLET-02 | User can connect directly via MetaMask deep link | AppKit modal includes MetaMask deep-link path natively; `app.json` LSApplicationQueriesSchemes + Android queries plugin enables device wallet detection |
-| WALLET-03 | User's wallet session persists across app restarts | AppKit uses AsyncStorage internally (already wired via `appKitStorage` in `lib/appkit.ts`); `useAppKitAccount()` re-hydrates on mount automatically |
-| WALLET-04 | User can disconnect their wallet | `useAppKit().disconnect()` ends session; `useWalletSync` clears Zustand store |
+| ID        | Description                                                                                   | Research Support                                                                                                                                        |
+| --------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| WALLET-01 | User can connect Ethereum wallet via WalletConnect v2 modal (supports MetaMask + 300 wallets) | AppKit `useAppKit().open()` triggers built-in modal; `app.json` wallet scheme configuration enables wallet detection                                    |
+| WALLET-02 | User can connect directly via MetaMask deep link                                              | AppKit modal includes MetaMask deep-link path natively; `app.json` LSApplicationQueriesSchemes + Android queries plugin enables device wallet detection |
+| WALLET-03 | User's wallet session persists across app restarts                                            | AppKit uses AsyncStorage internally (already wired via `appKitStorage` in `lib/appkit.ts`); `useAppKitAccount()` re-hydrates on mount automatically     |
+| WALLET-04 | User can disconnect their wallet                                                              | `useAppKit().disconnect()` ends session; `useWalletSync` clears Zustand store                                                                           |
+
 </phase_requirements>
 
 ---
@@ -76,30 +84,31 @@ The blockies identicon is the main research finding that differs from a naive ap
 
 ### Core (all already installed in package.json)
 
-| Library | Version | Purpose | Why Standard |
-|---------|---------|---------|--------------|
-| `@reown/appkit-react-native` | ^2.0.2 | AppKit modal, WalletConnect v2 session management | Official Reown SDK; already installed Phase 1 |
-| `@reown/appkit-ethers-react-native` | ^2.0.2 | Ethers adapter; bridges wallet to BrowserProvider | Already installed Phase 1 |
-| `zustand` | ^5.0.12 | Wallet connection state store | Project standard |
-| `react-native-svg` | installed | Renders blockies SVG identicon via SvgXml | Required by AppKit (already present); also serves blockies |
-| `@react-native-async-storage/async-storage` | 2.2.0 | AppKit session persistence | Already installed Phase 1 |
+| Library                                     | Version   | Purpose                                           | Why Standard                                               |
+| ------------------------------------------- | --------- | ------------------------------------------------- | ---------------------------------------------------------- |
+| `@reown/appkit-react-native`                | ^2.0.2    | AppKit modal, WalletConnect v2 session management | Official Reown SDK; already installed Phase 1              |
+| `@reown/appkit-ethers-react-native`         | ^2.0.2    | Ethers adapter; bridges wallet to BrowserProvider | Already installed Phase 1                                  |
+| `zustand`                                   | ^5.0.12   | Wallet connection state store                     | Project standard                                           |
+| `react-native-svg`                          | installed | Renders blockies SVG identicon via SvgXml         | Required by AppKit (already present); also serves blockies |
+| `@react-native-async-storage/async-storage` | 2.2.0     | AppKit session persistence                        | Already installed Phase 1                                  |
 
 ### New Dependencies (Phase 2)
 
-| Library | Version | Purpose | Install |
-|---------|---------|---------|---------|
-| `blo` | latest | Generates Ethereum blockies (SVG) from address | `npm install blo` |
-| `expo-clipboard` | latest | Copy address to clipboard | `npx expo install expo-clipboard` |
+| Library          | Version | Purpose                                        | Install                           |
+| ---------------- | ------- | ---------------------------------------------- | --------------------------------- |
+| `blo`            | latest  | Generates Ethereum blockies (SVG) from address | `npm install blo`                 |
+| `expo-clipboard` | latest  | Copy address to clipboard                      | `npx expo install expo-clipboard` |
 
 ### Alternatives Considered
 
-| Instead of | Could Use | Tradeoff |
-|------------|-----------|----------|
-| `blo` + `SvgXml` | `ethereum-blockies-base64` | Returns PNG base64; `Image` component accepts it, but library is unmaintained (7 years). `blo` is zero-dep, pure JS, 85x faster |
-| `blo` + `SvgXml` | Custom hand-rolled blockie | Significant complexity; blockies algorithm is non-trivial. Don't hand-roll |
-| `expo-clipboard` | `@react-native-clipboard/clipboard` | Both work; `expo-clipboard` is the Expo-first choice, consistent with rest of stack |
+| Instead of       | Could Use                           | Tradeoff                                                                                                                        |
+| ---------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `blo` + `SvgXml` | `ethereum-blockies-base64`          | Returns PNG base64; `Image` component accepts it, but library is unmaintained (7 years). `blo` is zero-dep, pure JS, 85x faster |
+| `blo` + `SvgXml` | Custom hand-rolled blockie          | Significant complexity; blockies algorithm is non-trivial. Don't hand-roll                                                      |
+| `expo-clipboard` | `@react-native-clipboard/clipboard` | Both work; `expo-clipboard` is the Expo-first choice, consistent with rest of stack                                             |
 
 **Installation:**
+
 ```bash
 npm install blo
 npx expo install expo-clipboard
@@ -196,7 +205,14 @@ export function useWalletConnection() {
     // useWalletSync handles clearing the store
   };
 
-  return { address, isConnected, status, error, connect, disconnect: handleDisconnect };
+  return {
+    address,
+    isConnected,
+    status,
+    error,
+    connect,
+    disconnect: handleDisconnect,
+  };
 }
 ```
 
@@ -287,6 +303,7 @@ const handleCopy = async () => {
 Required for AppKit modal to detect and deep-link to installed wallets. Without this, MetaMask may not appear in the wallet list on real devices.
 
 **iOS — add to `app.json`:**
+
 ```json
 {
   "expo": {
@@ -307,9 +324,13 @@ Required for AppKit modal to detect and deep-link to installed wallets. Without 
 ```
 
 **Android — create `queries.js` config plugin at project root:**
+
 ```javascript
 // queries.js
-const { withAndroidManifest, createRunOncePlugin } = require('expo/config-plugins');
+const {
+  withAndroidManifest,
+  createRunOncePlugin,
+} = require('expo/config-plugins');
 
 const queries = {
   package: [
@@ -328,10 +349,15 @@ const withAndroidManifestService = (config) => {
   });
 };
 
-module.exports = createRunOncePlugin(withAndroidManifestService, 'withAndroidManifestService', '1.0.0');
+module.exports = createRunOncePlugin(
+  withAndroidManifestService,
+  'withAndroidManifestService',
+  '1.0.0',
+);
 ```
 
 **Add to `app.json` plugins:**
+
 ```json
 {
   "expo": {
@@ -345,6 +371,7 @@ module.exports = createRunOncePlugin(withAndroidManifestService, 'withAndroidMan
 ```
 
 **Also add `redirect` to `lib/appkit.ts` metadata:**
+
 ```typescript
 metadata: {
   name: 'Ethereum Wallet Viewer',
@@ -372,12 +399,12 @@ The scheme `frontend` is already set in `app.json`. This redirect enables wallet
 
 ## Don't Hand-Roll
 
-| Problem | Don't Build | Use Instead | Why |
-|---------|-------------|-------------|-----|
-| Wallet selection modal + QR code | Custom modal with WalletConnect QR | AppKit `open()` | QR code generation, wallet list management, WalletConnect session negotiation are non-trivial |
-| Session persistence | Manual AsyncStorage read/write of address | AppKit's built-in AsyncStorage adapter (already in `lib/appkit.ts`) | AppKit persists cryptographic session material, not just the address — custom persistence would be incomplete |
-| Ethereum blockies algorithm | Custom pixel color algorithm | `blo` library | Blockies uses a seeded PRNG with specific color space transformations — the algorithm is subtle and easy to get wrong |
-| Clipboard access | Direct native module | `expo-clipboard` | Platform differences between iOS pasteboard and Android clipboard API |
+| Problem                          | Don't Build                               | Use Instead                                                         | Why                                                                                                                   |
+| -------------------------------- | ----------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Wallet selection modal + QR code | Custom modal with WalletConnect QR        | AppKit `open()`                                                     | QR code generation, wallet list management, WalletConnect session negotiation are non-trivial                         |
+| Session persistence              | Manual AsyncStorage read/write of address | AppKit's built-in AsyncStorage adapter (already in `lib/appkit.ts`) | AppKit persists cryptographic session material, not just the address — custom persistence would be incomplete         |
+| Ethereum blockies algorithm      | Custom pixel color algorithm              | `blo` library                                                       | Blockies uses a seeded PRNG with specific color space transformations — the algorithm is subtle and easy to get wrong |
+| Clipboard access                 | Direct native module                      | `expo-clipboard`                                                    | Platform differences between iOS pasteboard and Android clipboard API                                                 |
 
 **Key insight:** AppKit handles 95% of the complexity in this phase. The feature code is primarily wiring (hooks, store, UI) on top of what AppKit provides.
 
@@ -414,6 +441,7 @@ The scheme `frontend` is already set in `app.json`. This redirect enables wallet
 **How to avoid:** Track connecting state manually in Zustand. Set `status: 'idle'` when `isConnected` stays `false` after a reasonable timeout, or listen for the modal closing (via `useAppKitState().isOpen` transitioning from `true` to `false`).
 
 **Concrete approach:**
+
 ```typescript
 // When isOpen transitions false→false AND we're still 'connecting', return to 'idle'
 useEffect(() => {
@@ -511,13 +539,18 @@ export default function WalletScreen() {
     "ios": {
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
-          "metamask", "trust", "safe", "rainbow", "uniswap", "cbwallet"
+          "metamask",
+          "trust",
+          "safe",
+          "rainbow",
+          "uniswap",
+          "cbwallet"
         ]
       }
     },
     "plugins": [
       "expo-router",
-      ["expo-splash-screen", { "..." : "existing config" }],
+      ["expo-splash-screen", { "...": "existing config" }],
       "./queries.js"
     ]
   }
@@ -528,14 +561,15 @@ export default function WalletScreen() {
 
 ## State of the Art
 
-| Old Approach | Current Approach | When Changed | Impact |
-|--------------|------------------|--------------|--------|
-| `useDisconnect()` hook | `disconnect()` from `useAppKit()` | AppKit v2 | `useDisconnect` is deprecated; use `useAppKit().disconnect()` |
-| `@web3modal/ethers-react-native` | `@reown/appkit-ethers-react-native` | 2024 rebrand | Old package receives no updates |
-| WalletConnect v1 (bridge server) | WalletConnect v2 (Relay server) | 2023 | V1 shutdown June 2023; AppKit v2 uses v2 only |
-| `web3modal` package | `appkit` package (Reown) | 2024 | Complete rename; same team |
+| Old Approach                     | Current Approach                    | When Changed | Impact                                                        |
+| -------------------------------- | ----------------------------------- | ------------ | ------------------------------------------------------------- |
+| `useDisconnect()` hook           | `disconnect()` from `useAppKit()`   | AppKit v2    | `useDisconnect` is deprecated; use `useAppKit().disconnect()` |
+| `@web3modal/ethers-react-native` | `@reown/appkit-ethers-react-native` | 2024 rebrand | Old package receives no updates                               |
+| WalletConnect v1 (bridge server) | WalletConnect v2 (Relay server)     | 2023         | V1 shutdown June 2023; AppKit v2 uses v2 only                 |
+| `web3modal` package              | `appkit` package (Reown)            | 2024         | Complete rename; same team                                    |
 
 **Deprecated/outdated:**
+
 - `useDisconnect()`: Removed. Disconnect via `useAppKit().disconnect()`.
 - `useAccount()`: Still functional but `useAppKitAccount()` is the preferred name in the React Native SDK.
 - Etherscan API v1: Deprecated May 31, 2025. Use v2 (not relevant to Phase 2 but relevant to Phase 4).
@@ -561,12 +595,12 @@ No automated test framework is configured in this project (no jest.config.js, no
 
 ### Phase Requirements → Test Map
 
-| Req ID | Behavior | Test Type | Why Automated is Not Practical |
-|--------|----------|-----------|-------------------------------|
-| WALLET-01 | WalletConnect modal opens with QR code + wallet list | Manual device | Requires AppKit modal rendering + wallet list detection (device-level) |
-| WALLET-02 | MetaMask deep-link path connects and returns to app | Manual device | Requires installed MetaMask, deep link round-trip, physical/emulator device |
-| WALLET-03 | Session persists across app restart | Manual device | Requires app lifecycle (kill + reopen), device-level AsyncStorage |
-| WALLET-04 | Disconnect clears session and returns to disconnected state | Manual device | Requires connected wallet session |
+| Req ID    | Behavior                                                    | Test Type     | Why Automated is Not Practical                                              |
+| --------- | ----------------------------------------------------------- | ------------- | --------------------------------------------------------------------------- |
+| WALLET-01 | WalletConnect modal opens with QR code + wallet list        | Manual device | Requires AppKit modal rendering + wallet list detection (device-level)      |
+| WALLET-02 | MetaMask deep-link path connects and returns to app         | Manual device | Requires installed MetaMask, deep link round-trip, physical/emulator device |
+| WALLET-03 | Session persists across app restart                         | Manual device | Requires app lifecycle (kill + reopen), device-level AsyncStorage           |
+| WALLET-04 | Disconnect clears session and returns to disconnected state | Manual device | Requires connected wallet session                                           |
 
 ### Sampling Rate
 
@@ -584,6 +618,7 @@ No automated test framework is configured in this project (no jest.config.js, no
 ## Sources
 
 ### Primary (HIGH confidence)
+
 - [Reown AppKit React Native Hooks](https://docs.reown.com/appkit/react-native/core/hooks) — verified `useAppKit`, `useAppKitAccount`, `useAppKitState` signatures; confirmed `useDisconnect` deprecation
 - [Reown AppKit React Native Installation](https://docs.reown.com/appkit/react-native/core/installation) — verified `app.json` iOS infoPlist config, `queries.js` Android plugin pattern, `babel.config.js` requirement (already satisfied)
 - [Reown AppKit React Native Link Mode](https://docs.reown.com/appkit/react-native/core/link-mode) — verified `redirect.native` metadata config; linkMode requires SIWE (out of scope)
@@ -593,10 +628,12 @@ No automated test framework is configured in this project (no jest.config.js, no
 - [expo-clipboard docs](https://docs.expo.dev/versions/latest/sdk/clipboard/) — verified `Clipboard.setStringAsync()` API; confirmed separate install required
 
 ### Secondary (MEDIUM confidence)
+
 - [GitHub issue #4677 — isLoading stays true](https://github.com/reown-com/appkit/issues/4677) — `useAppKitState().isLoading` bug confirmed; workaround via `isOpen` transition recommended
 - [GitHub issue #13 — Error on disconnect](https://github.com/reown-com/appkit-react-native/issues/13) — disconnect error "Please call connect() before enable()" in some versions; current v2.0.2 status unconfirmed — handle with try/catch in disconnect handler
 
 ### Tertiary (LOW confidence)
+
 - Community pattern for `WalletSyncBridge` component — derived from React context boundary analysis; not explicitly documented by Reown but logically correct
 
 ---
@@ -604,6 +641,7 @@ No automated test framework is configured in this project (no jest.config.js, no
 ## Metadata
 
 **Confidence breakdown:**
+
 - Standard stack: HIGH — all packages verified in package.json; `blo` + `expo-clipboard` are the only new installs
 - Architecture: HIGH — AppKit hook API verified from official docs; patterns follow established Phase 1 patterns
 - Pitfalls: HIGH (pitfalls 1, 4, 5, 6) / MEDIUM (pitfalls 2, 3) — core pitfalls verified from official docs and GitHub issues

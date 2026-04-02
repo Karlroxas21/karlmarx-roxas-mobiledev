@@ -13,11 +13,13 @@ All three concerns have verified patterns. The Etherscan API v2 `txlist` endpoin
 **Primary recommendation:** Model `useTransactions` directly on `useBalance`. Wrap both in a coordinated refresh callback in ConnectedScreen. No new libraries needed — ethers.js `formatEther`, native `Intl.RelativeTimeFormat`, and FlatList cover all requirements.
 
 <user_constraints>
+
 ## User Constraints (from CONTEXT.md)
 
 ### Locked Decisions
 
 **Transaction list layout**
+
 - Compact flat rows, no cards or dividers
 - 2-line per row: counterparty address (truncated) on first line, ETH amount + relative timestamp on second line
 - Address truncation: 6+4 format (0x1234...abcd) — standard wallet convention
@@ -25,6 +27,7 @@ All three concerns have verified patterns. The Etherscan API v2 `txlist` endpoin
 - "Transactions (N)" section header above the list showing count of displayed transactions
 
 **Direction indicators**
+
 - Color-coded amount text only — no arrow icons, no text labels
 - Incoming: green text with "+" prefix (e.g., "+0.5000 ETH")
 - Outgoing: red text with "-" prefix (e.g., "-0.5000 ETH")
@@ -33,6 +36,7 @@ All three concerns have verified patterns. The Etherscan API v2 `txlist` endpoin
 - Counterparty address line shows address only, no "From"/"To" prefix — color already signals direction
 
 **Pull-to-refresh behavior**
+
 - Pull-to-refresh refetches BOTH balance AND transaction list simultaneously
 - During refresh: existing data stays visible, native RefreshControl spinner at top
 - No skeleton replacement during refresh — skeletons only for initial load
@@ -40,11 +44,13 @@ All three concerns have verified patterns. The Etherscan API v2 `txlist` endpoin
 - No rate-limiting or throttle on pull-to-refresh — Etherscan free tier (5 req/sec) won't be hit by manual pulls
 
 **Empty & loading states**
+
 - Initial load: 3 skeleton placeholder rows matching transaction row shape (gray pulsing rectangles), consistent with BalanceSkeleton pattern from Phase 3
 - Empty state (0 transactions): "No transactions yet" centered text, simple and clean
 - Section header shows "Transactions (0)" when empty
 
 ### Claude's Discretion
+
 - Etherscan API v2 endpoint and response parsing approach
 - Transaction type definition and data mapping
 - Hook structure for transaction fetching (useTransactions in features/wallet/hooks/)
@@ -54,42 +60,45 @@ All three concerns have verified patterns. The Etherscan API v2 `txlist` endpoin
 - How to refactor ConnectedScreen's current centered layout to work within FlatList's ListHeaderComponent
 
 ### Deferred Ideas (OUT OF SCOPE)
+
 None — discussion stayed within phase scope.
 </user_constraints>
 
 <phase_requirements>
+
 ## Phase Requirements
 
-| ID | Description | Research Support |
-|----|-------------|-----------------|
-| TX-01 | User can view their last 10 transactions with basic details (hash, from/to, value, timestamp) | Etherscan API v2 `txlist` with `offset=10&sort=desc` returns all required fields; ethers.formatEther converts Wei value; Intl.RelativeTimeFormat handles timestamp |
-| TX-02 | User can pull-to-refresh to update balance and transactions | FlatList `refreshControl` prop with `RefreshControl` component; coordinated re-fetch of both `useBalance` and `useTransactions` via shared `refreshing` state in ConnectedScreen |
+| ID    | Description                                                                                   | Research Support                                                                                                                                                                 |
+| ----- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| TX-01 | User can view their last 10 transactions with basic details (hash, from/to, value, timestamp) | Etherscan API v2 `txlist` with `offset=10&sort=desc` returns all required fields; ethers.formatEther converts Wei value; Intl.RelativeTimeFormat handles timestamp               |
+| TX-02 | User can pull-to-refresh to update balance and transactions                                   | FlatList `refreshControl` prop with `RefreshControl` component; coordinated re-fetch of both `useBalance` and `useTransactions` via shared `refreshing` state in ConnectedScreen |
+
 </phase_requirements>
 
 ## Standard Stack
 
 ### Core
 
-| Library | Version | Purpose | Why Standard |
-|---------|---------|---------|--------------|
-| ethers.js | v6 (already installed) | `formatEther` for Wei-to-ETH conversion | Already the project's RPC library; handles bigint-string Wei values from Etherscan |
-| React Native FlatList | built-in | Scrollable transaction list with pull-to-refresh | Only scroll component that supports `refreshControl`, `ListHeaderComponent`, and `keyExtractor` together |
-| React Native RefreshControl | built-in | Native pull-to-refresh spinner | Standard RefreshControl; pass to FlatList via `refreshControl` prop |
+| Library                     | Version                | Purpose                                          | Why Standard                                                                                             |
+| --------------------------- | ---------------------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| ethers.js                   | v6 (already installed) | `formatEther` for Wei-to-ETH conversion          | Already the project's RPC library; handles bigint-string Wei values from Etherscan                       |
+| React Native FlatList       | built-in               | Scrollable transaction list with pull-to-refresh | Only scroll component that supports `refreshControl`, `ListHeaderComponent`, and `keyExtractor` together |
+| React Native RefreshControl | built-in               | Native pull-to-refresh spinner                   | Standard RefreshControl; pass to FlatList via `refreshControl` prop                                      |
 
 ### Supporting
 
-| Library | Version | Purpose | When to Use |
-|---------|---------|---------|-------------|
+| Library                   | Version     | Purpose                                  | When to Use                                                       |
+| ------------------------- | ----------- | ---------------------------------------- | ----------------------------------------------------------------- |
 | `Intl.RelativeTimeFormat` | JS built-in | Relative timestamps ("2h ago", "3d ago") | No library needed; supported in Hermes (React Native's JS engine) |
-| `fetch` (global) | built-in | Etherscan API HTTP requests | Same as used everywhere else in the project; no axios |
+| `fetch` (global)          | built-in    | Etherscan API HTTP requests              | Same as used everywhere else in the project; no axios             |
 
 ### Alternatives Considered
 
-| Instead of | Could Use | Tradeoff |
-|------------|-----------|----------|
+| Instead of                | Could Use             | Tradeoff                                                                                      |
+| ------------------------- | --------------------- | --------------------------------------------------------------------------------------------- |
 | `Intl.RelativeTimeFormat` | `date-fns` or `dayjs` | Libraries add bundle weight; built-in covers all needed units (seconds, minutes, hours, days) |
-| Plain `fetch` | `axios` | axios not in project; no benefit for a single GET endpoint |
-| FlatList | ScrollView + map | ScrollView has no native `refreshControl` + `ListHeaderComponent` combination |
+| Plain `fetch`             | `axios`               | axios not in project; no benefit for a single GET endpoint                                    |
+| FlatList                  | ScrollView + map      | ScrollView has no native `refreshControl` + `ListHeaderComponent` combination                 |
 
 **Installation:** No new packages required — all dependencies are already installed.
 
@@ -171,7 +180,9 @@ export function useTransactions(refreshTrigger?: number): TransactionState {
         }
       });
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [address, refreshTrigger]);
 
   return state;
@@ -237,8 +248,8 @@ export type Transaction = {
   hash: string;
   from: string;
   to: string;
-  value: string;       // Wei string from Etherscan (e.g., "500000000000000000")
-  timeStamp: number;   // Unix seconds (parsed from Etherscan's string)
+  value: string; // Wei string from Etherscan (e.g., "500000000000000000")
+  timeStamp: number; // Unix seconds (parsed from Etherscan's string)
   isError: boolean;
 };
 
@@ -248,7 +259,7 @@ function mapEtherscanTx(raw: EtherscanTx): Transaction {
     hash: raw.hash,
     from: raw.from.toLowerCase(),
     to: raw.to.toLowerCase(),
-    value: raw.value,                      // Keep as Wei string; format at display time
+    value: raw.value, // Keep as Wei string; format at display time
     timeStamp: parseInt(raw.timeStamp, 10),
     isError: raw.isError === '1',
   };
@@ -310,11 +321,11 @@ export function formatRelativeTime(unixSeconds: number): string {
 
 ## Don't Hand-Roll
 
-| Problem | Don't Build | Use Instead | Why |
-|---------|-------------|-------------|-----|
-| Wei-to-ETH conversion | Custom division math | `ethers.formatEther(BigInt(wei))` | Precision loss with float arithmetic on large Wei values |
-| Pull-to-refresh | Custom gesture handler | `FlatList` + `RefreshControl` | Native platform behavior, handles iOS bounce physics |
-| Address truncation | Regex | Simple `slice` (see Pattern 5) | No regex complexity needed for fixed-format addresses |
+| Problem               | Don't Build            | Use Instead                       | Why                                                      |
+| --------------------- | ---------------------- | --------------------------------- | -------------------------------------------------------- |
+| Wei-to-ETH conversion | Custom division math   | `ethers.formatEther(BigInt(wei))` | Precision loss with float arithmetic on large Wei values |
+| Pull-to-refresh       | Custom gesture handler | `FlatList` + `RefreshControl`     | Native platform behavior, handles iOS bounce physics     |
+| Address truncation    | Regex                  | Simple `slice` (see Pattern 5)    | No regex complexity needed for fixed-format addresses    |
 
 **Key insight:** The Etherscan API already does the heavy work — filtering, sorting, pagination. The app only needs to parse, map, and display.
 
@@ -401,7 +412,7 @@ type TxDirection = 'incoming' | 'outgoing' | 'self';
 export function getTxDirection(
   from: string,
   to: string,
-  userAddress: string
+  userAddress: string,
 ): TxDirection {
   const addr = userAddress.toLowerCase();
   const f = from.toLowerCase();
@@ -478,13 +489,14 @@ export function TransactionSkeleton() {
 
 ## State of the Art
 
-| Old Approach | Current Approach | When Changed | Impact |
-|--------------|------------------|--------------|--------|
-| `ethers.provider.getHistory()` | Etherscan API v2 `txlist` | ethers.js v6 (removed) | Must use external API for transaction history |
+| Old Approach                              | Current Approach                             | When Changed              | Impact                                          |
+| ----------------------------------------- | -------------------------------------------- | ------------------------- | ----------------------------------------------- |
+| `ethers.provider.getHistory()`            | Etherscan API v2 `txlist`                    | ethers.js v6 (removed)    | Must use external API for transaction history   |
 | Etherscan API v1 (`api.etherscan.io/api`) | API v2 (`api.etherscan.io/v2/api?chainid=1`) | Mandatory by May 31, 2025 | Add `chainid=1` param; v1 disabled after cutoff |
-| Moment.js for dates | `Intl.RelativeTimeFormat` or custom | ~2020 | Moment deprecated; built-in sufficient |
+| Moment.js for dates                       | `Intl.RelativeTimeFormat` or custom          | ~2020                     | Moment deprecated; built-in sufficient          |
 
 **Deprecated/outdated:**
+
 - `ethers.provider.getHistory()`: Removed in ethers.js v6; replaced by Etherscan/block explorer APIs
 - Etherscan API v1 URL (`api.etherscan.io/api` without version prefix): Deprecated; use `api.etherscan.io/v2/api` with `chainid` param
 
@@ -506,22 +518,22 @@ export function TransactionSkeleton() {
 
 ### Test Framework
 
-| Property | Value |
-|----------|-------|
-| Framework | None detected in project |
-| Config file | None — Wave 0 gap |
-| Quick run command | N/A — Wave 0 gap |
-| Full suite command | N/A — Wave 0 gap |
+| Property           | Value                    |
+| ------------------ | ------------------------ |
+| Framework          | None detected in project |
+| Config file        | None — Wave 0 gap        |
+| Quick run command  | N/A — Wave 0 gap         |
+| Full suite command | N/A — Wave 0 gap         |
 
 ### Phase Requirements → Test Map
 
-| Req ID | Behavior | Test Type | Automated Command | File Exists? |
-|--------|----------|-----------|-------------------|-------------|
-| TX-01 | `formatTxValue` converts Wei string to ETH | unit | `jest src/features/wallet/hooks/use-transactions.test.ts` | Wave 0 |
-| TX-01 | `getTxDirection` returns correct direction | unit | `jest src/features/wallet/hooks/use-transactions.test.ts` | Wave 0 |
-| TX-01 | `truncateAddress` formats 6+4 correctly | unit | `jest src/features/wallet/hooks/use-transactions.test.ts` | Wave 0 |
-| TX-01 | `formatRelativeTime` returns expected strings | unit | `jest src/features/wallet/hooks/use-transactions.test.ts` | Wave 0 |
-| TX-02 | Pull-to-refresh triggers both refetches | manual-only | Visual test on device — RefreshControl is native platform gesture | N/A |
+| Req ID | Behavior                                      | Test Type   | Automated Command                                                 | File Exists? |
+| ------ | --------------------------------------------- | ----------- | ----------------------------------------------------------------- | ------------ |
+| TX-01  | `formatTxValue` converts Wei string to ETH    | unit        | `jest src/features/wallet/hooks/use-transactions.test.ts`         | Wave 0       |
+| TX-01  | `getTxDirection` returns correct direction    | unit        | `jest src/features/wallet/hooks/use-transactions.test.ts`         | Wave 0       |
+| TX-01  | `truncateAddress` formats 6+4 correctly       | unit        | `jest src/features/wallet/hooks/use-transactions.test.ts`         | Wave 0       |
+| TX-01  | `formatRelativeTime` returns expected strings | unit        | `jest src/features/wallet/hooks/use-transactions.test.ts`         | Wave 0       |
+| TX-02  | Pull-to-refresh triggers both refetches       | manual-only | Visual test on device — RefreshControl is native platform gesture | N/A          |
 
 **Note on TX-02:** Pull-to-refresh coordination is best validated manually on device. The `onRefresh` callback and state coordination can be unit-tested but the native gesture behavior requires device verification.
 
@@ -560,6 +572,7 @@ export function TransactionSkeleton() {
 ## Metadata
 
 **Confidence breakdown:**
+
 - Standard stack: HIGH — all libraries already installed, no new dependencies
 - Architecture: HIGH — direct pattern reuse from Phase 3 hooks/components
 - Etherscan API: HIGH — official docs verified, response format confirmed with example JSON

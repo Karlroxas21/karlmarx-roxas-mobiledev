@@ -33,15 +33,15 @@ key-files:
     - src/features/wallet/components/ConnectedScreen.tsx
 
 key-decisions:
-  - "useBalance reads address directly from useWalletStore, not useWalletConnection (avoids pulling in connect/disconnect logic)"
-  - "ethers.JsonRpcProvider with staticNetwork: true prevents redundant eth_chainId RPC call on provider creation"
-  - "formatBalance exported as pure function for independent testability"
+  - 'useBalance reads address directly from useWalletStore, not useWalletConnection (avoids pulling in connect/disconnect logic)'
+  - 'ethers.JsonRpcProvider with staticNetwork: true prevents redundant eth_chainId RPC call on provider creation'
+  - 'formatBalance exported as pure function for independent testability'
   - "Dust threshold: values > 0 && < 0.0001 ETH display as '< 0.0001' rather than truncating to 0.0000"
 
 patterns-established:
-  - "Async cancellation: set cancelled = false before async work, check !cancelled before setState, return () => { cancelled = true; } from useEffect"
-  - "Balance formatting: ethers.formatEther() -> parseFloat() -> toFixed(4) with threshold check"
-  - "Conditional loading render: {isLoading ? <Skeleton /> : <Display />} pattern"
+  - 'Async cancellation: set cancelled = false before async work, check !cancelled before setState, return () => { cancelled = true; } from useEffect'
+  - 'Balance formatting: ethers.formatEther() -> parseFloat() -> toFixed(4) with threshold check'
+  - 'Conditional loading render: {isLoading ? <Skeleton /> : <Display />} pattern'
 
 requirements-completed: [BAL-01]
 
@@ -63,6 +63,7 @@ completed: 2026-04-02
 - **Files modified:** 4
 
 ## Accomplishments
+
 - useBalance hook fetches live ETH balance via ethers.js v6 JsonRpcProvider using Infura RPC URL from ENV
 - formatBalance converts bigint Wei to human-readable ETH with exactly 4 decimal places and dust threshold (< 0.0001 for tiny non-zero values)
 - BalanceSkeleton renders a 160x36px pulsing gray rectangle while balance loads
@@ -79,12 +80,14 @@ Each task was committed atomically:
 **Plan metadata:** (docs commit to follow)
 
 ## Files Created/Modified
+
 - `src/features/wallet/hooks/use-balance.ts` - Balance fetch hook and formatBalance pure utility
 - `src/features/wallet/components/BalanceSkeleton.tsx` - Pulsing gray placeholder for loading state
 - `src/features/wallet/components/BalanceDisplay.tsx` - Formatted balance display or error fallback
 - `src/features/wallet/components/ConnectedScreen.tsx` - Updated to include balance display between network label and address card
 
 ## Decisions Made
+
 - useBalance reads `address` directly from `useWalletStore` (not `useWalletConnection`) to avoid importing unneeded connect/disconnect logic
 - `staticNetwork: true` passed to `JsonRpcProvider` to prevent an extra `eth_chainId` RPC round-trip on provider creation (ethers v6 optimization)
 - `formatBalance` exported as a named export separate from the hook so it can be tested in isolation without React or RPC dependencies
@@ -103,10 +106,12 @@ None. TypeScript compiled with zero errors. ESLint showed 0 errors (8 pre-existi
 None - no external service configuration required. Infura RPC URL is already required by `ENV.INFURA_RPC_URL` from Phase 01 setup.
 
 ## Next Phase Readiness
+
 - Balance display is complete and integrated — BAL-01 satisfied
 - ethers.js v6 RPC integration validated via useBalance hook pattern
 - Next: transaction history display (will reuse JsonRpcProvider pattern from this phase)
 
 ---
-*Phase: 03-balance-display*
-*Completed: 2026-04-02*
+
+_Phase: 03-balance-display_
+_Completed: 2026-04-02_

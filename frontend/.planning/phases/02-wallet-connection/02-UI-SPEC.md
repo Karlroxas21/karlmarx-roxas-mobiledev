@@ -15,13 +15,13 @@ created: 2026-04-01
 
 ## Design System
 
-| Property | Value |
-|----------|-------|
-| Tool | none (NativeWind v4 — Tailwind CSS for React Native) |
-| Preset | not applicable |
-| Component library | none — custom primitives via NativeWind className |
-| Icon library | none declared for this phase (text labels used instead of icons) |
-| Font | System default (Expo/React Native system font — SF Pro on iOS, Roboto on Android) |
+| Property          | Value                                                                             |
+| ----------------- | --------------------------------------------------------------------------------- |
+| Tool              | none (NativeWind v4 — Tailwind CSS for React Native)                              |
+| Preset            | not applicable                                                                    |
+| Component library | none — custom primitives via NativeWind className                                 |
+| Icon library      | none declared for this phase (text labels used instead of icons)                  |
+| Font              | System default (Expo/React Native system font — SF Pro on iOS, Roboto on Android) |
 
 **shadcn gate:** Not applicable. This is an Expo React Native project. shadcn targets web (Next.js/Vite). NativeWind v4 is the equivalent styling layer. No initialization required.
 
@@ -31,17 +31,18 @@ created: 2026-04-01
 
 Declared values (must be multiples of 4). NativeWind Tailwind classes map directly to these pixel values at 1:1 on React Native.
 
-| Token | Value | NativeWind Class | Usage |
-|-------|-------|-----------------|-------|
-| xs | 4px | `gap-1` / `p-1` | Icon gap between blockie and address |
-| sm | 8px | `gap-2` / `p-2` | Inline element spacing, compact row padding |
-| md | 16px | `p-4` / `px-4` | Default element padding, horizontal screen padding |
-| lg | 24px | `p-6` / `gap-6` | Section padding, hero vertical rhythm |
-| xl | 32px | `p-8` / `px-8` | Screen horizontal padding (matches existing smoke test) |
-| 2xl | 48px | `mt-12` | Hero icon top spacing |
-| 3xl | 64px | `mt-16` | Hero bottom CTA push spacing |
+| Token | Value | NativeWind Class | Usage                                                   |
+| ----- | ----- | ---------------- | ------------------------------------------------------- |
+| xs    | 4px   | `gap-1` / `p-1`  | Icon gap between blockie and address                    |
+| sm    | 8px   | `gap-2` / `p-2`  | Inline element spacing, compact row padding             |
+| md    | 16px  | `p-4` / `px-4`   | Default element padding, horizontal screen padding      |
+| lg    | 24px  | `p-6` / `gap-6`  | Section padding, hero vertical rhythm                   |
+| xl    | 32px  | `p-8` / `px-8`   | Screen horizontal padding (matches existing smoke test) |
+| 2xl   | 48px  | `mt-12`          | Hero icon top spacing                                   |
+| 3xl   | 64px  | `mt-16`          | Hero bottom CTA push spacing                            |
 
 Exceptions:
+
 - Touch targets (Connect Wallet button, Disconnect button, Copy button): minimum 44px height, per iOS HIG. Use `h-11` (44px) or `min-h-[44px]`.
 - Blockie identicon: 48px x 48px fixed (component default from RESEARCH.md Pattern 4).
 
@@ -53,14 +54,15 @@ Source: spacing values inferred from existing `index.tsx` patterns (`px-8`, `py-
 
 React Native does not inherit CSS font-size conventions. All sizes are in logical pixels (sp-equivalent). NativeWind maps Tailwind text sizes to React Native fontSize.
 
-| Role | Size | NativeWind Class | Weight | Weight Class | Line Height |
-|------|------|-----------------|--------|--------------|-------------|
-| Body | 14px | `text-sm` | Regular 400 | `font-normal` | 1.5 (default) |
-| Label | 16px | `text-base` | Regular 400 | `font-normal` | 1.5 |
-| Heading | 20px | `text-xl` | Semibold 600 | `font-semibold` | 1.2 |
-| Display | 28px | `text-3xl` | Semibold 600 | `font-semibold` | 1.2 |
+| Role    | Size | NativeWind Class | Weight       | Weight Class    | Line Height   |
+| ------- | ---- | ---------------- | ------------ | --------------- | ------------- |
+| Body    | 14px | `text-sm`        | Regular 400  | `font-normal`   | 1.5 (default) |
+| Label   | 16px | `text-base`      | Regular 400  | `font-normal`   | 1.5           |
+| Heading | 20px | `text-xl`        | Semibold 600 | `font-semibold` | 1.2           |
+| Display | 28px | `text-3xl`       | Semibold 600 | `font-semibold` | 1.2           |
 
 **Usage mapping:**
+
 - Body (14px/400): Caption labels, bullet point text ("View ETH balance", "See transactions", "Read-only & safe"), error message text, copy confirmation feedback text
 - Label (16px/400): Address string (42-char `0x...`), network label ("Connected to Ethereum Mainnet"), loading overlay message ("Waiting for approval in MetaMask...")
 - Heading (20px/600): Screen title "Ethereum Wallet Viewer" on disconnected hero
@@ -74,12 +76,12 @@ Source: Heading size `text-xl` / `font-semibold` established in existing `index.
 
 NativeWind Tailwind color palette. No custom tokens — uses default Tailwind gray/blue/green/red scale.
 
-| Role | Tailwind Token | Hex (approx) | Usage |
-|------|---------------|--------------|-------|
-| Dominant (60%) | `bg-white` / `bg-gray-50` | #FFFFFF / #F9FAFB | Screen background, full-bleed surface |
-| Secondary (30%) | `bg-gray-100` | #F3F4F6 | Address card container on connected screen |
-| Accent (10%) | `bg-blue-600` / `text-blue-600` | #2563EB | Connect Wallet button background only |
-| Destructive | `text-red-600` | #DC2626 | Inline connection error message text only; Disconnect button text |
+| Role            | Tailwind Token                  | Hex (approx)      | Usage                                                             |
+| --------------- | ------------------------------- | ----------------- | ----------------------------------------------------------------- |
+| Dominant (60%)  | `bg-white` / `bg-gray-50`       | #FFFFFF / #F9FAFB | Screen background, full-bleed surface                             |
+| Secondary (30%) | `bg-gray-100`                   | #F3F4F6           | Address card container on connected screen                        |
+| Accent (10%)    | `bg-blue-600` / `text-blue-600` | #2563EB           | Connect Wallet button background only                             |
+| Destructive     | `text-red-600`                  | #DC2626           | Inline connection error message text only; Disconnect button text |
 
 **Accent reserved for:** Connect Wallet button background (`bg-blue-600 text-white`). No other interactive element uses accent.
 
@@ -95,14 +97,14 @@ Source: All colors extracted from existing `index.tsx` usage: `bg-white`, `bg-gr
 
 Components new to Phase 2. Each maps to a file in `features/wallet/components/`.
 
-| Component | File | State Variants | NativeWind Notes |
-|-----------|------|---------------|-----------------|
-| ConnectScreen | `ConnectScreen.tsx` | single state | Full-screen SafeAreaView, vertically centered column |
-| ConnectedScreen | `ConnectedScreen.tsx` | single state | Full-screen SafeAreaView, minimal centered column |
-| BlockieIdenticon | `BlockieIdenticon.tsx` | — | `SvgXml` wrapper, `w-12 h-12` (48px) |
-| ConnectButton | `ConnectButton.tsx` | idle, connecting | `bg-blue-600 text-white rounded-xl h-11 w-full` |
-| LoadingOverlay | `LoadingOverlay.tsx` | visible/hidden | Full-screen semi-transparent overlay, centered content |
-| ConnectionError | `ConnectionError.tsx` | visible/hidden | Inline below ConnectButton, `text-red-600 text-sm` |
+| Component        | File                   | State Variants   | NativeWind Notes                                       |
+| ---------------- | ---------------------- | ---------------- | ------------------------------------------------------ |
+| ConnectScreen    | `ConnectScreen.tsx`    | single state     | Full-screen SafeAreaView, vertically centered column   |
+| ConnectedScreen  | `ConnectedScreen.tsx`  | single state     | Full-screen SafeAreaView, minimal centered column      |
+| BlockieIdenticon | `BlockieIdenticon.tsx` | —                | `SvgXml` wrapper, `w-12 h-12` (48px)                   |
+| ConnectButton    | `ConnectButton.tsx`    | idle, connecting | `bg-blue-600 text-white rounded-xl h-11 w-full`        |
+| LoadingOverlay   | `LoadingOverlay.tsx`   | visible/hidden   | Full-screen semi-transparent overlay, centered content |
+| ConnectionError  | `ConnectionError.tsx`  | visible/hidden   | Inline below ConnectButton, `text-red-600 text-sm`     |
 
 ---
 
@@ -165,16 +167,16 @@ Modal [transparent animationType="fade"]
 
 ## Interaction States
 
-| Interaction | Trigger | Visual Change | Duration |
-|-------------|---------|---------------|----------|
-| Connect Wallet tap | User taps button | Button opacity 0.7, LoadingOverlay appears | Immediate |
-| Wallet approved | `isConnected` becomes true | LoadingOverlay dismisses, screen flips to ConnectedScreen | Immediate (no animation) |
-| Modal dismissed without connecting | `isOpen` false while `status === 'connecting'` | LoadingOverlay dismisses, inline ConnectionError appears | Immediate |
-| Connection error | Hook catch block | ConnectionError text appears below button | Immediate |
-| Error dismiss | Any tap on ConnectButton | ConnectionError clears | Immediate |
-| Copy address tap | User taps Copy | "Copy" text changes to "Copied!" for 2000ms, then reverts | 2000ms |
-| Disconnect tap | User taps Disconnect in top-right | Silent — screen flips to ConnectScreen | Immediate (no animation, no toast) |
-| App restart with session | `useAppKitAccount` re-hydrates | ConnectedScreen renders directly, no flicker | On mount |
+| Interaction                        | Trigger                                        | Visual Change                                             | Duration                           |
+| ---------------------------------- | ---------------------------------------------- | --------------------------------------------------------- | ---------------------------------- |
+| Connect Wallet tap                 | User taps button                               | Button opacity 0.7, LoadingOverlay appears                | Immediate                          |
+| Wallet approved                    | `isConnected` becomes true                     | LoadingOverlay dismisses, screen flips to ConnectedScreen | Immediate (no animation)           |
+| Modal dismissed without connecting | `isOpen` false while `status === 'connecting'` | LoadingOverlay dismisses, inline ConnectionError appears  | Immediate                          |
+| Connection error                   | Hook catch block                               | ConnectionError text appears below button                 | Immediate                          |
+| Error dismiss                      | Any tap on ConnectButton                       | ConnectionError clears                                    | Immediate                          |
+| Copy address tap                   | User taps Copy                                 | "Copy" text changes to "Copied!" for 2000ms, then reverts | 2000ms                             |
+| Disconnect tap                     | User taps Disconnect in top-right              | Silent — screen flips to ConnectScreen                    | Immediate (no animation, no toast) |
+| App restart with session           | `useAppKitAccount` re-hydrates                 | ConnectedScreen renders directly, no flicker              | On mount                           |
 
 Source: All interaction behaviors derived from CONTEXT.md `## Implementation Decisions` (locked decisions).
 
@@ -182,23 +184,23 @@ Source: All interaction behaviors derived from CONTEXT.md `## Implementation Dec
 
 ## Copywriting Contract
 
-| Element | Copy | Source |
-|---------|------|--------|
-| Screen title (hero) | "Ethereum Wallet Viewer" | default |
-| Bullet 1 | "View ETH balance" | CONTEXT.md Specifics |
-| Bullet 2 | "See transactions" | CONTEXT.md Specifics |
-| Bullet 3 | "Read-only & safe" | CONTEXT.md Specifics |
-| Primary CTA | "Connect Wallet" | CONTEXT.md Connect Flow UX |
-| Loading overlay heading | "Waiting for approval in MetaMask..." | CONTEXT.md Connect Flow UX |
-| Loading overlay cancel | "Cancel Connection" | checker revision — verb + noun communicates consequence |
-| Network label | "Connected to Ethereum Mainnet" | CONTEXT.md Address Display |
-| Copy button idle | "Copy" | default |
-| Copy button success feedback | "Copied!" | default |
-| Connection error — rejection | "Connection cancelled. Tap Connect Wallet to try again." | derived from CONTEXT.md error behavior |
-| Connection error — timeout | "Connection timed out. Tap Connect Wallet to try again." | derived from CONTEXT.md error behavior |
-| Connection error — unknown | "Connection failed. Tap Connect Wallet to try again." | derived from CONTEXT.md error behavior |
-| Disconnect label | "Disconnect" | CONTEXT.md Disconnect Behavior |
-| Destructive confirmation | none — instant disconnect, no dialog | CONTEXT.md Disconnect Behavior (locked) |
+| Element                      | Copy                                                     | Source                                                  |
+| ---------------------------- | -------------------------------------------------------- | ------------------------------------------------------- |
+| Screen title (hero)          | "Ethereum Wallet Viewer"                                 | default                                                 |
+| Bullet 1                     | "View ETH balance"                                       | CONTEXT.md Specifics                                    |
+| Bullet 2                     | "See transactions"                                       | CONTEXT.md Specifics                                    |
+| Bullet 3                     | "Read-only & safe"                                       | CONTEXT.md Specifics                                    |
+| Primary CTA                  | "Connect Wallet"                                         | CONTEXT.md Connect Flow UX                              |
+| Loading overlay heading      | "Waiting for approval in MetaMask..."                    | CONTEXT.md Connect Flow UX                              |
+| Loading overlay cancel       | "Cancel Connection"                                      | checker revision — verb + noun communicates consequence |
+| Network label                | "Connected to Ethereum Mainnet"                          | CONTEXT.md Address Display                              |
+| Copy button idle             | "Copy"                                                   | default                                                 |
+| Copy button success feedback | "Copied!"                                                | default                                                 |
+| Connection error — rejection | "Connection cancelled. Tap Connect Wallet to try again." | derived from CONTEXT.md error behavior                  |
+| Connection error — timeout   | "Connection timed out. Tap Connect Wallet to try again." | derived from CONTEXT.md error behavior                  |
+| Connection error — unknown   | "Connection failed. Tap Connect Wallet to try again."    | derived from CONTEXT.md error behavior                  |
+| Disconnect label             | "Disconnect"                                             | CONTEXT.md Disconnect Behavior                          |
+| Destructive confirmation     | none — instant disconnect, no dialog                     | CONTEXT.md Disconnect Behavior (locked)                 |
 
 **Error copy pattern:** "[Problem in past tense]. Tap Connect Wallet to try again." — always one sentence stating what happened, one sentence giving next action.
 
@@ -210,10 +212,10 @@ Source: All CTA and flow copy derived from CONTEXT.md locked decisions. Error co
 
 ## Registry Safety
 
-| Registry | Blocks Used | Safety Gate |
-|----------|-------------|-------------|
-| shadcn official | none | not applicable — not initialized |
-| third-party | none | not applicable |
+| Registry        | Blocks Used | Safety Gate                      |
+| --------------- | ----------- | -------------------------------- |
+| shadcn official | none        | not applicable — not initialized |
+| third-party     | none        | not applicable                   |
 
 This project uses NativeWind (Tailwind CSS for React Native) with custom components. No shadcn registry, no third-party block registries. Registry safety gate: not required.
 

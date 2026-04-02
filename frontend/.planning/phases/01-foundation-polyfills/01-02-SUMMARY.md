@@ -7,24 +7,24 @@ tags: [appkit, walletconnect, reown, ethers, polyfills, react-native, expo]
 # Dependency graph
 requires:
   - phase: 01-foundation-polyfills-01
-    provides: "polyfill packages installed, babel+metro config, env.ts with three env vars"
+    provides: 'polyfill packages installed, babel+metro config, env.ts with three env vars'
 provides:
-  - "src/lib/appkit.ts — AppKit singleton with correct polyfill import order and ethers v6 crypto registration"
-  - "src/providers/app-provider.tsx — AppKitProvider wrapping with AppKit modal component"
-  - "src/app/index.tsx — Smoke test screen showing AppKit init status and masked env vars"
+  - 'src/lib/appkit.ts — AppKit singleton with correct polyfill import order and ethers v6 crypto registration'
+  - 'src/providers/app-provider.tsx — AppKitProvider wrapping with AppKit modal component'
+  - 'src/app/index.tsx — Smoke test screen showing AppKit init status and masked env vars'
 affects:
-  - "02-wallet-connection — AppKit singleton is the entry point for wallet connect flows"
-  - "All future phases — AppProvider is root provider that wraps entire app"
+  - '02-wallet-connection — AppKit singleton is the entry point for wallet connect flows'
+  - 'All future phases — AppProvider is root provider that wraps entire app'
 
 # Tech tracking
 tech-stack:
   added: []
   patterns:
-    - "AppKit singleton initialized at module scope in lib/appkit.ts (never inside a component)"
-    - "@walletconnect/react-native-compat MUST be absolute first import in lib/appkit.ts"
-    - "app-provider.tsx imports lib/appkit as first import (side-effect ensures polyfills run)"
-    - "Ethereum mainnet defined inline as AppKitNetwork (no @reown/appkit web package installed)"
-    - "ethers v6 crypto registered via plugin API (randomBytes, computeHmac, pbkdf2, sha256, sha512)"
+    - 'AppKit singleton initialized at module scope in lib/appkit.ts (never inside a component)'
+    - '@walletconnect/react-native-compat MUST be absolute first import in lib/appkit.ts'
+    - 'app-provider.tsx imports lib/appkit as first import (side-effect ensures polyfills run)'
+    - 'Ethereum mainnet defined inline as AppKitNetwork (no @reown/appkit web package installed)'
+    - 'ethers v6 crypto registered via plugin API (randomBytes, computeHmac, pbkdf2, sha256, sha512)'
 
 key-files:
   created:
@@ -34,13 +34,13 @@ key-files:
     - src/providers/app-provider.tsx
 
 key-decisions:
-  - "Defined Ethereum mainnet AppKitNetwork inline — @reown/appkit (web package) is not installed in this project; only @reown/appkit-react-native and @reown/appkit-common-react-native are present"
-  - "Merged side-effect import into named import in app-provider.tsx to avoid import/no-duplicates lint warning"
-  - "Used require() inside try/catch in smoke test screen to catch AppKit init errors on screen rather than crashing at module load"
+  - 'Defined Ethereum mainnet AppKitNetwork inline — @reown/appkit (web package) is not installed in this project; only @reown/appkit-react-native and @reown/appkit-common-react-native are present'
+  - 'Merged side-effect import into named import in app-provider.tsx to avoid import/no-duplicates lint warning'
+  - 'Used require() inside try/catch in smoke test screen to catch AppKit init errors on screen rather than crashing at module load'
 
 patterns-established:
-  - "Pattern: lib/appkit.ts import order — @walletconnect/react-native-compat first, react-native-get-random-values second, then AppKit+adapters, then env config, then ethers+quick-crypto"
-  - "Pattern: AppKitNetwork inline definition — use @reown/appkit-common-react-native AppKitNetwork type with eip155 chainNamespace and caipNetworkId"
+  - 'Pattern: lib/appkit.ts import order — @walletconnect/react-native-compat first, react-native-get-random-values second, then AppKit+adapters, then env config, then ethers+quick-crypto'
+  - 'Pattern: AppKitNetwork inline definition — use @reown/appkit-common-react-native AppKitNetwork type with eip155 chainNamespace and caipNetworkId'
 
 requirements-completed: [FOUND-01, FOUND-02, FOUND-03]
 
@@ -91,6 +91,7 @@ completed: 2026-04-01
 ### Auto-fixed Issues
 
 **1. [Rule 1 - Bug] Replaced unresolvable @reown/appkit/networks import with inline AppKitNetwork definition**
+
 - **Found during:** Task 1 (Create AppKit singleton)
 - **Issue:** Plan specified `import { mainnet } from '@reown/appkit/networks'` but the `@reown/appkit` web package is not installed in this project. ESLint reported `Unable to resolve path to module '@reown/appkit/networks'` (error, not warning).
 - **Fix:** Removed the web package import. Defined `mainnet` as an `AppKitNetwork` constant inline using the type from `@reown/appkit-common-react-native`, which is already installed as a peer dependency of `@reown/appkit-react-native`.
@@ -99,6 +100,7 @@ completed: 2026-04-01
 - **Committed in:** `fe6ee9a` (Task 1 commit)
 
 **2. [Rule 1 - Bug] Merged duplicate appkit import in app-provider.tsx to fix lint warning**
+
 - **Found during:** Task 1 (Wire AppKitProvider)
 - **Issue:** Plan template had both `import '@/src/lib/appkit'` (side-effect) and `import { appKit } from '@/src/lib/appkit'` (named) — two imports from the same path. ESLint `import/no-duplicates` reported a warning.
 - **Fix:** Removed the side-effect import; the named import `import { appKit } from '@/src/lib/appkit'` already executes all module-scope side effects (polyfills + createAppKit) when the module is first loaded.
@@ -131,12 +133,14 @@ External service accounts (Reown, Etherscan, Infura) configured in `.env` prior 
 ## Self-Check: PASSED
 
 All files verified to exist on disk:
+
 - `src/lib/appkit.ts` — FOUND
 - `src/providers/app-provider.tsx` — FOUND
 - `src/app/index.tsx` — FOUND
 - `.planning/phases/01-foundation-polyfills/01-02-SUMMARY.md` — FOUND
 
 Commits verified:
+
 - `fe6ee9a` — feat(01-02): create AppKit singleton and wire AppKitProvider — FOUND
 - `884f46c` — feat(01-02): add smoke test screen showing AppKit status and env vars — FOUND
 
@@ -148,5 +152,6 @@ Commits verified:
 - Phase 1 is fully complete — Phase 2 wallet connection work can begin
 
 ---
-*Phase: 01-foundation-polyfills*
-*Completed: 2026-04-01*
+
+_Phase: 01-foundation-polyfills_
+_Completed: 2026-04-01_

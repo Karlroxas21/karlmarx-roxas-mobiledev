@@ -7,7 +7,10 @@ type BlockieIdenticonProps = {
   size?: number;
 };
 
-export function BlockieIdenticon({ address, size = 48 }: BlockieIdenticonProps) {
+export function BlockieIdenticon({
+  address,
+  size = 48,
+}: BlockieIdenticonProps) {
   const svg = bloSvg(address);
   return (
     <View className="rounded-full overflow-hidden">

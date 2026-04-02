@@ -21,7 +21,12 @@ affects: [05-error-handling-polish]
 # Tech tracking
 tech-stack:
   added: []
-  patterns: [3-branch conditional for data states (loading/error/content), retry via refreshTrigger increment, friendly error copy over raw JS error strings]
+  patterns:
+    [
+      3-branch conditional for data states (loading/error/content),
+      retry via refreshTrigger increment,
+      friendly error copy over raw JS error strings,
+    ]
 
 key-files:
   created:
@@ -34,16 +39,16 @@ key-files:
     - src/features/wallet/hooks/use-balance.ts
 
 key-decisions:
-  - "ErrorState is a shared presentational component — callers only render it when error exists (message prop is non-nullable string)"
-  - "ConnectionError uses hasError boolean instead of message string — hard-coded friendly copy replaces raw JS error propagation"
-  - "handleRetry increments refreshTrigger without setRefreshing(true) — button retry does not show pull-to-refresh spinner"
-  - "Unescaped apostrophe in ConnectionError JSX text node fixed with JS string expression to satisfy react/no-unescaped-entities lint rule"
+  - 'ErrorState is a shared presentational component — callers only render it when error exists (message prop is non-nullable string)'
+  - 'ConnectionError uses hasError boolean instead of message string — hard-coded friendly copy replaces raw JS error propagation'
+  - 'handleRetry increments refreshTrigger without setRefreshing(true) — button retry does not show pull-to-refresh spinner'
+  - 'Unescaped apostrophe in ConnectionError JSX text node fixed with JS string expression to satisfy react/no-unescaped-entities lint rule'
   - "use-balance bug fix: string literal 'address' replaced with address variable in getBalance call — pre-existing bug discovered during device verification"
 
 patterns-established:
-  - "3-branch data conditional: loading skeleton -> error state -> content"
-  - "renderEmpty 3-branch: txLoading check -> txError check -> empty state"
-  - "Friendly error copy pattern: hard-code user-facing string in component, never propagate raw JS error messages to UI"
+  - '3-branch data conditional: loading skeleton -> error state -> content'
+  - 'renderEmpty 3-branch: txLoading check -> txError check -> empty state'
+  - 'Friendly error copy pattern: hard-code user-facing string in component, never propagate raw JS error messages to UI'
 
 requirements-completed: [ERR-01, ERR-02, ERR-03]
 
@@ -65,6 +70,7 @@ completed: 2026-04-02
 - **Files modified:** 6
 
 ## Accomplishments
+
 - Created ErrorState.tsx: reusable presentational component with error message + blue "Retry" text button matching existing button patterns
 - Updated ConnectionError to accept `hasError: boolean` and display fixed "Couldn't connect wallet" copy instead of raw JS error string
 - Wired ConnectedScreen with independent balance and transaction error states, both using handleRetry callback that increments refreshTrigger
@@ -84,6 +90,7 @@ Each task was committed atomically:
 **Plan metadata:** `13ff5c1` (docs: complete plan — paused at human-verify checkpoint)
 
 ## Files Created/Modified
+
 - `src/features/wallet/components/ErrorState.tsx` - New shared presentational component: error message + blue Retry text button
 - `src/features/wallet/components/ConnectionError.tsx` - Changed prop from message string to hasError boolean, hard-coded friendly copy
 - `src/features/wallet/components/ConnectScreen.tsx` - Updated call site to pass `hasError={!!error}`
@@ -92,6 +99,7 @@ Each task was committed atomically:
 - `src/features/wallet/hooks/use-balance.ts` - Bug fix: string literal replaced with address variable in getBalance call
 
 ## Decisions Made
+
 - ErrorState message prop is `string` (not nullable) — callers are responsible for only rendering ErrorState when an error exists; this keeps the component simple and avoids null checks inside it
 - ConnectionError switches from `message: string | null` to `hasError: boolean` — aligns with the pattern that error message copy is owned by the component, not passed from outside
 - handleRetry increments refreshTrigger but does NOT call setRefreshing(true) — keeps retry distinct from pull-to-refresh; no spinner on button tap
@@ -102,6 +110,7 @@ Each task was committed atomically:
 ### Auto-fixed Issues
 
 **1. [Rule 1 - Bug] Fixed unescaped apostrophe in ConnectionError JSX text**
+
 - **Found during:** Task 2 verification (lint check)
 - **Issue:** ConnectionError.tsx renders "Couldn't connect wallet" as bare JSX text — the apostrophe triggers `react/no-unescaped-entities` lint error
 - **Fix:** Wrapped the string in a JS expression: `{"Couldn't connect wallet"}`
@@ -110,6 +119,7 @@ Each task was committed atomically:
 - **Committed in:** `7fd5010` (Task 2 commit)
 
 **2. [Rule 1 - Bug] Fixed string literal passed to getBalance instead of address variable**
+
 - **Found during:** Task 3 (user-reported during device verification)
 - **Issue:** `use-balance.ts` was calling `provider.getBalance('address')` — passing the string literal `'address'` instead of the `address` variable. Balance would always fail for any connected wallet.
 - **Fix:** Changed `'address'` to `address` in the getBalance call
@@ -123,16 +133,31 @@ Each task was committed atomically:
 **Impact on plan:** Both fixes necessary for correctness. The getBalance bug was pre-existing and would have prevented ERR-02/ERR-03 from working correctly. No scope creep.
 
 ## Issues Encountered
+
 None beyond the apostrophe lint fix above.
 
 ## User Setup Required
+
 None - no external service configuration required.
 
 ## Next Phase Readiness
+
 - ERR-01, ERR-02, ERR-03 requirements fulfilled and user-verified on device
 - All 5 phases of v1.0 milestone are complete
 - No blockers — app is functionally complete for v1.0 scope
 
+## Self-Check: PASSED
+
+- FOUND: `src/features/wallet/components/ErrorState.tsx`
+- FOUND: `src/features/wallet/components/ConnectionError.tsx`
+- FOUND: `src/features/wallet/components/ConnectedScreen.tsx`
+- FOUND: `.planning/phases/05-error-handling-polish/05-01-SUMMARY.md`
+- FOUND: commit `856254e` (Task 1)
+- FOUND: commit `7fd5010` (Task 2)
+- FOUND: commit `93417d9` (bug fix)
+- FOUND: commit `3c411aa` (final metadata)
+
 ---
-*Phase: 05-error-handling-polish*
-*Completed: 2026-04-02*
+
+_Phase: 05-error-handling-polish_
+_Completed: 2026-04-02_

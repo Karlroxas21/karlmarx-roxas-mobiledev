@@ -45,18 +45,18 @@
 
 ### Component Responsibilities
 
-| Component | Responsibility | Implementation |
-|-----------|---------------|----------------|
-| `src/app/index.tsx` | Route gate — show ConnectScreen or redirect to wallet | Thin wrapper, reads `useWalletStore` |
-| `src/app/wallet.tsx` | Dashboard route — balance + tx list | Thin wrapper, composes feature components |
-| `features/wallet/` | Everything about wallet connection and balance | Reown AppKit hooks, ethers BrowserProvider |
-| `features/transactions/` | Transaction history fetching and display | Etherscan API via `apiClient`, list rendering |
-| `lib/appkit.ts` | Reown AppKit instance config (singleton) | `createAppKit()` called once, exported |
-| `lib/ethers.ts` | ethers.js provider factory | `new BrowserProvider(walletProvider, chainId)` |
-| `providers/app-provider.tsx` | Root provider tree — add `AppKitProvider` here | Modified from current stub |
-| `stores/wallet-store.ts` | (feature-scoped) Connection state, address, balance | Zustand; derived from AppKit hooks |
-| `stores/tx-store.ts` | (feature-scoped) Transaction list + loading state | Zustand slice |
-| `config/env.ts` | Add `EXPO_PUBLIC_ALCHEMY_URL`, `EXPO_PUBLIC_ETHERSCAN_KEY`, `EXPO_PUBLIC_WALLETCONNECT_PROJECT_ID` | Extend existing file |
+| Component                    | Responsibility                                                                                     | Implementation                                 |
+| ---------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `src/app/index.tsx`          | Route gate — show ConnectScreen or redirect to wallet                                              | Thin wrapper, reads `useWalletStore`           |
+| `src/app/wallet.tsx`         | Dashboard route — balance + tx list                                                                | Thin wrapper, composes feature components      |
+| `features/wallet/`           | Everything about wallet connection and balance                                                     | Reown AppKit hooks, ethers BrowserProvider     |
+| `features/transactions/`     | Transaction history fetching and display                                                           | Etherscan API via `apiClient`, list rendering  |
+| `lib/appkit.ts`              | Reown AppKit instance config (singleton)                                                           | `createAppKit()` called once, exported         |
+| `lib/ethers.ts`              | ethers.js provider factory                                                                         | `new BrowserProvider(walletProvider, chainId)` |
+| `providers/app-provider.tsx` | Root provider tree — add `AppKitProvider` here                                                     | Modified from current stub                     |
+| `stores/wallet-store.ts`     | (feature-scoped) Connection state, address, balance                                                | Zustand; derived from AppKit hooks             |
+| `stores/tx-store.ts`         | (feature-scoped) Transaction list + loading state                                                  | Zustand slice                                  |
+| `config/env.ts`              | Add `EXPO_PUBLIC_ALCHEMY_URL`, `EXPO_PUBLIC_ETHERSCAN_KEY`, `EXPO_PUBLIC_WALLETCONNECT_PROJECT_ID` | Extend existing file                           |
 
 ---
 
@@ -246,7 +246,7 @@ type WalletState = {
   address: string | null;
   isConnected: boolean;
   status: WalletStatus;
-  balance: string | null;     // formatted ETH string e.g. "1.234"
+  balance: string | null; // formatted ETH string e.g. "1.234"
   balanceError: string | null;
   // Actions
   setWallet: (wallet: { address: string; isConnected: boolean }) => void;
@@ -396,21 +396,21 @@ TransactionList component
 
 ### External Services
 
-| Service | Integration Pattern | Notes |
-|---------|---------------------|-------|
-| WalletConnect v2 (via Reown AppKit) | `@reown/appkit-react-native` + `@reown/appkit-ethers-react-native` — provides modal UI + session management | Requires `EXPO_PUBLIC_WALLETCONNECT_PROJECT_ID` from cloud.reown.com |
-| Ethereum RPC (Alchemy or Infura) | `ethers.JsonRpcProvider` for read-only calls; `BrowserProvider(walletProvider)` for wallet-signed calls | `EXPO_PUBLIC_ALCHEMY_URL` in env.ts. Alchemy free tier is sufficient for v1. |
-| Etherscan API | REST via existing `apiClient` (or a separate Etherscan client instance) | `EXPO_PUBLIC_ETHERSCAN_API_KEY` required. Free tier: 5 req/sec, 10K req/day. |
-| MetaMask | Handled natively by Reown AppKit — no separate integration needed | AppKit's modal includes MetaMask deep-link support on mobile. |
+| Service                             | Integration Pattern                                                                                         | Notes                                                                        |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| WalletConnect v2 (via Reown AppKit) | `@reown/appkit-react-native` + `@reown/appkit-ethers-react-native` — provides modal UI + session management | Requires `EXPO_PUBLIC_WALLETCONNECT_PROJECT_ID` from cloud.reown.com         |
+| Ethereum RPC (Alchemy or Infura)    | `ethers.JsonRpcProvider` for read-only calls; `BrowserProvider(walletProvider)` for wallet-signed calls     | `EXPO_PUBLIC_ALCHEMY_URL` in env.ts. Alchemy free tier is sufficient for v1. |
+| Etherscan API                       | REST via existing `apiClient` (or a separate Etherscan client instance)                                     | `EXPO_PUBLIC_ETHERSCAN_API_KEY` required. Free tier: 5 req/sec, 10K req/day. |
+| MetaMask                            | Handled natively by Reown AppKit — no separate integration needed                                           | AppKit's modal includes MetaMask deep-link support on mobile.                |
 
 ### Internal Boundaries
 
-| Boundary | Communication | Notes |
-|----------|---------------|-------|
-| `features/wallet` ↔ `features/transactions` | `features/transactions` reads `address` from `wallet-store` via import | Only this one cross-boundary read is acceptable under Bulletproof React rules; prefer passing address as a prop or parameter instead to keep features fully decoupled |
-| `lib/appkit.ts` ↔ `features/wallet` | Feature hooks import AppKit hooks; `lib/appkit.ts` export used in `providers/app-provider.tsx` | lib is shared, features import from it — correct dependency direction |
-| `providers/app-provider.tsx` ↔ both features | Provider calls `useWalletSync()` hook from `features/wallet` | Only one place for this sync; acceptable to import from feature into provider |
-| `features/transactions` ↔ `lib/api-client.ts` | Direct function call | `api-client` is shared lib — correct |
+| Boundary                                      | Communication                                                                                  | Notes                                                                                                                                                                 |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `features/wallet` ↔ `features/transactions`   | `features/transactions` reads `address` from `wallet-store` via import                         | Only this one cross-boundary read is acceptable under Bulletproof React rules; prefer passing address as a prop or parameter instead to keep features fully decoupled |
+| `lib/appkit.ts` ↔ `features/wallet`           | Feature hooks import AppKit hooks; `lib/appkit.ts` export used in `providers/app-provider.tsx` | lib is shared, features import from it — correct dependency direction                                                                                                 |
+| `providers/app-provider.tsx` ↔ both features  | Provider calls `useWalletSync()` hook from `features/wallet`                                   | Only one place for this sync; acceptable to import from feature into provider                                                                                         |
+| `features/transactions` ↔ `lib/api-client.ts` | Direct function call                                                                           | `api-client` is shared lib — correct                                                                                                                                  |
 
 **Preferred decoupling for transactions:** Pass `address` from the wallet screen to the transaction hook as a parameter rather than having the transaction feature read from the wallet store directly. This eliminates cross-feature store imports entirely.
 
@@ -538,12 +538,12 @@ Deliverable: App shows meaningful errors and retry options for all failure cases
 
 This is a read-only, single-user mobile app. Scaling is not a primary concern for v1. The realistic bottlenecks are rate limits on third-party APIs.
 
-| Scale | Architecture Adjustments |
-|-------|--------------------------|
-| Single user (v1) | Direct Etherscan + Alchemy API calls. No caching layer needed. Free tiers are sufficient. |
-| Multiple wallets per user | Extend `wallet-store` to hold an array of addresses. Tx store needs to key by address. |
+| Scale                     | Architecture Adjustments                                                                                                                                                         |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Single user (v1)          | Direct Etherscan + Alchemy API calls. No caching layer needed. Free tiers are sufficient.                                                                                        |
+| Multiple wallets per user | Extend `wallet-store` to hold an array of addresses. Tx store needs to key by address.                                                                                           |
 | Multi-chain support (v2+) | Extend AppKit config with additional chains. `wallet.tsx` needs chain selector. Etherscan replaced with chain-specific block explorer APIs or a unified provider like The Graph. |
-| ERC-20 tokens | Add `features/tokens/` feature. Use Etherscan token endpoints or Alchemy Token API. No architectural change to existing features. |
+| ERC-20 tokens             | Add `features/tokens/` feature. Use Etherscan token endpoints or Alchemy Token API. No architectural change to existing features.                                                |
 
 ### Scaling Priorities
 
@@ -554,20 +554,20 @@ This is a read-only, single-user mobile app. Scaling is not a primary concern fo
 
 ## New vs. Modified Files Summary
 
-| File | Status | Notes |
-|------|--------|-------|
-| `src/app/index.tsx` | MODIFIED | Add connection gate logic |
-| `src/app/wallet.tsx` | NEW | Dashboard screen |
-| `src/app/_layout.tsx` | UNCHANGED | No changes needed |
-| `src/config/env.ts` | MODIFIED | Add 3 new env vars |
-| `src/providers/app-provider.tsx` | MODIFIED | Wrap with AppKitProvider, call useWalletSync |
-| `src/lib/appkit.ts` | NEW | createAppKit singleton |
-| `src/lib/ethers.ts` | NEW | Provider factory |
-| `src/lib/api-client.ts` | UNCHANGED OR LIGHTLY MODIFIED | May need base URL override for Etherscan |
-| `src/features/wallet/` | NEW | Entire feature module |
-| `src/features/transactions/` | NEW | Entire feature module |
-| `src/stores/app-store.ts` | UNCHANGED | Global store stays as-is |
-| `src/utils/storage.ts` | UNCHANGED | No new persistence needed |
+| File                             | Status                        | Notes                                        |
+| -------------------------------- | ----------------------------- | -------------------------------------------- |
+| `src/app/index.tsx`              | MODIFIED                      | Add connection gate logic                    |
+| `src/app/wallet.tsx`             | NEW                           | Dashboard screen                             |
+| `src/app/_layout.tsx`            | UNCHANGED                     | No changes needed                            |
+| `src/config/env.ts`              | MODIFIED                      | Add 3 new env vars                           |
+| `src/providers/app-provider.tsx` | MODIFIED                      | Wrap with AppKitProvider, call useWalletSync |
+| `src/lib/appkit.ts`              | NEW                           | createAppKit singleton                       |
+| `src/lib/ethers.ts`              | NEW                           | Provider factory                             |
+| `src/lib/api-client.ts`          | UNCHANGED OR LIGHTLY MODIFIED | May need base URL override for Etherscan     |
+| `src/features/wallet/`           | NEW                           | Entire feature module                        |
+| `src/features/transactions/`     | NEW                           | Entire feature module                        |
+| `src/stores/app-store.ts`        | UNCHANGED                     | Global store stays as-is                     |
+| `src/utils/storage.ts`           | UNCHANGED                     | No new persistence needed                    |
 
 ---
 
@@ -585,5 +585,5 @@ This is a read-only, single-user mobile app. Scaling is not a primary concern fo
 
 ---
 
-*Architecture research for: Ethereum Wallet Viewer (Expo SDK 54 + Bulletproof React)*
-*Researched: 2026-04-01*
+_Architecture research for: Ethereum Wallet Viewer (Expo SDK 54 + Bulletproof React)_
+_Researched: 2026-04-01_

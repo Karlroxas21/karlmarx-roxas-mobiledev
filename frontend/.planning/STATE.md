@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: completed
 stopped_at: Completed 05-01-PLAN.md — all phases of v1.0 milestone complete
-last_updated: "2026-04-02T08:46:14.084Z"
+last_updated: '2026-04-02T08:46:14.084Z'
 last_activity: 2026-04-02 — All phases of v1.0 milestone complete
 progress:
   total_phases: 5
@@ -35,6 +35,7 @@ Progress: [██████████] 100%
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 0
 - Average duration: —
 - Total execution time: —
@@ -42,14 +43,15 @@ Progress: [██████████] 100%
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| - | - | - | - |
+| ----- | ----- | ----- | -------- |
+| -     | -     | -     | -        |
 
 **Recent Trend:**
+
 - Last 5 plans: —
 - Trend: —
 
-*Updated after each plan completion*
+_Updated after each plan completion_
 | Phase 01-foundation-polyfills P01 | 4 | 3 tasks | 7 files |
 | Phase 01-foundation-polyfills P02 | 5min | 2 tasks | 3 files |
 | Phase 02-wallet-connection P01 | 3min | 2 tasks | 9 files |
@@ -69,7 +71,7 @@ Recent decisions affecting current work:
 - Roadmap: ethers.js v6 chosen over web3.js (ecosystem consensus, typed, native BigInt)
 - Roadmap: Reown AppKit (`@reown/appkit-react-native`) for WalletConnect v2 (official successor to web3modal)
 - Roadmap: Etherscan API v2 for transaction history (ethers.js v6 removed `provider.getHistory()`)
-- [Phase 01-foundation-polyfills]: assertEnv(name, value) pattern used instead of requireEnv(name) to comply with expo/no-dynamic-env-var ESLint rule — static process.env.EXPO_PUBLIC_* reads passed as second argument
+- [Phase 01-foundation-polyfills]: assertEnv(name, value) pattern used instead of requireEnv(name) to comply with expo/no-dynamic-env-var ESLint rule — static process.env.EXPO*PUBLIC*\* reads passed as second argument
 - [Phase 01-foundation-polyfills]: Defined Ethereum mainnet AppKitNetwork inline — @reown/appkit (web package) not installed; only appkit-react-native packages present
 - [Phase 01-foundation-polyfills]: Merged duplicate appkit import in app-provider.tsx; named import already executes module-scope side effects
 - [Phase 02-wallet-connection]: No persist middleware on wallet store — AppKit owns session persistence via AsyncStorage adapter

@@ -55,40 +55,42 @@ Deferred to future release. Tracked but not in current roadmap.
 
 ## Out of Scope
 
-| Feature | Reason |
-|---------|--------|
-| Transaction sending | Read-only viewer for v1 — sending adds security complexity |
-| ERC-20 token balances | Focus on native ETH for v1; defer to v2 |
-| Multi-chain support | Ethereum mainnet only for v1 |
-| Fiat currency conversion | Requires price feed integration; defer to v2 |
-| Real-time auto-polling | Anti-feature — hits Etherscan free tier rate limits |
-| OAuth / social login | Wallet-based auth only |
+| Feature                  | Reason                                                     |
+| ------------------------ | ---------------------------------------------------------- |
+| Transaction sending      | Read-only viewer for v1 — sending adds security complexity |
+| ERC-20 token balances    | Focus on native ETH for v1; defer to v2                    |
+| Multi-chain support      | Ethereum mainnet only for v1                               |
+| Fiat currency conversion | Requires price feed integration; defer to v2               |
+| Real-time auto-polling   | Anti-feature — hits Etherscan free tier rate limits        |
+| OAuth / social login     | Wallet-based auth only                                     |
 
 ## Traceability
 
 Which phases cover which requirements. Updated during roadmap creation.
 
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| FOUND-01 | Phase 1 | Complete |
-| FOUND-02 | Phase 1 | Complete |
-| FOUND-03 | Phase 1 | Complete |
-| WALLET-01 | Phase 2 | Complete |
-| WALLET-02 | Phase 2 | Complete |
-| WALLET-03 | Phase 2 | Complete |
-| WALLET-04 | Phase 2 | Complete |
-| BAL-01 | Phase 3 | Complete |
-| TX-01 | Phase 4 | Complete |
-| TX-02 | Phase 4 | Complete |
-| ERR-01 | Phase 5 | Complete |
-| ERR-02 | Phase 5 | Complete |
-| ERR-03 | Phase 5 | Complete |
+| Requirement | Phase   | Status   |
+| ----------- | ------- | -------- |
+| FOUND-01    | Phase 1 | Complete |
+| FOUND-02    | Phase 1 | Complete |
+| FOUND-03    | Phase 1 | Complete |
+| WALLET-01   | Phase 2 | Complete |
+| WALLET-02   | Phase 2 | Complete |
+| WALLET-03   | Phase 2 | Complete |
+| WALLET-04   | Phase 2 | Complete |
+| BAL-01      | Phase 3 | Complete |
+| TX-01       | Phase 4 | Complete |
+| TX-02       | Phase 4 | Complete |
+| ERR-01      | Phase 5 | Complete |
+| ERR-02      | Phase 5 | Complete |
+| ERR-03      | Phase 5 | Complete |
 
 **Coverage:**
+
 - v1.0 requirements: 13 total
 - Mapped to phases: 13
 - Unmapped: 0
 
 ---
-*Requirements defined: 2026-04-01*
-*Last updated: 2026-04-01 after roadmap creation*
+
+_Requirements defined: 2026-04-01_
+_Last updated: 2026-04-01 after roadmap creation_

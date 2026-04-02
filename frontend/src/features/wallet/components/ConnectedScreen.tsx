@@ -67,9 +67,7 @@ export function ConnectedScreen() {
         </TouchableOpacity>
       </View>
 
-      {address && (
-        <BlockieIdenticon address={address as `0x${string}`} />
-      )}
+      {address && <BlockieIdenticon address={address as `0x${string}`} />}
 
       <Text className="text-xs text-green-600 text-center">
         Connected to Ethereum Mainnet

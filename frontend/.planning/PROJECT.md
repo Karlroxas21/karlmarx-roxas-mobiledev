@@ -13,6 +13,7 @@ Users can connect their Ethereum wallet and instantly see their balance and rece
 **Goal:** Build the foundational wallet connection and viewing experience.
 
 **Target features:**
+
 - Ethereum wallet connection (MetaMask / WalletConnect)
 - ETH balance display
 - Transaction history (last 10 transactions)
@@ -57,10 +58,11 @@ Users can connect their Ethereum wallet and instantly see their balance and rece
 
 ## Key Decisions
 
-| Decision | Rationale | Outcome |
-|----------|-----------|---------|
+| Decision                          | Rationale                                      | Outcome   |
+| --------------------------------- | ---------------------------------------------- | --------- |
 | Expo/React Native (not plain web) | Existing codebase is RN — build on what exists | — Pending |
-| ethers.js vs web3.js | TBD during research | — Pending |
+| ethers.js vs web3.js              | TBD during research                            | — Pending |
 
 ---
-*Last updated: 2026-04-01 after milestone v1.0 initialization*
+
+_Last updated: 2026-04-01 after milestone v1.0 initialization_

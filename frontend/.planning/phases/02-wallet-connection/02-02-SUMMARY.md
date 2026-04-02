@@ -2,7 +2,16 @@
 phase: 02-wallet-connection
 plan: 02
 subsystem: ui
-tags: [react-native, nativewind, appkit, walletconnect, blo, expo-clipboard, zustand]
+tags:
+  [
+    react-native,
+    nativewind,
+    appkit,
+    walletconnect,
+    blo,
+    expo-clipboard,
+    zustand,
+  ]
 
 # Dependency graph
 requires:
@@ -41,13 +50,13 @@ key-files:
     - src/app/index.tsx
 
 key-decisions:
-  - "ConnectionError splits message and retry hint into two separate Text nodes — avoids punctuation collision when error message already ends with period"
-  - "ConnectedScreen casts address to `0x${string}` at call site — BlockieIdenticon prop is typed stricter than Zustand store address (string | null)"
-  - "ConnectScreen uses ScrollView with contentContainerClassName to allow vertical centering on small devices while still scrolling on overflow"
+  - 'ConnectionError splits message and retry hint into two separate Text nodes — avoids punctuation collision when error message already ends with period'
+  - 'ConnectedScreen casts address to `0x${string}` at call site — BlockieIdenticon prop is typed stricter than Zustand store address (string | null)'
+  - 'ConnectScreen uses ScrollView with contentContainerClassName to allow vertical centering on small devices while still scrolling on overflow'
 
 patterns-established:
-  - "Copy feedback: useState(false) + setTimeout 2000ms + setCopied(false) for transient copy confirmation"
-  - "Null-guard inside ConnectedScreen: {address && <BlockieIdenticon />} — address is string | null from store"
+  - 'Copy feedback: useState(false) + setTimeout 2000ms + setCopied(false) for transient copy confirmation'
+  - 'Null-guard inside ConnectedScreen: {address && <BlockieIdenticon />} — address is string | null from store'
 
 requirements-completed: [WALLET-01, WALLET-02, WALLET-03, WALLET-04]
 
@@ -96,7 +105,7 @@ Each task was committed atomically:
 ## Decisions Made
 
 - `ConnectionError` renders the error message and the retry hint as separate `Text` nodes rather than string concatenation, to avoid awkward punctuation when the upstream error message already ends with a period
-- `ConnectedScreen` casts `address as \`0x\${string}\`` at the call site since `useWalletConnection` returns `string | null` but `BlockieIdenticon` requires the hex-typed address — the `{address &&}` guard ensures the cast is only reached with a non-null value
+- `ConnectedScreen` casts `address as \`0x\${string}\``at the call site since`useWalletConnection`returns`string | null`but`BlockieIdenticon`requires the hex-typed address — the`{address &&}` guard ensures the cast is only reached with a non-null value
 - `ConnectScreen` wraps content in a `ScrollView` with `contentContainerClassName="flex-1 items-center justify-center ..."` so the layout vertically centers on normal screens and scrolls on very small devices
 
 ## Deviations from Plan
@@ -118,5 +127,6 @@ None - no external service configuration required.
 - Known blocker: MetaMask deep-link round-trip must be tested on a physical device — iOS simulator has no wallet apps installed.
 
 ---
-*Phase: 02-wallet-connection*
-*Completed: 2026-04-01*
+
+_Phase: 02-wallet-connection_
+_Completed: 2026-04-01_

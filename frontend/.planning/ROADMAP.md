@@ -7,6 +7,7 @@ Five phases built in strict dependency order. Phase 1 installs polyfills and con
 ## Phases
 
 **Phase Numbering:**
+
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
@@ -21,67 +22,82 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Phase Details
 
 ### Phase 1: Foundation & Polyfills
+
 **Goal**: App boots on a physical device without polyfill or crypto errors, and all environment variables and build tooling are in place for feature development
 **Depends on**: Nothing (first phase)
 **Requirements**: FOUND-01, FOUND-02, FOUND-03
 **Success Criteria** (what must be TRUE):
-  1. App launches on a physical device (iOS or Android) built via EAS development build without any polyfill or crypto-related runtime crash
-  2. `babel.config.js` has both `unstable_transformImportMeta: true` and `unstable_transformProfile: 'hermes-stable'` set, and the app compiles without BigInt errors
-  3. `@walletconnect/react-native-compat` is the first import in `lib/appkit.ts` and the AppKit singleton initializes without errors visible in the Metro log
-  4. All three environment variables (Reown Project ID, Etherscan API key, RPC URL) are readable from `config/env.ts` in the running app
-**Plans:** 2/2 plans complete
-Plans:
+
+1. App launches on a physical device (iOS or Android) built via EAS development build without any polyfill or crypto-related runtime crash
+2. `babel.config.js` has both `unstable_transformImportMeta: true` and `unstable_transformProfile: 'hermes-stable'` set, and the app compiles without BigInt errors
+3. `@walletconnect/react-native-compat` is the first import in `lib/appkit.ts` and the AppKit singleton initializes without errors visible in the Metro log
+4. All three environment variables (Reown Project ID, Etherscan API key, RPC URL) are readable from `config/env.ts` in the running app
+   **Plans:** 2/2 plans complete
+   Plans:
+
 - [x] 01-01-PLAN.md — Install packages, create Babel/Metro configs, set up env vars
 - [x] 01-02-PLAN.md — Create AppKit singleton, wire provider, build smoke test screen, verify on device
 
 ### Phase 2: Wallet Connection
+
 **Goal**: Users can connect their Ethereum wallet, have their session survive app restarts, and disconnect when needed
 **Depends on**: Phase 1
 **Requirements**: WALLET-01, WALLET-02, WALLET-03, WALLET-04
 **Success Criteria** (what must be TRUE):
-  1. User taps "Connect Wallet" and the WalletConnect v2 modal opens showing a QR code and a list of wallet options (including MetaMask)
-  2. User can connect via the MetaMask deep-link path and is returned to the app with their address displayed after approving in MetaMask
-  3. After connecting, the user closes and reopens the app and their wallet address is still shown without needing to reconnect
-  4. User taps "Disconnect" and their session is cleared — the app returns to the disconnected state
-**Plans:** 2/2 plans complete
-Plans:
+
+1. User taps "Connect Wallet" and the WalletConnect v2 modal opens showing a QR code and a list of wallet options (including MetaMask)
+2. User can connect via the MetaMask deep-link path and is returned to the app with their address displayed after approving in MetaMask
+3. After connecting, the user closes and reopens the app and their wallet address is still shown without needing to reconnect
+4. User taps "Disconnect" and their session is cleared — the app returns to the disconnected state
+   **Plans:** 2/2 plans complete
+   Plans:
+
 - [ ] 02-01-PLAN.md — Install deps, configure wallet detection (app.json, queries.js), build data layer (types, store, hooks), wire AppProvider
 - [ ] 02-02-PLAN.md — Build wallet UI components (6 components), replace smoke test with wallet screen, verify on device
 
 ### Phase 3: Balance Display
+
 **Goal**: A connected user can see their ETH balance formatted in human-readable ETH on the wallet screen
 **Depends on**: Phase 2
 **Requirements**: BAL-01
 **Success Criteria** (what must be TRUE):
-  1. After connecting a wallet, the user sees their ETH balance displayed in ETH (not Wei) with 4-6 decimal places on the wallet screen
-  2. While the balance is loading, a loading indicator is visible in place of the balance value
-**Plans:** 1/1 plans complete
-Plans:
+
+1. After connecting a wallet, the user sees their ETH balance displayed in ETH (not Wei) with 4-6 decimal places on the wallet screen
+2. While the balance is loading, a loading indicator is visible in place of the balance value
+   **Plans:** 1/1 plans complete
+   Plans:
+
 - [ ] 03-01-PLAN.md — Create useBalance hook, BalanceSkeleton/BalanceDisplay components, wire into ConnectedScreen
 
 ### Phase 4: Transaction History
+
 **Goal**: A connected user can see their last 10 Ethereum transactions with enough detail to understand each one
 **Depends on**: Phase 3
 **Requirements**: TX-01, TX-02
 **Success Criteria** (what must be TRUE):
-  1. The wallet screen shows up to 10 recent transactions, each displaying the transaction hash (truncated), from/to address (truncated), ETH value, and a timestamp
-  2. User can distinguish incoming from outgoing transactions visually (direction indicator)
-  3. User pulls down on the transaction list and the balance and transactions both refresh with updated data from the network
-**Plans:** 2/2 plans complete
-Plans:
+
+1. The wallet screen shows up to 10 recent transactions, each displaying the transaction hash (truncated), from/to address (truncated), ETH value, and a timestamp
+2. User can distinguish incoming from outgoing transactions visually (direction indicator)
+3. User pulls down on the transaction list and the balance and transactions both refresh with updated data from the network
+   **Plans:** 2/2 plans complete
+   Plans:
+
 - [ ] 04-01-PLAN.md — Types, useTransactions hook, utility functions, add refreshTrigger to useBalance
 - [ ] 04-02-PLAN.md — TransactionRow, TransactionSkeleton components, restructure ConnectedScreen with FlatList and pull-to-refresh
 
 ### Phase 5: Error Handling & Polish
+
 **Goal**: All async failures surface clear, actionable error messages with retry affordances, and the experience is polished with copy, relative timestamps, and amount color-coding
 **Depends on**: Phase 4
 **Requirements**: ERR-01, ERR-02, ERR-03
 **Success Criteria** (what must be TRUE):
-  1. When wallet connection fails, the user sees a readable error message (not a raw exception) explaining what went wrong
-  2. When the ETH balance or transaction history fetch fails, the user sees an error message specific to that section
-  3. User can tap a retry button on any failed section and the app re-attempts the failed operation without requiring a full restart
-**Plans:** 1/1 plans complete
-Plans:
+
+1. When wallet connection fails, the user sees a readable error message (not a raw exception) explaining what went wrong
+2. When the ETH balance or transaction history fetch fails, the user sees an error message specific to that section
+3. User can tap a retry button on any failed section and the app re-attempts the failed operation without requiring a full restart
+   **Plans:** 1/1 plans complete
+   Plans:
+
 - [ ] 05-01-PLAN.md — Create ErrorState component, polish ConnectionError copy, wire balance/transaction error states with retry in ConnectedScreen
 
 ## Progress
@@ -89,10 +105,10 @@ Plans:
 **Execution Order:**
 Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
-| 1. Foundation & Polyfills | 2/2 | Complete   | 2026-04-01 |
-| 2. Wallet Connection | 2/2 | Complete   | 2026-04-01 |
-| 3. Balance Display | 1/1 | Complete   | 2026-04-02 |
-| 4. Transaction History | 2/2 | Complete   | 2026-04-02 |
-| 5. Error Handling & Polish | 1/1 | Complete   | 2026-04-02 |
+| Phase                      | Plans Complete | Status   | Completed  |
+| -------------------------- | -------------- | -------- | ---------- |
+| 1. Foundation & Polyfills  | 2/2            | Complete | 2026-04-01 |
+| 2. Wallet Connection       | 2/2            | Complete | 2026-04-01 |
+| 3. Balance Display         | 1/1            | Complete | 2026-04-02 |
+| 4. Transaction History     | 2/2            | Complete | 2026-04-02 |
+| 5. Error Handling & Polish | 1/1            | Complete | 2026-04-02 |

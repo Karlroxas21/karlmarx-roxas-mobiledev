@@ -2,7 +2,17 @@
 phase: 01-foundation-polyfills
 plan: 01
 subsystem: infra
-tags: [expo, react-native, walletconnect, ethers, polyfills, babel, metro, environment-variables]
+tags:
+  [
+    expo,
+    react-native,
+    walletconnect,
+    ethers,
+    polyfills,
+    babel,
+    metro,
+    environment-variables,
+  ]
 
 # Dependency graph
 requires: []
@@ -17,23 +27,23 @@ affects: [01-02, all subsequent phases that import ENV or use AppKit/ethers]
 # Tech tracking
 tech-stack:
   added:
-    - "@reown/appkit-react-native@2.0.2"
-    - "@reown/appkit-ethers-react-native@2.0.2"
-    - "@react-native-async-storage/async-storage@2.2.0"
-    - "react-native-get-random-values@1.11.0"
-    - "react-native-svg@15.12.1"
-    - "@react-native-community/netinfo@11.4.1"
-    - "@walletconnect/react-native-compat@2.23.9"
-    - "expo-application@7.0.8"
-    - "ethers@6.16.0"
-    - "react-native-quick-crypto@1.0.18"
-    - "stream-browserify@3.0.0"
-    - "@craftzdog/react-native-buffer@6.1.1"
+    - '@reown/appkit-react-native@2.0.2'
+    - '@reown/appkit-ethers-react-native@2.0.2'
+    - '@react-native-async-storage/async-storage@2.2.0'
+    - 'react-native-get-random-values@1.11.0'
+    - 'react-native-svg@15.12.1'
+    - '@react-native-community/netinfo@11.4.1'
+    - '@walletconnect/react-native-compat@2.23.9'
+    - 'expo-application@7.0.8'
+    - 'ethers@6.16.0'
+    - 'react-native-quick-crypto@1.0.18'
+    - 'stream-browserify@3.0.0'
+    - '@craftzdog/react-native-buffer@6.1.1'
   patterns:
-    - "Expo SDK version constraints honored via `npx expo install` for native modules"
-    - "Metro extraNodeModules for Node.js core module aliasing"
-    - "Static process.env.EXPO_PUBLIC_* access (expo/no-dynamic-env-var rule compliance)"
-    - "Startup-time env var validation via assertEnv helper"
+    - 'Expo SDK version constraints honored via `npx expo install` for native modules'
+    - 'Metro extraNodeModules for Node.js core module aliasing'
+    - 'Static process.env.EXPO_PUBLIC_* access (expo/no-dynamic-env-var rule compliance)'
+    - 'Startup-time env var validation via assertEnv helper'
 
 key-files:
   created:
@@ -47,13 +57,13 @@ key-files:
     - src/config/env.ts
 
 key-decisions:
-  - "Used assertEnv(name, process.env.EXPO_PUBLIC_*) pattern instead of requireEnv(name) to comply with expo/no-dynamic-env-var ESLint rule"
-  - "Removed .env from git tracking (git rm --cached) after adding it to .gitignore"
-  - "Two-step install: expo install for SDK-constrained native modules, npm install for Metro alias packages"
+  - 'Used assertEnv(name, process.env.EXPO_PUBLIC_*) pattern instead of requireEnv(name) to comply with expo/no-dynamic-env-var ESLint rule'
+  - 'Removed .env from git tracking (git rm --cached) after adding it to .gitignore'
+  - 'Two-step install: expo install for SDK-constrained native modules, npm install for Metro alias packages'
 
 patterns-established:
-  - "Env validation pattern: static process.env read passed to assertEnv() validator, throws at startup with clear error"
-  - "Metro node alias pattern: config.resolver.extraNodeModules assigned before withNativeWind wrapper"
+  - 'Env validation pattern: static process.env read passed to assertEnv() validator, throws at startup with clear error'
+  - 'Metro node alias pattern: config.resolver.extraNodeModules assigned before withNativeWind wrapper'
 
 requirements-completed: [FOUND-01, FOUND-02, FOUND-03]
 
@@ -95,7 +105,7 @@ Each task was committed atomically:
 - `metro.config.js` - Added extraNodeModules resolver for crypto/stream/buffer before withNativeWind wrapper
 - `package.json` - 12 new dependency entries
 - `package-lock.json` - Updated lock file
-- `.env.example` - Template with 3 EXPO_PUBLIC_ blockchain service vars (committed to repo)
+- `.env.example` - Template with 3 EXPO*PUBLIC* blockchain service vars (committed to repo)
 - `.gitignore` - Added `.env` to excluded files, removed from git tracking
 - `src/config/env.ts` - Added assertEnv helper and REOWN_PROJECT_ID, ETHERSCAN_API_KEY, INFURA_RPC_URL to ENV object
 
@@ -130,11 +140,11 @@ Each task was committed atomically:
 
 The plan's `user_setup` section defines 3 external services that require manual configuration before the app can be used:
 
-| Service | Env Var | Source |
-|---------|---------|--------|
-| Reown | `EXPO_PUBLIC_REOWN_PROJECT_ID` | https://cloud.reown.com -> Create project -> Copy Project ID |
-| Infura | `EXPO_PUBLIC_INFURA_RPC_URL` | https://app.infura.io -> Create API key -> Copy Ethereum mainnet endpoint |
-| Etherscan | `EXPO_PUBLIC_ETHERSCAN_API_KEY` | https://etherscan.io/myapikey -> Create key -> Copy |
+| Service   | Env Var                         | Source                                                                    |
+| --------- | ------------------------------- | ------------------------------------------------------------------------- |
+| Reown     | `EXPO_PUBLIC_REOWN_PROJECT_ID`  | https://cloud.reown.com -> Create project -> Copy Project ID              |
+| Infura    | `EXPO_PUBLIC_INFURA_RPC_URL`    | https://app.infura.io -> Create API key -> Copy Ethereum mainnet endpoint |
+| Etherscan | `EXPO_PUBLIC_ETHERSCAN_API_KEY` | https://etherscan.io/myapikey -> Create key -> Copy                       |
 
 Copy `.env.example` to `.env` and replace the placeholder values. The app will throw a clear error at startup if any are missing.
 
@@ -160,5 +170,6 @@ Copy `.env.example` to `.env` and replace the placeholder values. The app will t
 - FOUND commit: 33d7b8c (Task 3)
 
 ---
-*Phase: 01-foundation-polyfills*
-*Completed: 2026-04-01*
+
+_Phase: 01-foundation-polyfills_
+_Completed: 2026-04-01_

@@ -15,13 +15,13 @@ created: 2026-04-02
 
 ## Test Infrastructure
 
-| Property | Value |
-|----------|-------|
-| **Framework** | Manual verification (no test framework configured) |
-| **Config file** | none |
-| **Quick run command** | `npm run lint` |
-| **Full suite command** | `npm run lint` |
-| **Estimated runtime** | ~10 seconds |
+| Property               | Value                                              |
+| ---------------------- | -------------------------------------------------- |
+| **Framework**          | Manual verification (no test framework configured) |
+| **Config file**        | none                                               |
+| **Quick run command**  | `npm run lint`                                     |
+| **Full suite command** | `npm run lint`                                     |
+| **Estimated runtime**  | ~10 seconds                                        |
 
 ---
 
@@ -36,13 +36,13 @@ created: 2026-04-02
 
 ## Per-Task Verification Map
 
-| Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
-|---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 05-01-01 | 01 | 1 | ERR-01 | manual | Visual inspection | N/A | ⬜ pending |
-| 05-01-02 | 01 | 1 | ERR-02 | manual | Visual inspection | N/A | ⬜ pending |
-| 05-01-03 | 01 | 1 | ERR-03 | manual | Visual inspection | N/A | ⬜ pending |
+| Task ID  | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status     |
+| -------- | ---- | ---- | ----------- | --------- | ----------------- | ----------- | ---------- |
+| 05-01-01 | 01   | 1    | ERR-01      | manual    | Visual inspection | N/A         | ⬜ pending |
+| 05-01-02 | 01   | 1    | ERR-02      | manual    | Visual inspection | N/A         | ⬜ pending |
+| 05-01-03 | 01   | 1    | ERR-03      | manual    | Visual inspection | N/A         | ⬜ pending |
 
-*Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
+_Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky_
 
 ---
 
@@ -54,12 +54,12 @@ Existing infrastructure covers all phase requirements. No new test framework nee
 
 ## Manual-Only Verifications
 
-| Behavior | Requirement | Why Manual | Test Instructions |
-|----------|-------------|------------|-------------------|
-| Connection error shows friendly copy | ERR-01 | UI rendering requires visual check | Attempt wallet connection with no wallet app installed; verify "Couldn't connect wallet" appears |
-| Balance error shows inline error + retry | ERR-02 | Network failure needs simulated | Disconnect network, refresh; verify "Couldn't load balance" + Retry button appears |
-| Transaction error shows inline error + retry | ERR-02 | Network failure needs simulated | Disconnect network, refresh; verify "Couldn't load transactions" + Retry button appears |
-| Retry button refetches data | ERR-03 | Requires interaction test | Trigger error state, tap Retry; verify skeleton appears then data loads |
+| Behavior                                     | Requirement | Why Manual                         | Test Instructions                                                                                |
+| -------------------------------------------- | ----------- | ---------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Connection error shows friendly copy         | ERR-01      | UI rendering requires visual check | Attempt wallet connection with no wallet app installed; verify "Couldn't connect wallet" appears |
+| Balance error shows inline error + retry     | ERR-02      | Network failure needs simulated    | Disconnect network, refresh; verify "Couldn't load balance" + Retry button appears               |
+| Transaction error shows inline error + retry | ERR-02      | Network failure needs simulated    | Disconnect network, refresh; verify "Couldn't load transactions" + Retry button appears          |
+| Retry button refetches data                  | ERR-03      | Requires interaction test          | Trigger error state, tap Retry; verify skeleton appears then data loads                          |
 
 ---
 

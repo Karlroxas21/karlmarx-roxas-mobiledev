@@ -11,9 +11,7 @@ export function ConnectButton() {
       onPress={connect}
       disabled={status === 'connecting'}
     >
-      <Text className="text-base font-semibold text-white">
-        Connect Wallet
-      </Text>
+      <Text className="text-base font-semibold text-white">Connect Wallet</Text>
     </TouchableOpacity>
   );
 }

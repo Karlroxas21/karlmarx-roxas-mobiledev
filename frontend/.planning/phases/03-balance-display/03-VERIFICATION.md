@@ -16,40 +16,40 @@ score: 5/5 must-haves verified
 
 ### Observable Truths
 
-| #   | Truth                                                                                      | Status     | Evidence                                                                                                                    |
-| --- | ------------------------------------------------------------------------------------------ | ---------- | --------------------------------------------------------------------------------------------------------------------------- |
-| 1   | Connected user sees their ETH balance displayed in ETH (not Wei) with exactly 4 decimal places | ✓ VERIFIED | `formatBalance` uses `ethers.formatEther()` + `parseFloat()` + `.toFixed(4)`; all 6 spec test cases pass                  |
-| 2   | While the balance is loading, a gray pulsing skeleton placeholder is visible               | ✓ VERIFIED | `BalanceSkeleton` renders `View` with `className="w-40 h-9 rounded-lg bg-gray-200 animate-pulse"`                         |
-| 3   | Zero balance displays as 0.0000 ETH                                                        | ✓ VERIFIED | `formatBalance(0n)` returns `'0.0000'` confirmed by live node execution                                                    |
-| 4   | Very small balances below 0.0001 ETH display as < 0.0001 ETH                              | ✓ VERIFIED | `formatBalance(1n)` returns `'< 0.0001'`; threshold guard `eth > 0 && eth < 0.0001` present at line 15 of use-balance.ts  |
-| 5   | Balance appears between the network label and the address card on ConnectedScreen          | ✓ VERIFIED | Line 44 of ConnectedScreen.tsx is between the "Connected to Ethereum Mainnet" `Text` (line 40-42) and address card `View` (line 46) |
+| #   | Truth                                                                                          | Status     | Evidence                                                                                                                            |
+| --- | ---------------------------------------------------------------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Connected user sees their ETH balance displayed in ETH (not Wei) with exactly 4 decimal places | ✓ VERIFIED | `formatBalance` uses `ethers.formatEther()` + `parseFloat()` + `.toFixed(4)`; all 6 spec test cases pass                            |
+| 2   | While the balance is loading, a gray pulsing skeleton placeholder is visible                   | ✓ VERIFIED | `BalanceSkeleton` renders `View` with `className="w-40 h-9 rounded-lg bg-gray-200 animate-pulse"`                                   |
+| 3   | Zero balance displays as 0.0000 ETH                                                            | ✓ VERIFIED | `formatBalance(0n)` returns `'0.0000'` confirmed by live node execution                                                             |
+| 4   | Very small balances below 0.0001 ETH display as < 0.0001 ETH                                   | ✓ VERIFIED | `formatBalance(1n)` returns `'< 0.0001'`; threshold guard `eth > 0 && eth < 0.0001` present at line 15 of use-balance.ts            |
+| 5   | Balance appears between the network label and the address card on ConnectedScreen              | ✓ VERIFIED | Line 44 of ConnectedScreen.tsx is between the "Connected to Ethereum Mainnet" `Text` (line 40-42) and address card `View` (line 46) |
 
 **Score:** 5/5 truths verified
 
 ### Required Artifacts
 
-| Artifact                                                   | Expected                                           | Status     | Details                                                                                 |
-| ---------------------------------------------------------- | -------------------------------------------------- | ---------- | --------------------------------------------------------------------------------------- |
-| `src/features/wallet/hooks/use-balance.ts`                 | Balance fetch hook and formatBalance utility        | ✓ VERIFIED | 69 lines; exports `formatBalance` (line 12) and `useBalance` (line 21)                 |
-| `src/features/wallet/components/BalanceSkeleton.tsx`       | Pulsing skeleton placeholder during balance loading | ✓ VERIFIED | 7 lines; exports `BalanceSkeleton` with animate-pulse class                             |
-| `src/features/wallet/components/BalanceDisplay.tsx`        | Formatted ETH balance display with error fallback  | ✓ VERIFIED | 26 lines; exports `BalanceDisplay` with error/balance/null states                      |
-| `src/features/wallet/components/ConnectedScreen.tsx`       | Updated screen with balance between network and address card | ✓ VERIFIED | Imports and renders all three balance artifacts; balance placed at correct position     |
+| Artifact                                             | Expected                                                     | Status     | Details                                                                             |
+| ---------------------------------------------------- | ------------------------------------------------------------ | ---------- | ----------------------------------------------------------------------------------- |
+| `src/features/wallet/hooks/use-balance.ts`           | Balance fetch hook and formatBalance utility                 | ✓ VERIFIED | 69 lines; exports `formatBalance` (line 12) and `useBalance` (line 21)              |
+| `src/features/wallet/components/BalanceSkeleton.tsx` | Pulsing skeleton placeholder during balance loading          | ✓ VERIFIED | 7 lines; exports `BalanceSkeleton` with animate-pulse class                         |
+| `src/features/wallet/components/BalanceDisplay.tsx`  | Formatted ETH balance display with error fallback            | ✓ VERIFIED | 26 lines; exports `BalanceDisplay` with error/balance/null states                   |
+| `src/features/wallet/components/ConnectedScreen.tsx` | Updated screen with balance between network and address card | ✓ VERIFIED | Imports and renders all three balance artifacts; balance placed at correct position |
 
 ### Key Link Verification
 
-| From                                         | To                              | Via                            | Status     | Details                                                                                            |
-| -------------------------------------------- | ------------------------------- | ------------------------------ | ---------- | -------------------------------------------------------------------------------------------------- |
-| `use-balance.ts`                             | `ENV.INFURA_RPC_URL`            | `ethers.JsonRpcProvider` ctor  | ✓ WIRED    | Lines 36-40: `new ethers.JsonRpcProvider(ENV.INFURA_RPC_URL, undefined, { staticNetwork: true })` |
-| `use-balance.ts`                             | `useWalletStore`                | reading address from Zustand   | ✓ WIRED    | Line 4 import; line 22 `useWalletStore((s) => s.address)`                                         |
-| `ConnectedScreen.tsx`                        | `use-balance.ts`                | `useBalance()` hook call       | ✓ WIRED    | Line 10 import; line 18 destructures `{ balance, isLoading, error }` from `useBalance()`          |
-| `ConnectedScreen.tsx`                        | `BalanceDisplay` / `BalanceSkeleton` | conditional render on `isLoading` | ✓ WIRED | Line 44: `{isLoading ? <BalanceSkeleton /> : <BalanceDisplay balance={balance} error={error} />}` |
+| From                  | To                                   | Via                               | Status  | Details                                                                                           |
+| --------------------- | ------------------------------------ | --------------------------------- | ------- | ------------------------------------------------------------------------------------------------- |
+| `use-balance.ts`      | `ENV.INFURA_RPC_URL`                 | `ethers.JsonRpcProvider` ctor     | ✓ WIRED | Lines 36-40: `new ethers.JsonRpcProvider(ENV.INFURA_RPC_URL, undefined, { staticNetwork: true })` |
+| `use-balance.ts`      | `useWalletStore`                     | reading address from Zustand      | ✓ WIRED | Line 4 import; line 22 `useWalletStore((s) => s.address)`                                         |
+| `ConnectedScreen.tsx` | `use-balance.ts`                     | `useBalance()` hook call          | ✓ WIRED | Line 10 import; line 18 destructures `{ balance, isLoading, error }` from `useBalance()`          |
+| `ConnectedScreen.tsx` | `BalanceDisplay` / `BalanceSkeleton` | conditional render on `isLoading` | ✓ WIRED | Line 44: `{isLoading ? <BalanceSkeleton /> : <BalanceDisplay balance={balance} error={error} />}` |
 
 Note: The PLAN pattern for the first key link (`new ethers\\.JsonRpcProvider\\(ENV\\.INFURA_RPC_URL`) did not match because the constructor call spans multiple lines. Verified by manual reading — the implementation is correct.
 
 ### Requirements Coverage
 
-| Requirement | Source Plan | Description                                              | Status      | Evidence                                                                                       |
-| ----------- | ----------- | -------------------------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------- |
+| Requirement | Source Plan | Description                                                            | Status      | Evidence                                                                                                          |
+| ----------- | ----------- | ---------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------- |
 | BAL-01      | 03-01-PLAN  | User can view their ETH balance (formatted in ETH, 4-6 decimal places) | ✓ SATISFIED | `useBalance` fetches via Infura RPC; `formatBalance` outputs exactly 4 decimal places; wired into ConnectedScreen |
 
 No orphaned requirements — BAL-01 is the only requirement mapped to Phase 3 in REQUIREMENTS.md and it is claimed by 03-01-PLAN.

@@ -33,12 +33,10 @@ export function useBalance(refreshTrigger?: number): BalanceState {
 
     setState({ balance: null, isLoading: true, error: null });
 
-    const provider = new ethers.JsonRpcProvider(
-      ENV.INFURA_RPC_URL,
-      undefined,
-      { staticNetwork: true },
-    );
-    
+    const provider = new ethers.JsonRpcProvider(ENV.INFURA_RPC_URL, undefined, {
+      staticNetwork: true,
+    });
+
     provider
       .getBalance(address)
       .then((raw) => {

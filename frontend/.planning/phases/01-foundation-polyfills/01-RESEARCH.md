@@ -7,9 +7,11 @@
 ---
 
 <user_constraints>
+
 ## User Constraints (from CONTEXT.md)
 
 ### Locked Decisions
+
 - **Environment Variables:** Extend existing `config/env.ts` with three new vars: Reown Project ID, Etherscan API key, Infura RPC URL. Use standard `EXPO_PUBLIC_` prefix — no expo-dotenv. Validate all required env vars at startup; throw clear error if any are missing. Commit `.env.example` listing all required var names with placeholder values. Placeholders for now — real keys added later. Default network is Ethereum mainnet.
 - **EAS Build Target:** Android only for development. Physical device (not emulator) for testing. Local builds using `npx expo run:android` — no EAS cloud builds. User is first-time with EAS/local builds — plan must include setup guidance.
 - **RPC Provider:** Infura for Ethereum mainnet RPC. User does not have an Infura account yet — plan must note this as an external dependency (sign up at infura.io). RPC URL format: `https://mainnet.infura.io/v3/{PROJECT_ID}`.
@@ -17,25 +19,29 @@
 - **Validation:** Include a temporary smoke test screen on the index route displaying AppKit initialization status (OK / Error) and all three env var values (masked for keys). This screen will be replaced in Phase 2.
 
 ### Claude's Discretion
+
 - Exact polyfill import order beyond the documented `@walletconnect/react-native-compat` first requirement
 - Babel config flags and Metro resolver setup
 - `react-native-quick-crypto` registration approach
 - Any additional polyfills needed (Buffer, TextEncoder, etc.)
 
 ### Deferred Ideas (OUT OF SCOPE)
+
 None — discussion stayed within phase scope.
 </user_constraints>
 
 ---
 
 <phase_requirements>
+
 ## Phase Requirements
 
-| ID | Description | Research Support |
-|----|-------------|-----------------|
-| FOUND-01 | App bootstraps with correct polyfill import order (WalletConnect compat, crypto shims) | Import order verified against official Reown docs and appkit-expo-wagmi reference example. `@walletconnect/react-native-compat` must be first; `react-native-get-random-values` second. |
-| FOUND-02 | EAS development build configured and runnable on device/emulator | `npx expo run:android` documented as the correct command for local builds. Requires Android Studio + JDK 17 + USB debugging. No `eas.json` required for local `expo run:android` builds. |
-| FOUND-03 | Environment variables configured (Reown Project ID, Etherscan API key, RPC URL) | Standard Expo `EXPO_PUBLIC_` pattern already in use in `config/env.ts`. Extending with three new vars is a direct extension of existing pattern. |
+| ID       | Description                                                                            | Research Support                                                                                                                                                                         |
+| -------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| FOUND-01 | App bootstraps with correct polyfill import order (WalletConnect compat, crypto shims) | Import order verified against official Reown docs and appkit-expo-wagmi reference example. `@walletconnect/react-native-compat` must be first; `react-native-get-random-values` second.  |
+| FOUND-02 | EAS development build configured and runnable on device/emulator                       | `npx expo run:android` documented as the correct command for local builds. Requires Android Studio + JDK 17 + USB debugging. No `eas.json` required for local `expo run:android` builds. |
+| FOUND-03 | Environment variables configured (Reown Project ID, Etherscan API key, RPC URL)        | Standard Expo `EXPO_PUBLIC_` pattern already in use in `config/env.ts`. Extending with three new vars is a direct extension of existing pattern.                                         |
+
 </phase_requirements>
 
 ---
@@ -58,34 +64,34 @@ The local Android build (`npx expo run:android`) is the correct approach per the
 
 ### Core (Phase 1 Packages)
 
-| Library | Version | Purpose | Why Standard |
-|---------|---------|---------|--------------|
-| `@walletconnect/react-native-compat` | latest | Patches `TextEncoder`, `URL`, `Buffer`, `EventEmitter` globals for Hermes | Required by Reown AppKit — must be the absolute first import. Without it, WalletConnect internals crash at startup. |
-| `react-native-get-random-values` | ^1.11.x | Secure randomness shim for Hermes | Required before any crypto operations. Ethers.js and WalletConnect both require a secure random source. |
-| `@reown/appkit-react-native` | ^2.x | WalletConnect v2 wallet connection modal + session management | Official Reown AppKit for React Native. Expo SDK 53+ explicitly supported. |
-| `@reown/appkit-ethers-react-native` | ^2.x | Ethers.js adapter for AppKit | Bridges AppKit sessions to ethers `BrowserProvider`. Use over wagmi adapter — wagmi is not in the existing stack. |
-| `react-native-quick-crypto` | ^0.7.x | Native C++ crypto (JSI) for ethers.js | Registers native crypto primitives with ethers v6's plugin API. Without it, key operations fall back to pure-JS (30+ seconds on real devices). |
-| `ethers` | ^6.x | Ethereum provider, BigInt-native balance formatting | Actively maintained, typed, official React Native cookbook. v6 uses native `BigInt` (requires Babel flag). |
+| Library                              | Version | Purpose                                                                   | Why Standard                                                                                                                                   |
+| ------------------------------------ | ------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@walletconnect/react-native-compat` | latest  | Patches `TextEncoder`, `URL`, `Buffer`, `EventEmitter` globals for Hermes | Required by Reown AppKit — must be the absolute first import. Without it, WalletConnect internals crash at startup.                            |
+| `react-native-get-random-values`     | ^1.11.x | Secure randomness shim for Hermes                                         | Required before any crypto operations. Ethers.js and WalletConnect both require a secure random source.                                        |
+| `@reown/appkit-react-native`         | ^2.x    | WalletConnect v2 wallet connection modal + session management             | Official Reown AppKit for React Native. Expo SDK 53+ explicitly supported.                                                                     |
+| `@reown/appkit-ethers-react-native`  | ^2.x    | Ethers.js adapter for AppKit                                              | Bridges AppKit sessions to ethers `BrowserProvider`. Use over wagmi adapter — wagmi is not in the existing stack.                              |
+| `react-native-quick-crypto`          | ^0.7.x  | Native C++ crypto (JSI) for ethers.js                                     | Registers native crypto primitives with ethers v6's plugin API. Without it, key operations fall back to pure-JS (30+ seconds on real devices). |
+| `ethers`                             | ^6.x    | Ethereum provider, BigInt-native balance formatting                       | Actively maintained, typed, official React Native cookbook. v6 uses native `BigInt` (requires Babel flag).                                     |
 
 ### Supporting (Peer Dependencies Required by AppKit)
 
-| Library | Version | Purpose | When to Use |
-|---------|---------|---------|-------------|
-| `@react-native-async-storage/async-storage` | ^2.x | Persists WalletConnect session across app restarts | Required by AppKit — without it, every app launch requires reconnection. |
-| `@react-native-community/netinfo` | ^11.x | Network status detection | Required by AppKit — pauses/resumes WalletConnect on connectivity changes. |
-| `expo-application` | ~6.x | App name/version metadata | Required by AppKit — sends app metadata to wallets during WalletConnect handshake. |
-| `react-native-svg` | ^15.x | SVG rendering | Required by AppKit — wallet list icons and QR code are SVG. |
-| `stream-browserify` | latest | Node.js `stream` polyfill | Required for `metro.config.js` `extraNodeModules` — WalletConnect internals reference `stream`. |
-| `@craftzdog/react-native-buffer` | latest | Node.js `Buffer` polyfill | Required for `metro.config.js` `extraNodeModules` — Metro needs to resolve `buffer` to a React Native-compatible package. |
+| Library                                     | Version | Purpose                                            | When to Use                                                                                                               |
+| ------------------------------------------- | ------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `@react-native-async-storage/async-storage` | ^2.x    | Persists WalletConnect session across app restarts | Required by AppKit — without it, every app launch requires reconnection.                                                  |
+| `@react-native-community/netinfo`           | ^11.x   | Network status detection                           | Required by AppKit — pauses/resumes WalletConnect on connectivity changes.                                                |
+| `expo-application`                          | ~6.x    | App name/version metadata                          | Required by AppKit — sends app metadata to wallets during WalletConnect handshake.                                        |
+| `react-native-svg`                          | ^15.x   | SVG rendering                                      | Required by AppKit — wallet list icons and QR code are SVG.                                                               |
+| `stream-browserify`                         | latest  | Node.js `stream` polyfill                          | Required for `metro.config.js` `extraNodeModules` — WalletConnect internals reference `stream`.                           |
+| `@craftzdog/react-native-buffer`            | latest  | Node.js `Buffer` polyfill                          | Required for `metro.config.js` `extraNodeModules` — Metro needs to resolve `buffer` to a React Native-compatible package. |
 
 Note: `react-native-safe-area-context` is already in `package.json` — do not reinstall. `expo-linking` is already present and needed for AppKit's `redirectUrl` in Phase 2.
 
 ### Alternatives Considered
 
-| Instead of | Could Use | Tradeoff |
-|------------|-----------|----------|
-| `react-native-quick-crypto` | `@ethersproject/shims` only (pure-JS fallback) | Pure-JS crypto is 30–100x slower. Perceptible on real devices. Not acceptable for wallet operations. |
-| `stream-browserify` + `@craftzdog/react-native-buffer` | `readable-stream` + `buffer` | Either works for Metro aliasing. The craftzdog buffer is more actively maintained for React Native. |
+| Instead of                                             | Could Use                                      | Tradeoff                                                                                             |
+| ------------------------------------------------------ | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `react-native-quick-crypto`                            | `@ethersproject/shims` only (pure-JS fallback) | Pure-JS crypto is 30–100x slower. Perceptible on real devices. Not acceptable for wallet operations. |
+| `stream-browserify` + `@craftzdog/react-native-buffer` | `readable-stream` + `buffer`                   | Either works for Metro aliasing. The craftzdog buffer is more actively maintained for React Native.  |
 
 ### Installation
 
@@ -136,6 +142,7 @@ npm install stream-browserify @craftzdog/react-native-buffer
 **When to use:** Always — this file is imported by `app-provider.tsx` which loads before any feature code.
 
 **Example:**
+
 ```typescript
 // src/lib/appkit.ts
 // Source: https://docs.reown.com/appkit/react-native/core/installation
@@ -208,7 +215,7 @@ module.exports = function (api) {
       [
         'babel-preset-expo',
         {
-          unstable_transformImportMeta: true,   // Required: AppKit's valtio uses import.meta
+          unstable_transformImportMeta: true, // Required: AppKit's valtio uses import.meta
           unstable_transformProfile: 'hermes-stable', // Required: enables BigInt for ethers v6
         },
       ],
@@ -290,7 +297,7 @@ function requireEnv(name: string): string {
   if (!value) {
     throw new Error(
       `Missing required environment variable: ${name}. ` +
-      `Copy .env.example to .env and fill in the values.`
+        `Copy .env.example to .env and fill in the values.`,
     );
   }
   return value;
@@ -375,12 +382,12 @@ export default function Index() {
 
 ## Don't Hand-Roll
 
-| Problem | Don't Build | Use Instead | Why |
-|---------|-------------|-------------|-----|
-| `TextEncoder` / `URL` / `Buffer` global shims | Custom polyfill code | `@walletconnect/react-native-compat` | WalletConnect's compat package handles edge cases (proto chain, iterable, etc.) that hand-rolled shims miss. |
-| Native crypto binding for ethers | Custom JSI bridge | `react-native-quick-crypto` + ethers plugin API | `react-native-quick-crypto` is a mature C++ JSI implementation with 30–100x faster crypto than pure JS. The ethers v6 plugin API makes registration straightforward. |
-| Node.js module aliases in Metro | Custom resolver logic | `extraNodeModules` map | Metro's built-in resolver handles this correctly — no custom resolver code needed. |
-| Env var validation | Manual `if (!process.env.X)` scattered across files | `requireEnv()` helper in `config/env.ts` | Centralizes validation, fails fast at startup with a clear message, and is already the convention in this project. |
+| Problem                                       | Don't Build                                         | Use Instead                                     | Why                                                                                                                                                                  |
+| --------------------------------------------- | --------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TextEncoder` / `URL` / `Buffer` global shims | Custom polyfill code                                | `@walletconnect/react-native-compat`            | WalletConnect's compat package handles edge cases (proto chain, iterable, etc.) that hand-rolled shims miss.                                                         |
+| Native crypto binding for ethers              | Custom JSI bridge                                   | `react-native-quick-crypto` + ethers plugin API | `react-native-quick-crypto` is a mature C++ JSI implementation with 30–100x faster crypto than pure JS. The ethers v6 plugin API makes registration straightforward. |
+| Node.js module aliases in Metro               | Custom resolver logic                               | `extraNodeModules` map                          | Metro's built-in resolver handles this correctly — no custom resolver code needed.                                                                                   |
+| Env var validation                            | Manual `if (!process.env.X)` scattered across files | `requireEnv()` helper in `config/env.ts`        | Centralizes validation, fails fast at startup with a clear message, and is already the convention in this project.                                                   |
 
 **Key insight:** All polyfill complexity in this phase has well-established solutions. The implementation work is configuration, not coding.
 
@@ -389,6 +396,7 @@ export default function Index() {
 ## Common Pitfalls
 
 ### Pitfall 1: Wrong Polyfill Import Order
+
 **What goes wrong:** App crashes on launch with `ReferenceError: TextEncoder is not defined` or `Can't find variable: crypto`. The error appears deep in WalletConnect's internal stack, not at the import site.
 
 **Why it happens:** WalletConnect's JS modules execute their body code on import. If `@walletconnect/react-native-compat` hasn't run yet, the globals it patches are missing when the first WalletConnect module is executed.
@@ -398,6 +406,7 @@ export default function Index() {
 **Warning signs:** "X is not defined" errors on launch with stack traces pointing into `node_modules/@walletconnect/` or `node_modules/ethers/`.
 
 ### Pitfall 2: Missing babel.config.js
+
 **What goes wrong:** App silently fails to render, or crashes with `import.meta is not defined` or `SyntaxError: Unexpected identifier 'n'` (the `n` suffix on BigInt literals).
 
 **Why it happens:** Expo SDK 54 uses `babel-preset-expo` but does not create a `babel.config.js` file. The two required flags (`unstable_transformImportMeta`, `unstable_transformProfile: 'hermes-stable'`) have no defaults — they must be explicitly set.
@@ -407,6 +416,7 @@ export default function Index() {
 **Warning signs:** `import.meta` errors in stack traces pointing to `node_modules/valtio/` or `node_modules/@reown/`. BigInt syntax errors in stack traces pointing to `node_modules/ethers/`.
 
 ### Pitfall 3: Metro Cache Stale After Config Changes
+
 **What goes wrong:** Changes to `babel.config.js` or `metro.config.js` appear to have no effect. The old error persists.
 
 **Why it happens:** Metro caches its transform output. Config changes do not automatically invalidate the cache.
@@ -416,6 +426,7 @@ export default function Index() {
 **Warning signs:** Errors that should be fixed by a config change are still occurring.
 
 ### Pitfall 4: `extraNodeModules` Overwriting NativeWind Config
+
 **What goes wrong:** NativeWind stops working — styles are not applied, or `className` is treated as an unknown prop.
 
 **Why it happens:** Incorrectly replacing the `withNativeWind` call with a raw `extraNodeModules` assignment, or assigning `extraNodeModules` inside the `withNativeWind` options object instead of on the `config` object.
@@ -425,6 +436,7 @@ export default function Index() {
 **Warning signs:** NativeWind `className` props stop styling components after metro.config.js is changed.
 
 ### Pitfall 5: `requireEnv` Throws Before App Renders
+
 **What goes wrong:** App crashes at the white screen stage with an unhandled `Error: Missing required environment variable` before any UI appears.
 
 **Why it happens:** `env.ts` is imported by `lib/appkit.ts` which is imported by `app-provider.tsx` which wraps the root layout. If `.env` is missing or empty, the throw happens before React can mount any error UI.
@@ -434,6 +446,7 @@ export default function Index() {
 **Warning signs:** White screen on launch with Metro log showing `Error: Missing required environment variable: EXPO_PUBLIC_REOWN_PROJECT_ID`.
 
 ### Pitfall 6: React Compiler + AppKit Hooks
+
 **What goes wrong:** AppKit hooks (`useAppKitProvider`, `useAccount`) return stale values or don't re-render on connection state changes.
 
 **Why it happens:** The React Compiler is enabled experimentally in this project (`experiments.reactCompiler: true` in `app.json`). It only runs on application code (not node_modules), but if a custom hook that wraps AppKit hooks violates React's rules (e.g., conditional hook calls), the compiler may produce incorrect memoization.
@@ -449,6 +462,7 @@ export default function Index() {
 Verified patterns from official sources:
 
 ### .env.example
+
 ```bash
 # .env.example — copy to .env and fill in real values
 # All vars are required. App will throw at startup if any are missing.
@@ -465,6 +479,7 @@ EXPO_PUBLIC_INFURA_RPC_URL=https://mainnet.infura.io/v3/your_infura_project_id_h
 ```
 
 ### Quick-crypto registration with ethers v6
+
 ```typescript
 // Source: https://docs.ethers.org/v6/cookbook/react-native/
 import { ethers } from 'ethers';
@@ -488,6 +503,7 @@ ethers.sha512.register((data) => {
 ```
 
 ### Android physical device build commands
+
 ```bash
 # Prerequisites (one-time setup):
 # 1. Install Android Studio: https://developer.android.com/studio
@@ -518,14 +534,15 @@ npx expo start --clear
 
 ## State of the Art
 
-| Old Approach | Current Approach | When Changed | Impact |
-|--------------|------------------|--------------|--------|
-| `@web3modal/ethers-react-native` | `@reown/appkit-react-native` + `@reown/appkit-ethers-react-native` | 2024 (Reown rebrand) | Old package receives no new features. Use new package names. |
-| `crypto-browserify` in `extraNodeModules` | `react-native-quick-crypto` in `extraNodeModules` | 2022–2023 | `crypto-browserify` is pure JS, adds ~200KB, and is effectively abandoned. `react-native-quick-crypto` is C++ JSI, faster, actively maintained. |
-| Etherscan API v1 (`/api?module=...`) | Etherscan API v2 (`/v2/api?chainid=1&...`) | Deprecated May 31, 2025 | Phase 4 must use v2. Not relevant to Phase 1, but noted to prevent a common copy-paste error from old examples. |
-| `babel-preset-expo` with no custom `babel.config.js` | Explicit `babel.config.js` with `unstable_transformImportMeta: true` + `unstable_transformProfile: 'hermes-stable'` | Expo SDK 53+ | Without this file, AppKit and ethers v6 both fail on first launch. |
+| Old Approach                                         | Current Approach                                                                                                    | When Changed            | Impact                                                                                                                                          |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@web3modal/ethers-react-native`                     | `@reown/appkit-react-native` + `@reown/appkit-ethers-react-native`                                                  | 2024 (Reown rebrand)    | Old package receives no new features. Use new package names.                                                                                    |
+| `crypto-browserify` in `extraNodeModules`            | `react-native-quick-crypto` in `extraNodeModules`                                                                   | 2022–2023               | `crypto-browserify` is pure JS, adds ~200KB, and is effectively abandoned. `react-native-quick-crypto` is C++ JSI, faster, actively maintained. |
+| Etherscan API v1 (`/api?module=...`)                 | Etherscan API v2 (`/v2/api?chainid=1&...`)                                                                          | Deprecated May 31, 2025 | Phase 4 must use v2. Not relevant to Phase 1, but noted to prevent a common copy-paste error from old examples.                                 |
+| `babel-preset-expo` with no custom `babel.config.js` | Explicit `babel.config.js` with `unstable_transformImportMeta: true` + `unstable_transformProfile: 'hermes-stable'` | Expo SDK 53+            | Without this file, AppKit and ethers v6 both fail on first launch.                                                                              |
 
 **Deprecated/outdated:**
+
 - `rn-nodeify`: Old polyfill approach using postinstall script hacks. Replaced by `extraNodeModules` in metro.config.js.
 - `@ethersproject/shims` (without quick-crypto): Technically functional but produces 30+ second wallet operations. Not acceptable for production use.
 
@@ -561,11 +578,11 @@ npx expo start --clear
 
 No existing test framework is present in this project. All test files found during scanning are inside `node_modules`.
 
-| Property | Value |
-|----------|-------|
-| Framework | None installed |
-| Config file | None — Wave 0 gap |
-| Quick run command | N/A until framework installed |
+| Property           | Value                         |
+| ------------------ | ----------------------------- |
+| Framework          | None installed                |
+| Config file        | None — Wave 0 gap             |
+| Quick run command  | N/A until framework installed |
 | Full suite command | N/A until framework installed |
 
 **Assessment for Phase 1:** Phase 1 requirements are fundamentally device-runtime behaviors (polyfill crashes, Babel transform errors, build success). These cannot be meaningfully unit tested — they manifest only in a native build on a physical device. Automated testing infrastructure is therefore not applicable to FOUND-01 and FOUND-02. FOUND-03 (env var readable) can be lightly verified via a manual smoke test.
@@ -574,11 +591,11 @@ The appropriate validation mechanism for this phase is the smoke test screen on 
 
 ### Phase Requirements to Test Map
 
-| Req ID | Behavior | Test Type | Automated Command | Automated? |
-|--------|----------|-----------|-------------------|-----------|
-| FOUND-01 | App launches without polyfill or crypto-related runtime crash | Device smoke test | Manual — launch on physical Android device, verify no crash | Manual only — crash happens at JS runtime in native build |
-| FOUND-02 | EAS development build (via `npx expo run:android`) compiles and installs | Build verification | `npx expo run:android` exit code 0 | Manual — requires connected device |
-| FOUND-03 | All three env vars readable from `config/env.ts` | Device smoke test | Manual — check smoke test screen shows masked values | Manual only — requires running app |
+| Req ID   | Behavior                                                                 | Test Type          | Automated Command                                           | Automated?                                                |
+| -------- | ------------------------------------------------------------------------ | ------------------ | ----------------------------------------------------------- | --------------------------------------------------------- |
+| FOUND-01 | App launches without polyfill or crypto-related runtime crash            | Device smoke test  | Manual — launch on physical Android device, verify no crash | Manual only — crash happens at JS runtime in native build |
+| FOUND-02 | EAS development build (via `npx expo run:android`) compiles and installs | Build verification | `npx expo run:android` exit code 0                          | Manual — requires connected device                        |
+| FOUND-03 | All three env vars readable from `config/env.ts`                         | Device smoke test  | Manual — check smoke test screen shows masked values        | Manual only — requires running app                        |
 
 ### Wave 0 Gaps
 
@@ -589,13 +606,14 @@ For Phase 1, the validation is entirely device-level. The smoke test screen in `
 - [ ] Reown Project ID obtained from https://cloud.reown.com — required for AppKit to initialize without throwing
 - [ ] Infura Project ID obtained from https://app.infura.io — required for `EXPO_PUBLIC_INFURA_RPC_URL` to be set
 
-*No automated test framework is installed. Unit testing of polyfill behavior and build infrastructure is not practical. The smoke test screen is the intended verification mechanism for this phase.*
+_No automated test framework is installed. Unit testing of polyfill behavior and build infrastructure is not practical. The smoke test screen is the intended verification mechanism for this phase._
 
 ---
 
 ## Sources
 
 ### Primary (HIGH confidence)
+
 - [Reown AppKit React Native Installation](https://docs.reown.com/appkit/react-native/core/installation) — exact install command, polyfill import order, `babel.config.js` with `unstable_transformImportMeta`, `AppKitProvider` with `instance` prop, `<AppKit />` component placement
 - [ethers.js v6 React Native cookbook](https://docs.ethers.org/v6/cookbook/react-native/) — quick-crypto registration API for all five crypto primitives
 - [reown-com/react-native-examples — appkit-expo-wagmi](https://github.com/reown-com/react-native-examples/tree/main/dapps/appkit-expo-wagmi) — confirms `unstable_transformImportMeta: true` in `babel.config.js` for Expo AppKit example
@@ -605,12 +623,14 @@ For Phase 1, the validation is entirely device-level. The smoke test screen in `
 - [Expo React Compiler guide](https://docs.expo.dev/guides/react-compiler/) — compiler only runs on application code (not node_modules), `'use no memo'` opt-out
 
 ### Secondary (MEDIUM confidence)
+
 - [Hermes BigInt issue #510](https://github.com/facebook/hermes/issues/510) — `unstable_transformProfile: 'hermes-stable'` requirement documented by React Native core team
 - [ethers.js Discussion #3905 — React Native](https://github.com/ethers-io/ethers.js/discussions/3905) — community-verified install steps for ethers v6 on React Native
 - [project STACK.md](../../research/STACK.md) — Metro `extraNodeModules` pattern, `stream-browserify` + `@craftzdog/react-native-buffer` alias map
 - [project PITFALLS.md](../../research/PITFALLS.md) — polyfill order pitfalls, Expo Go limitations, BigInt/Babel pitfalls, all verified against official sources
 
 ### Tertiary (LOW confidence)
+
 - None for this phase — all critical claims are covered by HIGH or MEDIUM sources.
 
 ---
@@ -618,6 +638,7 @@ For Phase 1, the validation is entirely device-level. The smoke test screen in `
 ## Metadata
 
 **Confidence breakdown:**
+
 - Standard stack: HIGH — packages verified against official Reown install command; versions confirmed compatible with Expo SDK 54 / RN 0.81 in existing STACK.md research
 - Architecture: HIGH — AppKit singleton pattern is the mandated Reown approach per official docs; Metro extraNodeModules pattern verified against official Metro docs; provider wiring confirmed against appkit-expo-wagmi example
 - Pitfalls: HIGH — all six pitfalls have official source backing (Reown docs, Hermes issue tracker, Expo docs, React Compiler docs)

@@ -27,11 +27,7 @@ export function TransactionRow({ tx, userAddress }: TransactionRowProps) {
         : 'text-gray-400';
 
   const amountPrefix =
-    isZero || direction === 'self'
-      ? ''
-      : direction === 'incoming'
-        ? '+'
-        : '-';
+    isZero || direction === 'self' ? '' : direction === 'incoming' ? '+' : '-';
 
   return (
     <View className="px-4 py-2">
@@ -40,7 +36,8 @@ export function TransactionRow({ tx, userAddress }: TransactionRowProps) {
       </Text>
       <View className="flex-row justify-between mt-1">
         <Text className={`text-sm font-semibold ${amountColor}`}>
-          {amountPrefix}{ethValue} ETH
+          {amountPrefix}
+          {ethValue} ETH
         </Text>
         <Text className="text-xs text-gray-400">
           {formatRelativeTime(tx.timeStamp)}
