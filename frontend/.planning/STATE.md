@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 4 context gathered
-last_updated: "2026-04-02T03:56:06.349Z"
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-04-02T06:49:17.141Z"
 last_activity: 2026-04-01 — Roadmap created for milestone v1.0
 progress:
   total_phases: 5
   completed_phases: 3
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 7
+  completed_plans: 6
   percent: 0
 ---
 
@@ -55,6 +55,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-wallet-connection P01 | 3min | 2 tasks | 9 files |
 | Phase 02-wallet-connection P02 | 2min | 2 tasks | 7 files |
 | Phase 03-balance-display P01 | 2min | 2 tasks | 4 files |
+| Phase 04-transaction-history P01 | 70s | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -79,6 +80,8 @@ Recent decisions affecting current work:
 - [Phase 03-balance-display]: useBalance reads address from useWalletStore directly (not useWalletConnection) to avoid importing connect/disconnect logic
 - [Phase 03-balance-display]: JsonRpcProvider with staticNetwork: true prevents redundant eth_chainId RPC call on provider creation
 - [Phase 03-balance-display]: formatBalance exported as pure function separate from useBalance hook for independent testability
+- [Phase 04-transaction-history]: useTransactions treats Etherscan status '0' as empty list, not error — consistent with API semantics for wallets with no transactions
+- [Phase 04-transaction-history]: refreshTrigger added as optional parameter to useBalance and useTransactions for pull-to-refresh coordination without breaking existing callers
 
 ### Pending Todos
 
@@ -92,6 +95,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-02T03:56:06.346Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-transaction-history/04-CONTEXT.md
+Last session: 2026-04-02T06:49:17.139Z
+Stopped at: Completed 04-01-PLAN.md
+Resume file: None

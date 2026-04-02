@@ -67,7 +67,7 @@ Plans:
   1. The wallet screen shows up to 10 recent transactions, each displaying the transaction hash (truncated), from/to address (truncated), ETH value, and a timestamp
   2. User can distinguish incoming from outgoing transactions visually (direction indicator)
   3. User pulls down on the transaction list and the balance and transactions both refresh with updated data from the network
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 Plans:
 - [ ] 04-01-PLAN.md — Types, useTransactions hook, utility functions, add refreshTrigger to useBalance
 - [ ] 04-02-PLAN.md — TransactionRow, TransactionSkeleton components, restructure ConnectedScreen with FlatList and pull-to-refresh
@@ -92,5 +92,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Foundation & Polyfills | 2/2 | Complete   | 2026-04-01 |
 | 2. Wallet Connection | 2/2 | Complete   | 2026-04-01 |
 | 3. Balance Display | 1/1 | Complete   | 2026-04-02 |
-| 4. Transaction History | 0/2 | Planned | - |
+| 4. Transaction History | 1/2 | In Progress|  |
 | 5. Error Handling & Polish | 0/? | Not started | - |

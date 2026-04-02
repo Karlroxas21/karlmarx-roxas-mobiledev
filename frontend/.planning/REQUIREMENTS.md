@@ -26,8 +26,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Transactions
 
-- [ ] **TX-01**: User can view their last 10 transactions with basic details (hash, from/to, value, timestamp)
-- [ ] **TX-02**: User can pull-to-refresh to update balance and transactions
+- [x] **TX-01**: User can view their last 10 transactions with basic details (hash, from/to, value, timestamp)
+- [x] **TX-02**: User can pull-to-refresh to update balance and transactions
 
 ### Error Handling
 
@@ -78,8 +78,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | WALLET-03 | Phase 2 | Complete |
 | WALLET-04 | Phase 2 | Complete |
 | BAL-01 | Phase 3 | Complete |
-| TX-01 | Phase 4 | Pending |
-| TX-02 | Phase 4 | Pending |
+| TX-01 | Phase 4 | Complete |
+| TX-02 | Phase 4 | Complete |
 | ERR-01 | Phase 5 | Pending |
 | ERR-02 | Phase 5 | Pending |
 | ERR-03 | Phase 5 | Pending |
