@@ -22,7 +22,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Balance
 
-- [ ] **BAL-01**: User can view their ETH balance (formatted in ETH, 4-6 decimal places)
+- [x] **BAL-01**: User can view their ETH balance (formatted in ETH, 4-6 decimal places)
 
 ### Transactions
 
@@ -77,7 +77,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | WALLET-02 | Phase 2 | Complete |
 | WALLET-03 | Phase 2 | Complete |
 | WALLET-04 | Phase 2 | Complete |
-| BAL-01 | Phase 3 | Pending |
+| BAL-01 | Phase 3 | Complete |
 | TX-01 | Phase 4 | Pending |
 | TX-02 | Phase 4 | Pending |
 | ERR-01 | Phase 5 | Pending |

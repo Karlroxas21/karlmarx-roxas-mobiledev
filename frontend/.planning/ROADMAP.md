@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Polyfills** - Wire polyfills, Babel/Metro config, and EAS dev build so the app boots on device without errors (completed 2026-04-01)
 - [x] **Phase 2: Wallet Connection** - User can connect, persist, and disconnect an Ethereum wallet via WalletConnect v2 and MetaMask deep-link (completed 2026-04-01)
-- [ ] **Phase 3: Balance Display** - Connected user sees their ETH balance formatted in ETH at the top of the wallet screen
+- [x] **Phase 3: Balance Display** - Connected user sees their ETH balance formatted in ETH at the top of the wallet screen (completed 2026-04-02)
 - [ ] **Phase 4: Transaction History** - Connected user sees their last 10 transactions with direction, amount, counterparty, and timestamp
 - [ ] **Phase 5: Error Handling & Polish** - All error states surface with retry affordances; pull-to-refresh, address copy, and visual polish are applied
 
@@ -55,7 +55,7 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. After connecting a wallet, the user sees their ETH balance displayed in ETH (not Wei) with 4-6 decimal places on the wallet screen
   2. While the balance is loading, a loading indicator is visible in place of the balance value
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 Plans:
 - [ ] 03-01-PLAN.md — Create useBalance hook, BalanceSkeleton/BalanceDisplay components, wire into ConnectedScreen
 
@@ -88,6 +88,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Foundation & Polyfills | 2/2 | Complete   | 2026-04-01 |
 | 2. Wallet Connection | 2/2 | Complete   | 2026-04-01 |
-| 3. Balance Display | 0/1 | Not started | - |
+| 3. Balance Display | 1/1 | Complete   | 2026-04-02 |
 | 4. Transaction History | 0/? | Not started | - |
 | 5. Error Handling & Polish | 0/? | Not started | - |

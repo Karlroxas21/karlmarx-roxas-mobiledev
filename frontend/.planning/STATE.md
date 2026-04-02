@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 3 context gathered
-last_updated: "2026-04-02T02:53:27.275Z"
+stopped_at: Completed 03-balance-display-01-PLAN.md
+last_updated: "2026-04-02T03:32:42.527Z"
 last_activity: 2026-04-01 — Roadmap created for milestone v1.0
 progress:
   total_phases: 5
-  completed_phases: 2
-  total_plans: 4
-  completed_plans: 4
+  completed_phases: 3
+  total_plans: 5
+  completed_plans: 5
   percent: 0
 ---
 
@@ -54,6 +54,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-foundation-polyfills P02 | 5min | 2 tasks | 3 files |
 | Phase 02-wallet-connection P01 | 3min | 2 tasks | 9 files |
 | Phase 02-wallet-connection P02 | 2min | 2 tasks | 7 files |
+| Phase 03-balance-display P01 | 2min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,9 @@ Recent decisions affecting current work:
 - [Phase 02-wallet-connection]: ConnectionError splits message and retry hint into two separate Text nodes to avoid punctuation collision
 - [Phase 02-wallet-connection]: ConnectedScreen casts address to 0x-typed string at call site for BlockieIdenticon prop compatibility
 - [Phase 02-wallet-connection]: ConnectScreen wraps content in ScrollView with contentContainerClassName for vertical centering with overflow scroll
+- [Phase 03-balance-display]: useBalance reads address from useWalletStore directly (not useWalletConnection) to avoid importing connect/disconnect logic
+- [Phase 03-balance-display]: JsonRpcProvider with staticNetwork: true prevents redundant eth_chainId RPC call on provider creation
+- [Phase 03-balance-display]: formatBalance exported as pure function separate from useBalance hook for independent testability
 
 ### Pending Todos
 
@@ -88,6 +92,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-02T02:53:27.273Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-balance-display/03-CONTEXT.md
+Last session: 2026-04-02T03:32:42.525Z
+Stopped at: Completed 03-balance-display-01-PLAN.md
+Resume file: None
