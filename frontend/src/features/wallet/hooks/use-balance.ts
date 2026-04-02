@@ -38,7 +38,7 @@ export function useBalance(refreshTrigger?: number): BalanceState {
       undefined,
       { staticNetwork: true },
     );
-
+    
     provider
       .getBalance(address)
       .then((raw) => {
