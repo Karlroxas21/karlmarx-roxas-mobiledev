@@ -45,8 +45,8 @@ Plans:
   5. `EthereumService` fetches gas price and block number in parallel via `Promise.all` on cache miss; balance is always fetched live after the cache check; service API surface is finalized (method signatures settled)
 **Plans:** 2/2 plans complete
 Plans:
-- [ ] 02-01-PLAN.md — Port interfaces, DTOs, error classes, constants, and Wave 0 test scaffold
-- [ ] 02-02-PLAN.md — EthereumService implementation with full business logic
+- [x] 02-01-PLAN.md — Port interfaces, DTOs, error classes, constants, and Wave 0 test scaffold
+- [x] 02-02-PLAN.md — EthereumService implementation with full business logic
 
 ### Phase 3: Adapters
 **Goal**: EtherscanAdapter, RedisAdapter, and TypeOrmBalanceRepository implement their respective port interfaces — each adapter handles its own failure mode without propagating errors to the service
@@ -58,7 +58,11 @@ Plans:
   3. Redis failure (connection error, timeout) logs a warning and the service falls back to live Etherscan fetch — no 500 returned to the caller
   4. Balance insert writes to PostgreSQL as a historical append (not upsert); the insert is fire-and-forget and does not delay the response
   5. PostgreSQL insert failure logs a warning and the response is still returned — the missing insert does not cause a 500
-**Plans**: TBD
+**Plans:** 3 plans
+Plans:
+- [ ] 03-01-PLAN.md — Wave 0 test scaffolds for all three adapters
+- [ ] 03-02-PLAN.md — EtherscanAdapter implementing IEthereumProvider
+- [ ] 03-03-PLAN.md — RedisAdapter, Balance entity, TypeOrmBalanceRepository, and wire.ts entity registration
 
 ### Phase 4: HTTP Layer and Docker
 **Goal**: EthereumController is registered, wire.ts is async, the health endpoint exists, and Docker Compose runs the full stack with health checks
@@ -80,5 +84,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Infrastructure Foundations | 1/1 | Complete   | 2026-04-02 |
 | 2. Component Layer | 2/2 | Complete   | 2026-04-02 |
-| 3. Adapters | 0/TBD | Not started | - |
+| 3. Adapters | 0/3 | In progress | - |
 | 4. HTTP Layer and Docker | 0/TBD | Not started | - |
