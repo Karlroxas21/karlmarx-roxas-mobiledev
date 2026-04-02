@@ -1,0 +1,1 @@
+cd backend && npx prettier --check "src/**/*.ts" && npx eslint src/
