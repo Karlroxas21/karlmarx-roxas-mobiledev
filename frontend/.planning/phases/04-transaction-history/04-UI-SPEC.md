@@ -174,7 +174,7 @@ SafeAreaView [flex-1 bg-white]
 ```
 View [px-4 py-2]
   Text [text-sm text-gray-900 font-mono]       — counterparty address (6+4 truncated)
-  View [flex-row justify-between mt-0.5]
+  View [flex-row justify-between mt-1]
     Text [text-sm font-semibold {amountColor}]  — {prefix}{value} ETH
     Text [text-xs text-gray-400]               — relative timestamp ("2h ago")
 ```
