@@ -89,7 +89,7 @@ describe('EtherscanAdapter', () => {
                 data: {
                     jsonrpc: '2.0',
                     id: 1,
-                    result: '0x1661760',
+                    result: '0x1661b60',
                 },
             });
 
