@@ -10,7 +10,7 @@ export function ConnectionError({ hasError }: ConnectionErrorProps) {
   return (
     <View className="mt-2">
       <Text className="text-red-600 text-sm text-center">
-        Couldn't connect wallet
+        {"Couldn't connect wallet"}
       </Text>
       <Text className="text-gray-500 text-sm text-center mt-1">
         Tap Connect Wallet to try again.
