@@ -29,7 +29,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. TypeORM DataSource connects to PostgreSQL and `synchronize: true` is gated behind a `NODE_ENV !== 'production'` guard
   4. Redis client initializes without crashing the process when Redis is unreachable (error event is handled)
   5. `reflect-metadata` is the first import in `index.ts` and `experimentalDecorators`/`emitDecoratorMetadata` are set in `tsconfig.json`
-**Plans**: TBD
+**Plans:** 1 plan
+Plans:
+- [ ] 01-01-PLAN.md — Install deps, env var validation, TypeORM + Redis initialization
 
 ### Phase 2: Component Layer
 **Goal**: The ethereum component's port interfaces, DTOs, and EthereumService are defined — the service orchestrates cache-check, parallel Etherscan calls, and fire-and-forget DB insert, all against interfaces (no concrete adapters yet)
@@ -73,7 +75,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Infrastructure Foundations | 0/TBD | Not started | - |
+| 1. Infrastructure Foundations | 0/1 | Not started | - |
 | 2. Component Layer | 0/TBD | Not started | - |
 | 3. Adapters | 0/TBD | Not started | - |
 | 4. HTTP Layer and Docker | 0/TBD | Not started | - |
