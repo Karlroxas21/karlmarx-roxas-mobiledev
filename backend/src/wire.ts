@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import { Redis } from 'ioredis';
 import { Server, Controller } from './server';
 import { config, logger } from './config';
+import { Balance } from './infrastructure/postgres/Balance.entity';
 
 export const createServer = async (): Promise<Server> => {
     const app = express();
@@ -13,7 +14,7 @@ export const createServer = async (): Promise<Server> => {
         url: config.databaseUrl,
         synchronize: process.env.NODE_ENV !== 'production',
         logging: process.env.NODE_ENV === 'development',
-        entities: [],
+        entities: [Balance],
     });
     await dataSource.initialize();
     logger.info('PostgreSQL DataSource initialized');
