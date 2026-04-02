@@ -31,9 +31,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Error Handling
 
-- [ ] **ERR-01**: User sees clear error message when wallet connection fails
-- [ ] **ERR-02**: User sees clear error message when API/RPC calls fail
-- [ ] **ERR-03**: User can retry failed operations via a retry button
+- [x] **ERR-01**: User sees clear error message when wallet connection fails
+- [x] **ERR-02**: User sees clear error message when API/RPC calls fail
+- [x] **ERR-03**: User can retry failed operations via a retry button
 
 ## v2 Requirements
 
@@ -80,9 +80,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BAL-01 | Phase 3 | Complete |
 | TX-01 | Phase 4 | Complete |
 | TX-02 | Phase 4 | Complete |
-| ERR-01 | Phase 5 | Pending |
-| ERR-02 | Phase 5 | Pending |
-| ERR-03 | Phase 5 | Pending |
+| ERR-01 | Phase 5 | Complete |
+| ERR-02 | Phase 5 | Complete |
+| ERR-03 | Phase 5 | Complete |
 
 **Coverage:**
 - v1.0 requirements: 13 total

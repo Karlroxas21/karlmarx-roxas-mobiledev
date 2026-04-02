@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 5 context gathered
-last_updated: "2026-04-02T08:04:47.735Z"
+stopped_at: Paused at Task 3 human-verify checkpoint (05-01)
+last_updated: "2026-04-02T08:26:26.795Z"
 last_activity: 2026-04-01 — Roadmap created for milestone v1.0
 progress:
   total_phases: 5
-  completed_phases: 4
-  total_plans: 7
-  completed_plans: 7
+  completed_phases: 5
+  total_plans: 8
+  completed_plans: 8
   percent: 0
 ---
 
@@ -57,6 +57,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-balance-display P01 | 2min | 2 tasks | 4 files |
 | Phase 04-transaction-history P01 | 70s | 3 tasks | 3 files |
 | Phase 04-transaction-history P02 | 4min | 2 tasks | 3 files |
+| Phase 05-error-handling-polish P01 | 7min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -85,6 +86,9 @@ Recent decisions affecting current work:
 - [Phase 04-transaction-history]: refreshTrigger added as optional parameter to useBalance and useTransactions for pull-to-refresh coordination without breaking existing callers
 - [Phase 04-transaction-history]: txError from useTransactions not destructured in ConnectedScreen — error display is Phase 5 scope per copywriting contract
 - [Phase 04-transaction-history]: Unused destructured hook return values are omitted entirely (not renamed with underscore) to satisfy no-unused-vars lint rule — underscore prefix not configured as ignore pattern
+- [Phase 05-error-handling-polish]: ErrorState is a shared presentational component — message prop is non-nullable string, callers only render when error exists
+- [Phase 05-error-handling-polish]: ConnectionError uses hasError boolean instead of message string — hard-coded friendly copy replaces raw JS error propagation
+- [Phase 05-error-handling-polish]: handleRetry increments refreshTrigger without pull-to-refresh spinner — button retry is distinct from pull-to-refresh interaction
 
 ### Pending Todos
 
@@ -98,6 +102,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-02T08:04:47.732Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-error-handling-polish/05-CONTEXT.md
+Last session: 2026-04-02T08:25:45.938Z
+Stopped at: Paused at Task 3 human-verify checkpoint (05-01)
+Resume file: None

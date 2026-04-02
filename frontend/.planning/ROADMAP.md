@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Wallet Connection** - User can connect, persist, and disconnect an Ethereum wallet via WalletConnect v2 and MetaMask deep-link (completed 2026-04-01)
 - [x] **Phase 3: Balance Display** - Connected user sees their ETH balance formatted in ETH at the top of the wallet screen (completed 2026-04-02)
 - [x] **Phase 4: Transaction History** - Connected user sees their last 10 transactions with direction, amount, counterparty, and timestamp (completed 2026-04-02)
-- [ ] **Phase 5: Error Handling & Polish** - All error states surface with retry affordances; pull-to-refresh, address copy, and visual polish are applied
+- [x] **Phase 5: Error Handling & Polish** - All error states surface with retry affordances; pull-to-refresh, address copy, and visual polish are applied (completed 2026-04-02)
 
 ## Phase Details
 
@@ -80,7 +80,7 @@ Plans:
   1. When wallet connection fails, the user sees a readable error message (not a raw exception) explaining what went wrong
   2. When the ETH balance or transaction history fetch fails, the user sees an error message specific to that section
   3. User can tap a retry button on any failed section and the app re-attempts the failed operation without requiring a full restart
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 Plans:
 - [ ] 05-01-PLAN.md — Create ErrorState component, polish ConnectionError copy, wire balance/transaction error states with retry in ConnectedScreen
 
@@ -95,4 +95,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Wallet Connection | 2/2 | Complete   | 2026-04-01 |
 | 3. Balance Display | 1/1 | Complete   | 2026-04-02 |
 | 4. Transaction History | 2/2 | Complete   | 2026-04-02 |
-| 5. Error Handling & Polish | 0/1 | Not started | - |
+| 5. Error Handling & Polish | 1/1 | Complete   | 2026-04-02 |
