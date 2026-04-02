@@ -12,7 +12,7 @@ Build a clean `GET /api/ethereum/:address` endpoint on top of the existing Expre
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Infrastructure Foundations** - Dependencies installed, TypeORM and Redis clients initialized, env config validated at startup
+- [x] **Phase 1: Infrastructure Foundations** - Dependencies installed, TypeORM and Redis clients initialized, env config validated at startup (completed 2026-04-02)
 - [ ] **Phase 2: Component Layer** - Port interfaces, response/request DTOs, and EthereumService with full business logic
 - [ ] **Phase 3: Adapters** - EtherscanAdapter, RedisAdapter, and TypeOrmBalanceRepository implementing their port interfaces
 - [ ] **Phase 4: HTTP Layer and Docker** - EthereumController, async wire.ts, health endpoint, and Docker Compose
@@ -29,7 +29,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. TypeORM DataSource connects to PostgreSQL and `synchronize: true` is gated behind a `NODE_ENV !== 'production'` guard
   4. Redis client initializes without crashing the process when Redis is unreachable (error event is handled)
   5. `reflect-metadata` is the first import in `index.ts` and `experimentalDecorators`/`emitDecoratorMetadata` are set in `tsconfig.json`
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 Plans:
 - [ ] 01-01-PLAN.md — Install deps, env var validation, TypeORM + Redis initialization
 
@@ -75,7 +75,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Infrastructure Foundations | 0/1 | Not started | - |
+| 1. Infrastructure Foundations | 1/1 | Complete   | 2026-04-02 |
 | 2. Component Layer | 0/TBD | Not started | - |
 | 3. Adapters | 0/TBD | Not started | - |
 | 4. HTTP Layer and Docker | 0/TBD | Not started | - |

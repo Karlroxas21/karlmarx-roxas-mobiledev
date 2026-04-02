@@ -21,7 +21,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **ETH-01**: Gas price, block number, and balance are fetched from Etherscan API in parallel via `Promise.all`
 - [ ] **ETH-02**: Etherscan response validation checks `status !== "1"` (not just HTTP status)
 - [ ] **ETH-03**: Etherscan failures return 502 with structured error to client
-- [ ] **ETH-04**: Etherscan API key and base URL are configured via environment variables
+- [x] **ETH-04**: Etherscan API key and base URL are configured via environment variables
 
 ### Caching
 
@@ -45,7 +45,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **INFRA-01**: `GET /api/health` endpoint returns `{ "status": "ok" }` for Docker/probe checks
 - [ ] **INFRA-02**: Docker Compose runs full stack (API + PostgreSQL + Redis) with healthchecks
-- [ ] **INFRA-03**: Application validates required environment variables at startup and fails fast with descriptive error
+- [x] **INFRA-03**: Application validates required environment variables at startup and fails fast with descriptive error
 
 ## v2 Requirements
 
@@ -89,7 +89,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ETH-01 | Phase 2 | Pending |
 | ETH-02 | Phase 3 | Pending |
 | ETH-03 | Phase 2 | Pending |
-| ETH-04 | Phase 1 | Pending |
+| ETH-04 | Phase 1 | Complete |
 | CACHE-01 | Phase 3 | Pending |
 | CACHE-02 | Phase 3 | Pending |
 | CACHE-03 | Phase 3 | Pending |
@@ -101,7 +101,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ARCH-03 | Phase 4 | Pending |
 | INFRA-01 | Phase 4 | Pending |
 | INFRA-02 | Phase 4 | Pending |
-| INFRA-03 | Phase 1 | Pending |
+| INFRA-03 | Phase 1 | Complete |
 
 **Coverage:**
 - v1 requirements: 22 total
