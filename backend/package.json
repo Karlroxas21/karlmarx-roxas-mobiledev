@@ -19,8 +19,13 @@
   "type": "commonjs",
   "dependencies": {
     "@types/cors": "^2.8.19",
+    "@types/pg": "^8.20.0",
+    "axios": "1.14.0",
     "cors": "^2.8.6",
+    "ethers": "^6.16.0",
     "express": "^5.2.1",
+    "ioredis": "^5.10.1",
+    "pg": "^8.20.0",
     "swagger-ui-express": "^5.0.1",
     "typeorm": "^0.3.28",
     "winston": "^3.19.0"
