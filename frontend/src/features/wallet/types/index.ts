@@ -10,3 +10,14 @@ export type WalletState = {
   setStatus: (status: ConnectionStatus) => void;
   setError: (error: string | null) => void;
 };
+
+export type Transaction = {
+  hash: string;
+  from: string;
+  to: string;
+  value: string; // Wei string from Etherscan (e.g., "500000000000000000")
+  timeStamp: number; // Unix seconds (parsed from Etherscan's string)
+  isError: boolean;
+};
+
+export type TxDirection = 'incoming' | 'outgoing' | 'self';
