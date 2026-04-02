@@ -26,13 +26,13 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Caching
 
 - [x] **CACHE-01**: Gas price and block number are cached in Redis with ~15s TTL
-- [ ] **CACHE-02**: Cache hit skips Etherscan calls for gas/block (balance always fetched live)
+- [x] **CACHE-02**: Cache hit skips Etherscan calls for gas/block (balance always fetched live)
 - [x] **CACHE-03**: Redis failure degrades gracefully — fallback to live Etherscan fetch, not 500
 
 ### Database
 
 - [x] **DB-01**: Account balance is stored in PostgreSQL on each request (historical log, not upsert)
-- [ ] **DB-02**: Database insert is non-blocking (fire-and-forget, does not slow response)
+- [x] **DB-02**: Database insert is non-blocking (fire-and-forget, does not slow response)
 - [x] **DB-03**: PostgreSQL failure degrades gracefully — response still returned, insert skipped with warning log
 
 ### Architecture
@@ -91,10 +91,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ETH-03 | Phase 2 | Complete |
 | ETH-04 | Phase 1 | Complete |
 | CACHE-01 | Phase 3 | Complete |
-| CACHE-02 | Phase 3 | Pending |
+| CACHE-02 | Phase 3 | Complete |
 | CACHE-03 | Phase 3 | Complete |
 | DB-01 | Phase 3 | Complete |
-| DB-02 | Phase 3 | Pending |
+| DB-02 | Phase 3 | Complete |
 | DB-03 | Phase 3 | Complete |
 | ARCH-01 | Phase 2 | Complete |
 | ARCH-02 | Phase 3 | Complete |
