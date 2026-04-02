@@ -73,7 +73,10 @@ Plans:
   2. `GET /api/ethereum/invalid-address` returns HTTP 400 with a structured error body — no Etherscan calls are made
   3. `GET /api/health` returns HTTP 200 with `{ "status": "ok" }`
   4. `docker compose up` starts API, PostgreSQL, and Redis; the API container passes its health check and is reachable at the mapped port
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 04-01-PLAN.md — EthereumController, health endpoint, and wire.ts full dependency wiring
+- [ ] 04-02-PLAN.md — Dockerfile, docker-compose.yml, .dockerignore, and .env.example
 
 ## Progress
 
@@ -85,4 +88,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Infrastructure Foundations | 1/1 | Complete   | 2026-04-02 |
 | 2. Component Layer | 2/2 | Complete   | 2026-04-02 |
 | 3. Adapters | 0/3 | In progress | - |
-| 4. HTTP Layer and Docker | 0/TBD | Not started | - |
+| 4. HTTP Layer and Docker | 0/2 | Not started | - |
