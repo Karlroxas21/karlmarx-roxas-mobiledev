@@ -18,7 +18,7 @@ export function formatBalance(wei: bigint): string {
   return eth.toFixed(4);
 }
 
-export function useBalance(): BalanceState {
+export function useBalance(refreshTrigger?: number): BalanceState {
   const address = useWalletStore((s) => s.address);
   const [state, setState] = useState<BalanceState>({
     balance: null,
@@ -63,7 +63,7 @@ export function useBalance(): BalanceState {
     return () => {
       cancelled = true;
     };
-  }, [address]);
+  }, [address, refreshTrigger]);
 
   return state;
 }
