@@ -42,13 +42,13 @@ Declared values (NativeWind Tailwind equivalents, all multiples of 4):
 | 2xl | 48px | `py-12` | Scroll container vertical breathing room |
 | 3xl | 64px | `mt-16` | CTA group top margin (ConnectScreen uses `mt-16`) |
 
-Transaction row padding: `px-4 py-3` (16px horizontal, 12px vertical) — sourced from RESEARCH.md TransactionRow example, consistent with existing card padding pattern.
+Transaction row padding: `px-4 py-2` (16px horizontal, 8px vertical).
 
 Section header spacing: `px-4 pt-4 pb-2` — 16px horizontal, 16px top, 8px bottom.
 
 Exceptions:
 - Touch target for Disconnect button: minimum 44px height (accessibility) — implemented via `h-11 w-11` per existing ConnectedScreen pattern.
-- Skeleton pulse rows: `py-3` vertical (12px) to match live row height and prevent layout shift on data arrival.
+- Skeleton pulse rows: `py-2` vertical (8px) to match live row height and prevent layout shift on data arrival.
 
 ---
 
@@ -69,13 +69,13 @@ Additional usage for Phase 4 new elements:
 |---------|------|--------|-----------------|--------|
 | Section header ("Transactions (N)") | 14px | 600 | `text-sm font-semibold text-gray-500` | Default — matches label hierarchy |
 | Counterparty address | 14px | 400 | `text-sm text-gray-900 font-mono` | RESEARCH.md TransactionRow example |
-| ETH amount (incoming) | 14px | 500 | `text-sm font-medium text-green-600` | RESEARCH.md TransactionRow example |
-| ETH amount (outgoing) | 14px | 500 | `text-sm font-medium text-red-600` | RESEARCH.md TransactionRow example |
-| ETH amount (self/zero) | 14px | 500 | `text-sm font-medium text-gray-400` | CONTEXT.md locked decision |
+| ETH amount (incoming) | 14px | 600 | `text-sm font-semibold text-green-600` | Collapsed from font-medium to font-semibold per 2-weight rule |
+| ETH amount (outgoing) | 14px | 600 | `text-sm font-semibold text-red-600` | Collapsed from font-medium to font-semibold per 2-weight rule |
+| ETH amount (self/zero) | 14px | 600 | `text-sm font-semibold text-gray-400` | Collapsed from font-medium to font-semibold per 2-weight rule |
 | Relative timestamp | 12px | 400 | `text-xs text-gray-400` | RESEARCH.md TransactionRow example |
 | Empty state text | 14px | 400 | `text-sm text-gray-400 text-center` | Default — matches BalanceDisplay error style |
 
-Font weights in use: regular (400) and medium/semibold (500/600). Existing codebase uses `font-semibold` (600) for headings and display values; body and labels use `font-normal` (400) or `font-medium` (500) for emphasis within rows.
+Font weights in use: regular (400) and semibold (600) only. Body text, labels, addresses, and timestamps use `font-normal` (400). Section headers and all ETH amount values use `font-semibold` (600).
 
 ---
 
@@ -172,18 +172,18 @@ SafeAreaView [flex-1 bg-white]
 ### TransactionRow
 
 ```
-View [px-4 py-3]
-  Text [text-sm text-gray-900 font-mono]     — counterparty address (6+4 truncated)
+View [px-4 py-2]
+  Text [text-sm text-gray-900 font-mono]       — counterparty address (6+4 truncated)
   View [flex-row justify-between mt-0.5]
-    Text [text-sm font-medium {amountColor}]  — {prefix}{value} ETH
-    Text [text-xs text-gray-400]              — relative timestamp ("2h ago")
+    Text [text-sm font-semibold {amountColor}]  — {prefix}{value} ETH
+    Text [text-xs text-gray-400]               — relative timestamp ("2h ago")
 ```
 
 ### TransactionSkeleton
 
 ```
 Fragment
-  View [px-4 py-3 gap-1.5]  × 3
+  View [px-4 py-2 gap-2]  × 3
     View [w-40 h-4 rounded bg-gray-200 animate-pulse]
     View [w-32 h-4 rounded bg-gray-200 animate-pulse]
 ```
