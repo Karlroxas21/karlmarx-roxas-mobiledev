@@ -38,7 +38,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Architecture
 
 - [x] **ARCH-01**: Ethereum component follows hexagonal architecture with port interfaces in `component/ethereum/interfaces.ts`
-- [ ] **ARCH-02**: Infrastructure adapters (Etherscan, Redis, PostgreSQL) implement port interfaces
+- [x] **ARCH-02**: Infrastructure adapters (Etherscan, Redis, PostgreSQL) implement port interfaces
 - [ ] **ARCH-03**: Dependencies are wired via constructor injection in `wire.ts`
 
 ### Infrastructure
@@ -97,7 +97,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DB-02 | Phase 3 | Pending |
 | DB-03 | Phase 3 | Complete |
 | ARCH-01 | Phase 2 | Complete |
-| ARCH-02 | Phase 3 | Pending |
+| ARCH-02 | Phase 3 | Complete |
 | ARCH-03 | Phase 4 | Pending |
 | INFRA-01 | Phase 4 | Pending |
 | INFRA-02 | Phase 4 | Pending |

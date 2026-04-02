@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-adapters/03-01-PLAN.md
-last_updated: "2026-04-02T17:04:35.748Z"
+stopped_at: Completed 03-adapters/03-02-PLAN.md
+last_updated: "2026-04-02T17:08:44.965Z"
 last_activity: 2026-04-02 — Completed 02-01-PLAN.md (ethereum component contracts)
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 6
-  completed_plans: 4
+  completed_plans: 5
   percent: 50
 ---
 
@@ -53,6 +53,7 @@ Progress: [█████░░░░░] 50%
 *Updated after each plan completion*
 | Phase 02-component-layer P02 | 7 | 2 tasks | 2 files |
 | Phase 03-adapters P01 | 2min | 2 tasks | 3 files |
+| Phase 03-adapters P02 | 2min | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,8 @@ Recent decisions affecting current work:
 - [Phase 03-adapters]: Wave 0 tests fail at import time (RED state) — expected before Wave 1 adapter implementation
 - [Phase 03-adapters]: eslint-disable-next-line no-explicit-any used for mock constructor injection in test stubs
 - [Phase 03-adapters]: Manual mock objects used for Redis/TypeORM instead of jest.mock auto-mocking
+- [Phase 03-adapters]: getBlockNumber uses no status check — Etherscan proxy/eth_blockNumber returns JSON-RPC format without status field; validates hex string prefix instead
+- [Phase 03-adapters]: Math.floor before BigInt in Gwei-to-Wei conversion — 0.496840168 * 1e9 produces fractional result that BigInt() cannot accept
 
 ### Pending Todos
 
@@ -87,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-02T17:04:35.746Z
-Stopped at: Completed 03-adapters/03-01-PLAN.md
+Last session: 2026-04-02T17:08:44.963Z
+Stopped at: Completed 03-adapters/03-02-PLAN.md
 Resume file: None
