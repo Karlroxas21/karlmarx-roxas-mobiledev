@@ -1,7 +1,8 @@
 ---
 phase: 3
 slug: balance-display
-status: draft
+status: approved
+reviewed_at: 2026-04-02
 shadcn_initialized: false
 preset: none
 created: 2026-04-02
