@@ -8,7 +8,7 @@ import { EtherscanAdapter } from './infrastructure/etherscan/EtherscanAdapter';
 import { RedisAdapter } from './infrastructure/redis/RedisAdapter';
 import { TypeOrmBalanceRepository } from './infrastructure/postgres/TypeOrmBalanceRepository';
 import { EthereumService } from './component/ethereum/service';
-import { Ethereum } from './entrypoint/controller/ethereum';
+import { EthereumController } from './entrypoint/controller/ethereum';
 
 export const createServer = async (): Promise<Server> => {
     const app = express();
@@ -48,7 +48,7 @@ export const createServer = async (): Promise<Server> => {
     );
 
     // Controllers
-    const ethereumController = new Ethereum(ethereumService);
+    const ethereumController = new EthereumController(ethereumService);
     const controllers: Controller[] = [ethereumController];
 
     const server = new Server(app, controllers, config.hostname, config.port);

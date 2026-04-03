@@ -3,6 +3,8 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import { RequestHandler } from 'express';
 import cors from 'cors';
 import { randomUUID } from 'crypto';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
 import { logger } from './config';
 
 export interface Controller {
@@ -53,6 +55,31 @@ export class Server {
             instance.use(express.json({ type: 'application/*' }));
             instance.use(requestContext());
             instance.use(requestLogger());
+
+            // Swagger UI (auto-generated from sibling .yaml files)
+            const swaggerSpec = swaggerJsdoc({
+                definition: {
+                    openapi: '3.0.3',
+                    info: {
+                        title: 'Ethereum Address API',
+                        description:
+                            'REST API that returns gas price, current block number, and account balance for a given Ethereum address.',
+                        version: '1.0.0',
+                    },
+                    servers: [
+                        {
+                            url: `http://localhost:${this.port}`,
+                            description: 'Local development',
+                        },
+                    ],
+                },
+                apis: ['./src/entrypoint/controller/*.yaml'],
+            });
+            instance.use(
+                '/api-docs',
+                swaggerUi.serve,
+                swaggerUi.setup(swaggerSpec),
+            );
 
             // Health endpoint — registered before controllers
             instance.get('/api/health', (_req: Request, res: Response) => {

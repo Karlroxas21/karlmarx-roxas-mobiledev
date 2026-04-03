@@ -11,24 +11,20 @@ import {
     EtherscanApiError,
 } from '../../component/ethereum/errors';
 import { logger } from '../../config';
-import express from 'express';
 
-export class Ethereum implements Controller {
+export class EthereumController implements Controller {
     constructor(private readonly service: EthereumService) {}
 
     register(server: Express): void {
-        const router = express.Router();
-
-        server.use('/api/etheruem');
-
-        router.get('/:address');
-        server.get('/api/ethereum/:address');
+        server.get('/api/ethereum/:address', (req: Request, res: Response) => {
+            this.getEthereumData(req, res);
+        });
     }
 
-    async getEthereumData(
+    private async getEthereumData(
         req: Request,
         res: Response<SuccessEnvelope<EthereumDataDto> | ErrorEnvelope>,
-    ) {
+    ): Promise<void> {
         try {
             const data = await this.service.getEthereumData(
                 req.params['address'] as string,

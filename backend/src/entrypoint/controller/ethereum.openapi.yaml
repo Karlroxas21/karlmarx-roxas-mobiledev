@@ -1,0 +1,74 @@
+/api/ethereum/{address}:
+  get:
+    summary: Get Ethereum data for an address
+    description: Returns gas price (wei + gwei), current block number, and account balance (wei + eth).
+    tags:
+      - Ethereum
+    parameters:
+      - in: path
+        name: address
+        required: true
+        schema:
+          type: string
+          example: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+        description: Ethereum address (0x-prefixed, 42 characters)
+    responses:
+      200:
+        description: Ethereum data retrieved successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    gasPrice:
+                      type: object
+                      properties:
+                        wei:
+                          type: string
+                        gwei:
+                          type: string
+                    blockNumber:
+                      type: string
+                    balance:
+                      type: object
+                      properties:
+                        wei:
+                          type: string
+                        eth:
+                          type: string
+                    timestamp:
+                      type: string
+                      format: date-time
+      400:
+        description: Invalid Ethereum address
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                    code:
+                      type: string
+                      enum: [VALIDATION_ERROR]
+      502:
+        description: Etherscan API failure
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                    code:
+                      type: string
+                      enum: [UPSTREAM_ERROR]

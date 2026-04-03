@@ -3,7 +3,7 @@ jest.mock('../config', () => ({
 }));
 
 import { Express, Request, Response } from 'express';
-import { Ethereum } from '../entrypoint/controller/ethereum';
+import { EthereumController } from '../entrypoint/controller/ethereum';
 import { EthereumService } from '../component/ethereum/service';
 import {
     ValidationError,
@@ -16,10 +16,10 @@ const mockService = {
     getEthereumData: jest.fn(),
 } as unknown as EthereumService;
 
-let controller: Ethereum;
+let controller: EthereumController;
 
 beforeEach(() => {
-    controller = new Ethereum(mockService);
+    controller = new EthereumController(mockService);
     jest.clearAllMocks();
 });
 
