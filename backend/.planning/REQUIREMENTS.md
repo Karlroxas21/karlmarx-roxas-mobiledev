@@ -39,11 +39,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **ARCH-01**: Ethereum component follows hexagonal architecture with port interfaces in `component/ethereum/interfaces.ts`
 - [x] **ARCH-02**: Infrastructure adapters (Etherscan, Redis, PostgreSQL) implement port interfaces
-- [ ] **ARCH-03**: Dependencies are wired via constructor injection in `wire.ts`
+- [x] **ARCH-03**: Dependencies are wired via constructor injection in `wire.ts`
 
 ### Infrastructure
 
-- [ ] **INFRA-01**: `GET /api/health` endpoint returns `{ "status": "ok" }` for Docker/probe checks
+- [x] **INFRA-01**: `GET /api/health` endpoint returns `{ "status": "ok" }` for Docker/probe checks
 - [ ] **INFRA-02**: Docker Compose runs full stack (API + PostgreSQL + Redis) with healthchecks
 - [x] **INFRA-03**: Application validates required environment variables at startup and fails fast with descriptive error
 
@@ -98,8 +98,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DB-03 | Phase 3 | Complete |
 | ARCH-01 | Phase 2 | Complete |
 | ARCH-02 | Phase 3 | Complete |
-| ARCH-03 | Phase 4 | Pending |
-| INFRA-01 | Phase 4 | Pending |
+| ARCH-03 | Phase 4 | Complete |
+| INFRA-01 | Phase 4 | Complete |
 | INFRA-02 | Phase 4 | Pending |
 | INFRA-03 | Phase 1 | Complete |
 
