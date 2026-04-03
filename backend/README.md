@@ -63,7 +63,7 @@ The OpenAPI spec is auto-generated from JSDoc annotations on route handlers usin
 ### Get Ethereum Data
 
 ```
-GET /api/ethereum/:address
+GET /v1/api/ethereum/:address
 ```
 
 Returns gas price, block number, and balance for the given Ethereum address.
@@ -71,7 +71,7 @@ Returns gas price, block number, and balance for the given Ethereum address.
 **Example:**
 
 ```bash
-curl http://localhost:3000/api/ethereum/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+curl http://localhost:3000/v1/api/ethereum/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
 ```
 
 **Success Response (200):**
@@ -118,7 +118,7 @@ curl http://localhost:3000/api/ethereum/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA960
 ### Health Check
 
 ```
-GET /api/health
+GET /v1/api/health
 ```
 
 ```json
@@ -146,7 +146,7 @@ Account balance is **per-address** and changes with every transaction, so it is 
 | Block Number | Redis | 15s | — | Global, changes every ~12s |
 | Balance | Never | — | PostgreSQL | Per-address, stale data is worse than slow |
 
-On cache miss, all three data points are fetched in parallel via `Promise.all`. On cache hit, only the balance is fetched (1 API call instead of 3).
+On cache miss, gas price and block number are fetched sequentially (Etherscan free-tier rate limit), then balance is fetched. On cache hit, only the balance is fetched (1 API call instead of 3).
 
 ### Directory Structure
 
@@ -164,7 +164,7 @@ src/
 │   ├── errors.ts                     # ValidationError, EtherscanApiError
 │   └── constants.ts                  # Cache keys + TTL
 ├── entrypoint/controller/            # HTTP controllers
-│   └── ethereum-controller.ts        # GET /api/ethereum/:address
+│   └── ethereum-controller.ts        # GET /v1/api/ethereum/:address
 └── infrastructure/                   # External adapters
     ├── etherscan/EtherscanAdapter.ts  # Etherscan API client
     ├── redis/RedisAdapter.ts          # Redis cache adapter
@@ -179,7 +179,7 @@ src/
 2. Controller calls `EthereumService.getEthereumData(address)`
 3. Service validates address (ethers.js `isAddress` + `getAddress` normalization)
 4. Service checks Redis cache for gas price + block number
-5. On cache miss: fetches all 3 from Etherscan via `Promise.all`
+5. On cache miss: fetches gas + block sequentially, then balance from Etherscan
 6. On cache hit: fetches only balance from Etherscan
 7. Stores balance in PostgreSQL (fire-and-forget, non-blocking)
 8. Returns structured response with dual units + timestamp
