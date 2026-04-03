@@ -21,7 +21,7 @@ export interface SuccessEnvelope<T> {
 
 export interface ErrorBody {
     message: string;
-    code: 'VALIDATION_ERROR' | 'UPSTREAM_ERROR';
+    code?: 'VALIDATION_ERROR' | 'UPSTREAM_ERROR';
 }
 
 export interface ErrorEnvelope {

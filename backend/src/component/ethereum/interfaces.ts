@@ -1,3 +1,5 @@
+import { EthereumDataDto } from './response-models';
+
 export interface IEthereumProvider {
     getGasPrice(): Promise<string>;
     getBlockNumber(): Promise<string>;
@@ -17,4 +19,8 @@ export interface BalanceSaveDto {
 
 export interface IBalanceRepository {
     save(data: BalanceSaveDto): Promise<void>;
+}
+
+export interface IEthereumService {
+    getEthereumData(rawAddress: string): Promise<EthereumDataDto>;
 }

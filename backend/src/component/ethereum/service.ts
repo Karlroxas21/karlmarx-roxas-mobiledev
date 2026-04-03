@@ -3,13 +3,14 @@ import {
     IEthereumProvider,
     ICacheStore,
     IBalanceRepository,
+    IEthereumService,
 } from './interfaces';
 import { EthereumDataDto } from './response-models';
 import { EtherscanApiError, ValidationError } from './errors';
 import { CACHE_TTL_SECONDS, cacheKey } from './constants';
 import { logger } from '../../config';
 
-export class EthereumService {
+export class EthereumService implements IEthereumService {
     constructor(
         private readonly provider: IEthereumProvider,
         private readonly cache: ICacheStore,
