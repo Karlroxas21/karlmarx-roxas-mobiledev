@@ -1,0 +1,7 @@
+node_modules
+dist
+.planning
+.git
+.husky
+.env
+*.md
