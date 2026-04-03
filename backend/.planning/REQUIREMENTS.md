@@ -44,7 +44,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Infrastructure
 
 - [x] **INFRA-01**: `GET /api/health` endpoint returns `{ "status": "ok" }` for Docker/probe checks
-- [ ] **INFRA-02**: Docker Compose runs full stack (API + PostgreSQL + Redis) with healthchecks
+- [x] **INFRA-02**: Docker Compose runs full stack (API + PostgreSQL + Redis) with healthchecks
 - [x] **INFRA-03**: Application validates required environment variables at startup and fails fast with descriptive error
 
 ## v2 Requirements
@@ -100,7 +100,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ARCH-02 | Phase 3 | Complete |
 | ARCH-03 | Phase 4 | Complete |
 | INFRA-01 | Phase 4 | Complete |
-| INFRA-02 | Phase 4 | Pending |
+| INFRA-02 | Phase 4 | Complete |
 | INFRA-03 | Phase 1 | Complete |
 
 **Coverage:**

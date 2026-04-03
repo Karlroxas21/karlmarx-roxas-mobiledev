@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-http-layer-and-docker/04-01-PLAN.md
-last_updated: "2026-04-03T02:36:17.340Z"
+stopped_at: Completed 04-http-layer-and-docker/04-02-PLAN.md
+last_updated: "2026-04-03T02:42:07.592Z"
 last_activity: 2026-04-02 — Completed 02-01-PLAN.md (ethereum component contracts)
 progress:
   total_phases: 4
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 8
-  completed_plans: 7
+  completed_plans: 8
   percent: 50
 ---
 
@@ -56,6 +56,7 @@ Progress: [█████░░░░░] 50%
 | Phase 03-adapters P02 | 2min | 1 tasks | 2 files |
 | Phase 03-adapters P03 | 5min | 2 tasks | 4 files |
 | Phase 04-http-layer-and-docker P01 | 28min | 2 tasks | 4 files |
+| Phase 04-http-layer-and-docker P02 | 3min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -86,6 +87,9 @@ Recent decisions affecting current work:
 - [Phase 04-http-layer-and-docker]: req.params['address'] cast as string for TS strict mode (TS2345)
 - [Phase 04-http-layer-and-docker]: Health endpoint registered before controller loop in Server constructor
 - [Phase 04-http-layer-and-docker]: EthereumController instanceof checks for error dispatch rely on Object.setPrototypeOf in CJS error classes
+- [Phase 04-http-layer-and-docker]: npm ci --omit=dev used in Dockerfile production stage (npm 7+ flag, omits all devDependencies from production image)
+- [Phase 04-http-layer-and-docker]: HOSTNAME=0.0.0.0 set in docker-compose environment block to override Linux kernel HOSTNAME collision in containers
+- [Phase 04-http-layer-and-docker]: start_period: 15s on API healthcheck gives TypeORM DataSource time to initialize before first healthcheck attempt
 
 ### Pending Todos
 
@@ -98,6 +102,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-03T02:36:17.337Z
-Stopped at: Completed 04-http-layer-and-docker/04-01-PLAN.md
+Last session: 2026-04-03T02:42:07.590Z
+Stopped at: Completed 04-http-layer-and-docker/04-02-PLAN.md
 Resume file: None
