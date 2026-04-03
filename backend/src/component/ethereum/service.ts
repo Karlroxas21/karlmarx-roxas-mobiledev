@@ -39,15 +39,13 @@ export class EthereumService implements IEthereumService {
             gasPriceWei = cachedGas;
             blockNumber = cachedBlock;
         } else {
-            // ETH-01: cache miss — parallel fetch gas + block
-            const [gas, block] = await Promise.all([
-                this.provider.getGasPrice(),
-                this.provider.getBlockNumber(),
-            ]).catch((err: Error) => {
-                throw new EtherscanApiError(err.message);
-            });
-            gasPriceWei = gas;
-            blockNumber = block;
+            // ETH-01: cache miss — sequential fetch (free-tier rate limit)
+            try {
+                gasPriceWei = await this.provider.getGasPrice();
+                blockNumber = await this.provider.getBlockNumber();
+            } catch (err) {
+                throw new EtherscanApiError((err as Error).message);
+            }
 
             // Fire-and-forget cache writes
             void this.cache.set(

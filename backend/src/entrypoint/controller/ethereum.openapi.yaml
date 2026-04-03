@@ -1,4 +1,4 @@
-/api/ethereum/{address}:
+/v1/api/ethereum/{address}:
   get:
     summary: Get Ethereum data for an address
     description: Returns gas price (wei + gwei), current block number, and account balance (wei + eth).

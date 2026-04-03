@@ -1,6 +1,6 @@
 # Ethereum Address API
 
-REST API that returns gas price, current block number, and account balance for a given Ethereum address.
+REST API that returns gas price, current block number, and account balance for a given Ethereum address. Use this as test address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
 
 ## Tech Stack
 

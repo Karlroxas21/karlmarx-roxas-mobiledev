@@ -36,6 +36,7 @@ export class EtherscanAdapter implements IEthereumProvider {
                 params: {
                     module: 'gastracker',
                     action: 'gasoracle',
+                    chainid: 1,
                     apikey: this.apiKey,
                 },
             },
@@ -55,6 +56,7 @@ export class EtherscanAdapter implements IEthereumProvider {
             params: {
                 module: 'proxy',
                 action: 'eth_blockNumber',
+                chainid: 1,
                 apikey: this.apiKey,
             },
         });
@@ -76,6 +78,7 @@ export class EtherscanAdapter implements IEthereumProvider {
                     action: 'balance',
                     address,
                     tag: 'latest',
+                    chainid: 1,
                     apikey: this.apiKey,
                 },
             },

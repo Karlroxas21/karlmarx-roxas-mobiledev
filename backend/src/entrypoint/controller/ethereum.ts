@@ -16,9 +16,12 @@ export class EthereumController implements Controller {
     constructor(private readonly service: EthereumService) {}
 
     register(server: Express): void {
-        server.get('/api/ethereum/:address', (req: Request, res: Response) => {
-            this.getEthereumData(req, res);
-        });
+        server.get(
+            '/v1/api/ethereum/:address',
+            (req: Request, res: Response) => {
+                this.getEthereumData(req, res);
+            },
+        );
     }
 
     private async getEthereumData(

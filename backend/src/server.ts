@@ -82,7 +82,7 @@ export class Server {
             );
 
             // Health endpoint — registered before controllers
-            instance.get('/api/health', (_req: Request, res: Response) => {
+            instance.get('/v1/api/health', (_req: Request, res: Response) => {
                 res.status(200).json({ status: 'ok' });
             });
 

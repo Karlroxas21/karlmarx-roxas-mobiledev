@@ -1,4 +1,4 @@
-/api/health:
+/v1/api/health:
   get:
     summary: Health check
     description: Returns service health status. Used by Docker Compose healthchecks.

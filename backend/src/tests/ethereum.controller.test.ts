@@ -25,17 +25,17 @@ beforeEach(() => {
 
 describe('EthereumController', () => {
     describe('register()', () => {
-        it('mounts GET /api/ethereum/:address', () => {
+        it('mounts GET /v1/api/ethereum/:address', () => {
             const mockApp = { get: jest.fn() } as unknown as Express;
             controller.register(mockApp);
             expect(mockApp.get).toHaveBeenCalledWith(
-                '/api/ethereum/:address',
+                '/v1/api/ethereum/:address',
                 expect.any(Function),
             );
         });
     });
 
-    describe('GET /api/ethereum/:address handler', () => {
+    describe('GET /v1/api/ethereum/:address handler', () => {
         // Extract the handler from register() for direct testing
         let handler: (req: Request, res: Response) => Promise<void>;
         let mockRes: {
