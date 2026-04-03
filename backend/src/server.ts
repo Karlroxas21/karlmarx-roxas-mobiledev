@@ -54,6 +54,11 @@ export class Server {
             instance.use(requestContext());
             instance.use(requestLogger());
 
+            // Health endpoint — registered before controllers
+            instance.get('/api/health', (_req: Request, res: Response) => {
+                res.status(200).json({ status: 'ok' });
+            });
+
             if (this.controllers?.length > 0) {
                 this.controllers.forEach((c) => {
                     c.register(this.instance, this.middlewares);
