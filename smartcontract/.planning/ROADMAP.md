@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Minting Mechanics** - Public mint with per-tx limit, hard cap, cooldown, and initial supply (completed 2026-04-05)
 - [x] **Phase 5: Deployment and Minting Tests** - Tests verify deployment state and all minting behaviors (completed 2026-04-05)
 - [x] **Phase 6: Transfer and Boundary Tests** - Tests verify transfers, approvals, and cap boundary conditions (completed 2026-04-05)
-- [ ] **Phase 7: Sepolia Deployment** - Contract deployed to Sepolia testnet via Hardhat Ignition
+- [x] **Phase 7: Sepolia Deployment** - Contract deployed to Sepolia testnet via Hardhat Ignition (completed 2026-04-05)
 - [ ] **Phase 8: Etherscan Verification** - Contract source verified and readable on Etherscan
 
 ## Phase Details
@@ -149,5 +149,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | 4. Minting Mechanics | 0/1 | Complete    | 2026-04-05 |
 | 5. Deployment and Minting Tests | 1/1 | Complete    | 2026-04-05 |
 | 6. Transfer and Boundary Tests | 1/1 | Complete    | 2026-04-05 |
-| 7. Sepolia Deployment | 0/1 | Not started | - |
+| 7. Sepolia Deployment | 0/1 | Complete    | 2026-04-05 |
 | 8. Etherscan Verification | 0/0 | Not started | - |
