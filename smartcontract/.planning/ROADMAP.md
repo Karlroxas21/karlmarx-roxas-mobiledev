@@ -35,10 +35,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 1 plan
 
 Plans:
-- [ ] 01-01-PLAN.md -- Initialize Hardhat 3 ESM project with all config files, .gitignore, .env.example, and compile verification
+- [x] 01-01-PLAN.md -- Initialize Hardhat 3 ESM project with all config files, .gitignore, .env.example, and compile verification
 
 ### Phase 2: Contract Foundation
-**Goal**: A RoxasToken contract that inherits ERC20Capped, has correct metadata (name, symbol, decimals), and compiles with TypeChain type generation
+**Goal**: A RoxasToken contract that inherits ERC20 and ERC20Capped, has correct metadata (name, symbol, decimals), and compiles with TypeChain type generation
 **Depends on**: Phase 1
 **Requirements**: INFR-02, INFR-03, TOKN-01
 **Success Criteria** (what must be TRUE):
@@ -46,11 +46,10 @@ Plans:
   2. The contract compiles and exposes name() returning "Roxas Token", symbol() returning "RXS", and decimals() returning 18
   3. TypeChain generates typed contract interfaces in the artifacts directory after compilation
   4. The contract constructor accepts and sets a cap of 10,000,000 RXS (with 18 decimals)
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md -- Create RoxasToken.sol with ERC20+ERC20Capped inheritance, update .gitignore, compile and verify TypeChain generation
 
 ### Phase 3: ERC-20 Transfers and Approvals
 **Goal**: The contract implements the full ERC-20 transfer and approval interface so tokens can move between any addresses
@@ -148,7 +147,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Scaffolding | 1/1 | Complete    | 2026-04-05 |
-| 2. Contract Foundation | 0/0 | Not started | - |
+| 2. Contract Foundation | 0/1 | Not started | - |
 | 3. ERC-20 Transfers and Approvals | 0/0 | Not started | - |
 | 4. Minting Mechanics | 0/0 | Not started | - |
 | 5. Deployment and Minting Tests | 0/0 | Not started | - |
