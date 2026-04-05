@@ -4,7 +4,7 @@ node_modules/
 # Hardhat artifacts and cache
 artifacts/
 cache/
-typechain-types/
+types/
 
 # Hardhat Ignition deployment state
 ignition/deployments/
