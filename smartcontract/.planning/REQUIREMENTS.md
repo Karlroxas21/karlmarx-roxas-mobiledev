@@ -9,7 +9,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Token Core
 
-- [ ] **TOKN-01**: Contract implements ERC-20 standard (name, symbol, decimals, totalSupply, balanceOf)
+- [x] **TOKN-01**: Contract implements ERC-20 standard (name, symbol, decimals, totalSupply, balanceOf)
 - [ ] **TOKN-02**: User can transfer tokens to any address via `transfer()`
 - [ ] **TOKN-03**: User can approve another address to spend tokens via `approve()`
 - [ ] **TOKN-04**: Approved address can transfer tokens on behalf of owner via `transferFrom()`
@@ -28,8 +28,8 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Infrastructure
 
 - [x] **INFR-01**: Hardhat 3 ESM project with TypeScript configuration compiles successfully
-- [ ] **INFR-02**: OpenZeppelin v5 contracts installed and ERC20Capped inheritance works
-- [ ] **INFR-03**: TypeChain generates typed contract interfaces after compilation
+- [x] **INFR-02**: OpenZeppelin v5 contracts installed and ERC20Capped inheritance works
+- [x] **INFR-03**: TypeChain generates typed contract interfaces after compilation
 - [x] **INFR-04**: .gitignore excludes artifacts/, cache/, node_modules/, .env
 - [x] **INFR-05**: .env.example documents required environment variables
 
@@ -87,9 +87,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INFR-01 | Phase 1 | Complete |
 | INFR-04 | Phase 1 | Complete |
 | INFR-05 | Phase 1 | Complete |
-| INFR-02 | Phase 2 | Pending |
-| INFR-03 | Phase 2 | Pending |
-| TOKN-01 | Phase 2 | Pending |
+| INFR-02 | Phase 2 | Complete |
+| INFR-03 | Phase 2 | Complete |
+| TOKN-01 | Phase 2 | Complete |
 | TOKN-02 | Phase 3 | Pending |
 | TOKN-03 | Phase 3 | Pending |
 | TOKN-04 | Phase 3 | Pending |
