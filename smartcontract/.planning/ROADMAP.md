@@ -112,17 +112,17 @@ Plans:
 - [ ] 06-01-PLAN.md -- Add transfer, approval, and cap boundary tests to existing test suite (TEST-06 through TEST-09)
 
 ### Phase 7: Sepolia Deployment
-**Goal**: The RoxasToken contract is live on the Sepolia testnet, deployed via Hardhat Ignition with correct constructor parameters
+**Goal**: Hardhat Ignition deployment module exists and is validated on local network, ready for manual Sepolia deployment
 **Depends on**: Phase 6
 **Requirements**: DEPL-01
 **Success Criteria** (what must be TRUE):
   1. A Hardhat Ignition module exists that deploys RoxasToken with the correct constructor arguments
   2. The contract is deployed to Sepolia and the deployment transaction is confirmed on-chain
   3. The deployed contract responds correctly to name(), symbol(), and totalSupply() calls on Sepolia
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 07-01: TBD
+- [ ] 07-01-PLAN.md -- Create Ignition module at ignition/modules/RoxasToken.ts and smoke test validating deployment on local Hardhat network
 
 ### Phase 8: Etherscan Verification
 **Goal**: The contract source code is verified on Etherscan so anyone can read and audit the contract
@@ -149,5 +149,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | 4. Minting Mechanics | 0/1 | Complete    | 2026-04-05 |
 | 5. Deployment and Minting Tests | 1/1 | Complete    | 2026-04-05 |
 | 6. Transfer and Boundary Tests | 1/1 | Complete    | 2026-04-05 |
-| 7. Sepolia Deployment | 0/0 | Not started | - |
+| 7. Sepolia Deployment | 0/1 | Not started | - |
 | 8. Etherscan Verification | 0/0 | Not started | - |
