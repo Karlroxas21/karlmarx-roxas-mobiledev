@@ -18,12 +18,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Minting
 
-- [ ] **MINT-01**: Any address can mint tokens by calling the public `mint()` function
-- [ ] **MINT-02**: Each mint call is limited to 1000 RXS maximum per transaction
-- [ ] **MINT-03**: Total supply cannot exceed 10,000,000 RXS (hard cap enforced by contract)
-- [ ] **MINT-04**: Deployer receives 1,000,000 RXS initial supply at deployment
-- [ ] **MINT-05**: Same address cannot mint again within a cooldown period (per-address cooldown)
-- [ ] **MINT-06**: Contract emits custom TokensMinted(minter, amount) event on each mint
+- [x] **MINT-01**: Any address can mint tokens by calling the public `mint()` function
+- [x] **MINT-02**: Each mint call is limited to 1000 RXS maximum per transaction
+- [x] **MINT-03**: Total supply cannot exceed 10,000,000 RXS (hard cap enforced by contract)
+- [x] **MINT-04**: Deployer receives 1,000,000 RXS initial supply at deployment
+- [x] **MINT-05**: Same address cannot mint again within a cooldown period (per-address cooldown)
+- [x] **MINT-06**: Contract emits custom TokensMinted(minter, amount) event on each mint
 
 ### Infrastructure
 
@@ -95,12 +95,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TOKN-04 | Phase 3 | Complete |
 | TOKN-05 | Phase 3 | Complete |
 | TOKN-06 | Phase 3 | Complete |
-| MINT-01 | Phase 4 | Pending |
-| MINT-02 | Phase 4 | Pending |
-| MINT-03 | Phase 4 | Pending |
-| MINT-04 | Phase 4 | Pending |
-| MINT-05 | Phase 4 | Pending |
-| MINT-06 | Phase 4 | Pending |
+| MINT-01 | Phase 4 | Complete |
+| MINT-02 | Phase 4 | Complete |
+| MINT-03 | Phase 4 | Complete |
+| MINT-04 | Phase 4 | Complete |
+| MINT-05 | Phase 4 | Complete |
+| MINT-06 | Phase 4 | Complete |
 | TEST-01 | Phase 5 | Pending |
 | TEST-02 | Phase 5 | Pending |
 | TEST-03 | Phase 5 | Pending |

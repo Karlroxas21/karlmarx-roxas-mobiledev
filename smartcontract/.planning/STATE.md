@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-04-05T04:11:19.056Z"
-last_activity: 2026-04-05 -- Completed 03-01-PLAN.md (ERC-20 ABI verification)
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-04-05T04:33:52.666Z"
+last_activity: 2026-04-05 -- Completed 04-01-PLAN.md (public minting mechanics)
 progress:
   total_phases: 8
-  completed_phases: 3
-  total_plans: 3
-  completed_plans: 3
+  completed_phases: 4
+  total_plans: 4
+  completed_plans: 4
   percent: 100
 ---
 
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-05)
 
 **Core value:** Anyone can mint RXS tokens up to a hard cap, and freely transfer them between addresses
-**Current focus:** Phase 3: ERC-20 Transfers and Approvals (complete)
+**Current focus:** Phase 4: Minting Mechanics (complete)
 
 ## Current Position
 
-Phase: 3 of 8 (ERC-20 Transfers and Approvals)
+Phase: 4 of 8 (Minting Mechanics)
 Plan: 1 of 1 in current phase
-Status: Phase 3 complete
-Last activity: 2026-04-05 -- Completed 03-01-PLAN.md (ERC-20 ABI verification)
+Status: Phase 4 complete
+Last activity: 2026-04-05 -- Completed 04-01-PLAN.md (public minting mechanics)
 
 Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
+- Total plans completed: 4
 - Average duration: 2min
-- Total execution time: 0.08 hours
+- Total execution time: 0.1 hours
 
 **By Phase:**
 
@@ -46,9 +46,10 @@ Progress: [██████████] 100%
 | 01-project-scaffolding | 1 | 2min | 2min |
 | 02-contract-foundation | 1 | 2min | 2min |
 | 03-erc-20-transfers-and-approvals | 1 | 1min | 1min |
+| 04-minting-mechanics | 1 | 1min | 1min |
 
 **Recent Trend:**
-- Last 5 plans: 2min, 2min, 1min
+- Last 5 plans: 2min, 2min, 1min, 1min
 - Trend: stable
 
 *Updated after each plan completion*
@@ -70,6 +71,9 @@ Recent decisions affecting current work:
 - [Phase 02-01]: Replaced typechain-types/ with types/ in .gitignore (Hardhat 3 convention)
 - [Phase 03-01]: No contract modifications needed -- all ERC-20 transfer/approval functions provided by OpenZeppelin ERC20 inheritance
 - [Phase 03-01]: Verification-only approach: compilation + ABI inspection confirms interface completeness without code changes
+- [Phase 04-01]: Combined zero-amount and over-limit check into single MintLimitExceeded revert
+- [Phase 04-01]: Limit check before cooldown check (cheaper, no SLOAD)
+- [Phase 04-01]: cooldownRemaining(address) view over boolean canMint() -- more informative for frontend
 
 ### Pending Todos
 
@@ -83,6 +87,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-05T04:08:52.896Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-04-05T04:33:52.664Z
+Stopped at: Completed 04-01-PLAN.md
 Resume file: None
