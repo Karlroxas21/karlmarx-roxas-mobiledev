@@ -27,11 +27,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Infrastructure
 
-- [ ] **INFR-01**: Hardhat 3 ESM project with TypeScript configuration compiles successfully
+- [x] **INFR-01**: Hardhat 3 ESM project with TypeScript configuration compiles successfully
 - [ ] **INFR-02**: OpenZeppelin v5 contracts installed and ERC20Capped inheritance works
 - [ ] **INFR-03**: TypeChain generates typed contract interfaces after compilation
-- [ ] **INFR-04**: .gitignore excludes artifacts/, cache/, node_modules/, .env
-- [ ] **INFR-05**: .env.example documents required environment variables
+- [x] **INFR-04**: .gitignore excludes artifacts/, cache/, node_modules/, .env
+- [x] **INFR-05**: .env.example documents required environment variables
 
 ### Testing
 
@@ -84,9 +84,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFR-01 | Phase 1 | Pending |
-| INFR-04 | Phase 1 | Pending |
-| INFR-05 | Phase 1 | Pending |
+| INFR-01 | Phase 1 | Complete |
+| INFR-04 | Phase 1 | Complete |
+| INFR-05 | Phase 1 | Complete |
 | INFR-02 | Phase 2 | Pending |
 | INFR-03 | Phase 2 | Pending |
 | TOKN-01 | Phase 2 | Pending |

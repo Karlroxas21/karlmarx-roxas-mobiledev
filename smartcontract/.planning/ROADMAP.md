@@ -12,7 +12,7 @@ This roadmap delivers a complete ERC-20 token (RXS) from empty directory to veri
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Project Scaffolding** - Hardhat 3 ESM project with TypeScript compiles successfully
+- [x] **Phase 1: Project Scaffolding** - Hardhat 3 ESM project with TypeScript compiles successfully
 - [ ] **Phase 2: Contract Foundation** - ERC20Capped contract with token metadata compiles cleanly
 - [ ] **Phase 3: ERC-20 Transfers and Approvals** - Standard token transfer and approval flows work in contract
 - [ ] **Phase 4: Minting Mechanics** - Public mint with per-tx limit, hard cap, cooldown, and initial supply
@@ -147,7 +147,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Scaffolding | 0/1 | Not started | - |
+| 1. Project Scaffolding | 1/1 | Complete | 2026-04-05 |
 | 2. Contract Foundation | 0/0 | Not started | - |
 | 3. ERC-20 Transfers and Approvals | 0/0 | Not started | - |
 | 4. Minting Mechanics | 0/0 | Not started | - |
