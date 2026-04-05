@@ -185,6 +185,29 @@ describe("RoxasToken", function () {
         token.connect(signers[1]).mint(ethers.parseEther("1"))
       ).to.be.revertedWithCustomError(token, "ERC20ExceededCap");
     });
+
+    it("should revert even 1 wei mint at cap (TEST-09 boundary)", async function () {
+      const { token, signers } =
+        await networkHelpers.loadFixture(nearCapFixture);
+      const cap = await token.cap();
+      const totalSupply = await token.totalSupply();
+      const remaining = cap - totalSupply;
+
+      await networkHelpers.time.increase(61);
+
+      // Fill exactly to cap
+      if (remaining > 0n) {
+        await token.connect(signers[0]).mint(remaining);
+      }
+
+      expect(await token.totalSupply()).to.equal(cap);
+
+      // Even 1 wei should fail
+      await networkHelpers.time.increase(61);
+      await expect(
+        token.connect(signers[1]).mint(1n)
+      ).to.be.revertedWithCustomError(token, "ERC20ExceededCap");
+    });
   });
 
   describe("Transfers", function () {
@@ -243,6 +266,55 @@ describe("RoxasToken", function () {
           ethers.parseEther("1000000"),
           ethers.parseEther("1000001")
         );
+    });
+  });
+
+  describe("Approvals", function () {
+    it("should approve spender and emit Approval event", async function () {
+      const { token, owner, user1 } =
+        await networkHelpers.loadFixture(deployFixture);
+      const amount = ethers.parseEther("500");
+
+      await expect(token.approve(user1.address, amount))
+        .to.emit(token, "Approval")
+        .withArgs(owner.address, user1.address, amount);
+
+      expect(await token.allowance(owner.address, user1.address)).to.equal(
+        amount
+      );
+    });
+
+    it("should allow transferFrom after approval", async function () {
+      const { token, owner, user1, user2 } =
+        await networkHelpers.loadFixture(deployFixture);
+      const amount = ethers.parseEther("500");
+
+      await token.approve(user1.address, amount);
+
+      await expect(
+        token.connect(user1).transferFrom(owner.address, user2.address, amount)
+      )
+        .to.emit(token, "Transfer")
+        .withArgs(owner.address, user2.address, amount);
+
+      expect(await token.balanceOf(user2.address)).to.equal(amount);
+      expect(await token.balanceOf(owner.address)).to.equal(
+        ethers.parseEther("1000000") - amount
+      );
+      expect(await token.allowance(owner.address, user1.address)).to.equal(0n);
+    });
+
+    it("should revert transferFrom without approval", async function () {
+      const { token, owner, user1, user2 } =
+        await networkHelpers.loadFixture(deployFixture);
+
+      await expect(
+        token
+          .connect(user1)
+          .transferFrom(owner.address, user2.address, ethers.parseEther("1"))
+      )
+        .to.be.revertedWithCustomError(token, "ERC20InsufficientAllowance")
+        .withArgs(user1.address, 0n, ethers.parseEther("1"));
     });
   });
 });
