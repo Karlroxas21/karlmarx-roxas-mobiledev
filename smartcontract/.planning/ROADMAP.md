@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Contract Foundation** - ERC20Capped contract with token metadata compiles cleanly (completed 2026-04-05)
 - [x] **Phase 3: ERC-20 Transfers and Approvals** - Standard token transfer and approval flows work in contract (completed 2026-04-05)
 - [x] **Phase 4: Minting Mechanics** - Public mint with per-tx limit, hard cap, cooldown, and initial supply (completed 2026-04-05)
-- [ ] **Phase 5: Deployment and Minting Tests** - Tests verify deployment state and all minting behaviors
+- [x] **Phase 5: Deployment and Minting Tests** - Tests verify deployment state and all minting behaviors (completed 2026-04-05)
 - [ ] **Phase 6: Transfer and Boundary Tests** - Tests verify transfers, approvals, and cap boundary conditions
 - [ ] **Phase 7: Sepolia Deployment** - Contract deployed to Sepolia testnet via Hardhat Ignition
 - [ ] **Phase 8: Etherscan Verification** - Contract source verified and readable on Etherscan
@@ -148,7 +148,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | 2. Contract Foundation | 1/1 | Complete    | 2026-04-05 |
 | 3. ERC-20 Transfers and Approvals | 0/1 | Complete    | 2026-04-05 |
 | 4. Minting Mechanics | 0/1 | Complete    | 2026-04-05 |
-| 5. Deployment and Minting Tests | 0/1 | Not started | - |
+| 5. Deployment and Minting Tests | 1/1 | Complete   | 2026-04-05 |
 | 6. Transfer and Boundary Tests | 0/0 | Not started | - |
 | 7. Sepolia Deployment | 0/0 | Not started | - |
 | 8. Etherscan Verification | 0/0 | Not started | - |

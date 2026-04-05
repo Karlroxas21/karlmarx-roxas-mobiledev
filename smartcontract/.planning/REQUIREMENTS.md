@@ -35,11 +35,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Testing
 
-- [ ] **TEST-01**: Tests verify deployment state (name, symbol, decimals, initial supply, cap)
-- [ ] **TEST-02**: Tests verify public mint succeeds and updates balance and totalSupply
-- [ ] **TEST-03**: Tests verify mint reverts when per-transaction limit exceeded
-- [ ] **TEST-04**: Tests verify mint reverts when total supply would exceed hard cap
-- [ ] **TEST-05**: Tests verify mint reverts when cooldown period has not elapsed
+- [x] **TEST-01**: Tests verify deployment state (name, symbol, decimals, initial supply, cap)
+- [x] **TEST-02**: Tests verify public mint succeeds and updates balance and totalSupply
+- [x] **TEST-03**: Tests verify mint reverts when per-transaction limit exceeded
+- [x] **TEST-04**: Tests verify mint reverts when total supply would exceed hard cap
+- [x] **TEST-05**: Tests verify mint reverts when cooldown period has not elapsed
 - [ ] **TEST-06**: Tests verify transfer succeeds and emits Transfer event
 - [ ] **TEST-07**: Tests verify transfer reverts on insufficient balance
 - [ ] **TEST-08**: Tests verify approve + transferFrom flow works correctly
@@ -101,11 +101,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MINT-04 | Phase 4 | Complete |
 | MINT-05 | Phase 4 | Complete |
 | MINT-06 | Phase 4 | Complete |
-| TEST-01 | Phase 5 | Pending |
-| TEST-02 | Phase 5 | Pending |
-| TEST-03 | Phase 5 | Pending |
-| TEST-04 | Phase 5 | Pending |
-| TEST-05 | Phase 5 | Pending |
+| TEST-01 | Phase 5 | Complete |
+| TEST-02 | Phase 5 | Complete |
+| TEST-03 | Phase 5 | Complete |
+| TEST-04 | Phase 5 | Complete |
+| TEST-05 | Phase 5 | Complete |
 | TEST-06 | Phase 6 | Pending |
 | TEST-07 | Phase 6 | Pending |
 | TEST-08 | Phase 6 | Pending |
