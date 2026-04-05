@@ -186,4 +186,63 @@ describe("RoxasToken", function () {
       ).to.be.revertedWithCustomError(token, "ERC20ExceededCap");
     });
   });
+
+  describe("Transfers", function () {
+    it("should transfer tokens and emit Transfer event", async function () {
+      const { token, owner, user1 } =
+        await networkHelpers.loadFixture(deployFixture);
+      const amount = ethers.parseEther("100");
+
+      await expect(token.transfer(user1.address, amount))
+        .to.emit(token, "Transfer")
+        .withArgs(owner.address, user1.address, amount);
+
+      expect(await token.balanceOf(user1.address)).to.equal(amount);
+      expect(await token.balanceOf(owner.address)).to.equal(
+        ethers.parseEther("1000000") - amount
+      );
+    });
+
+    it("should allow recipient to transfer received tokens", async function () {
+      const { token, owner, user1, user2 } =
+        await networkHelpers.loadFixture(deployFixture);
+      const amount = ethers.parseEther("50");
+
+      await token.transfer(user1.address, amount);
+
+      await expect(token.connect(user1).transfer(user2.address, amount))
+        .to.emit(token, "Transfer")
+        .withArgs(user1.address, user2.address, amount);
+
+      expect(await token.balanceOf(user2.address)).to.equal(amount);
+      expect(await token.balanceOf(user1.address)).to.equal(0n);
+    });
+
+    it("should revert transfer on insufficient balance", async function () {
+      const { token, user1, user2 } =
+        await networkHelpers.loadFixture(deployFixture);
+      const amount = ethers.parseEther("1");
+
+      await expect(
+        token.connect(user1).transfer(user2.address, amount)
+      )
+        .to.be.revertedWithCustomError(token, "ERC20InsufficientBalance")
+        .withArgs(user1.address, 0n, amount);
+    });
+
+    it("should revert when transfer amount exceeds balance", async function () {
+      const { token, owner, user1 } =
+        await networkHelpers.loadFixture(deployFixture);
+
+      await expect(
+        token.transfer(user1.address, ethers.parseEther("1000001"))
+      )
+        .to.be.revertedWithCustomError(token, "ERC20InsufficientBalance")
+        .withArgs(
+          owner.address,
+          ethers.parseEther("1000000"),
+          ethers.parseEther("1000001")
+        );
+    });
+  });
 });
