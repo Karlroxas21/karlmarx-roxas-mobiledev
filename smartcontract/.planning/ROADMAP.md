@@ -92,11 +92,10 @@ Plans:
   3. Tests pass that verify minting over the 1000 RXS per-tx limit reverts with an appropriate error
   4. Tests pass that verify minting reverts when totalSupply would exceed the 10M hard cap
   5. Tests pass that verify minting reverts when the caller's cooldown period has not elapsed
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 05-01: TBD
-- [ ] 05-02: TBD
+- [ ] 05-01-PLAN.md -- Create test file with deployment state, minting behavior, and cap enforcement tests
 
 ### Phase 6: Transfer and Boundary Tests
 **Goal**: Automated tests prove all transfer and approval flows work correctly, plus cap boundary edge cases are handled
@@ -149,7 +148,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | 2. Contract Foundation | 1/1 | Complete    | 2026-04-05 |
 | 3. ERC-20 Transfers and Approvals | 0/1 | Complete    | 2026-04-05 |
 | 4. Minting Mechanics | 0/1 | Complete    | 2026-04-05 |
-| 5. Deployment and Minting Tests | 0/0 | Not started | - |
+| 5. Deployment and Minting Tests | 0/1 | Not started | - |
 | 6. Transfer and Boundary Tests | 0/0 | Not started | - |
 | 7. Sepolia Deployment | 0/0 | Not started | - |
 | 8. Etherscan Verification | 0/0 | Not started | - |
