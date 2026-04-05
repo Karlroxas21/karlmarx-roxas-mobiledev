@@ -106,11 +106,10 @@ Plans:
   2. Tests pass that verify transfer() reverts when the sender has insufficient balance
   3. Tests pass that verify the full approve() + transferFrom() flow works correctly end-to-end
   4. Tests pass that verify minting exactly to the cap succeeds, then any further mint reverts
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 06-01: TBD
-- [ ] 06-02: TBD
+- [ ] 06-01-PLAN.md -- Add transfer, approval, and cap boundary tests to existing test suite (TEST-06 through TEST-09)
 
 ### Phase 7: Sepolia Deployment
 **Goal**: The RoxasToken contract is live on the Sepolia testnet, deployed via Hardhat Ignition with correct constructor parameters
@@ -149,6 +148,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | 3. ERC-20 Transfers and Approvals | 0/1 | Complete    | 2026-04-05 |
 | 4. Minting Mechanics | 0/1 | Complete    | 2026-04-05 |
 | 5. Deployment and Minting Tests | 1/1 | Complete    | 2026-04-05 |
-| 6. Transfer and Boundary Tests | 0/0 | Not started | - |
+| 6. Transfer and Boundary Tests | 0/1 | Not started | - |
 | 7. Sepolia Deployment | 0/0 | Not started | - |
 | 8. Etherscan Verification | 0/0 | Not started | - |
