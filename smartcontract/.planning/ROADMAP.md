@@ -32,11 +32,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The project uses ESM (`"type": "module"` in package.json) with `defineConfig` in hardhat.config.ts
   3. A .gitignore exists that excludes artifacts/, cache/, node_modules/, and .env
   4. A .env.example file documents all required environment variables (RPC URL, private key, Etherscan API key)
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md -- Initialize Hardhat 3 ESM project with all config files, .gitignore, .env.example, and compile verification
 
 ### Phase 2: Contract Foundation
 **Goal**: A RoxasToken contract that inherits ERC20Capped, has correct metadata (name, symbol, decimals), and compiles with TypeChain type generation
@@ -148,7 +147,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Scaffolding | 0/0 | Not started | - |
+| 1. Project Scaffolding | 0/1 | Not started | - |
 | 2. Contract Foundation | 0/0 | Not started | - |
 | 3. ERC-20 Transfers and Approvals | 0/0 | Not started | - |
 | 4. Minting Mechanics | 0/0 | Not started | - |
