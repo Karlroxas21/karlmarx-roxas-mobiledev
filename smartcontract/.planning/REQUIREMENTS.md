@@ -10,11 +10,11 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Token Core
 
 - [x] **TOKN-01**: Contract implements ERC-20 standard (name, symbol, decimals, totalSupply, balanceOf)
-- [ ] **TOKN-02**: User can transfer tokens to any address via `transfer()`
-- [ ] **TOKN-03**: User can approve another address to spend tokens via `approve()`
-- [ ] **TOKN-04**: Approved address can transfer tokens on behalf of owner via `transferFrom()`
-- [ ] **TOKN-05**: Contract emits Transfer event on every token movement
-- [ ] **TOKN-06**: Contract emits Approval event on every approval change
+- [x] **TOKN-02**: User can transfer tokens to any address via `transfer()`
+- [x] **TOKN-03**: User can approve another address to spend tokens via `approve()`
+- [x] **TOKN-04**: Approved address can transfer tokens on behalf of owner via `transferFrom()`
+- [x] **TOKN-05**: Contract emits Transfer event on every token movement
+- [x] **TOKN-06**: Contract emits Approval event on every approval change
 
 ### Minting
 
@@ -90,11 +90,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INFR-02 | Phase 2 | Complete |
 | INFR-03 | Phase 2 | Complete |
 | TOKN-01 | Phase 2 | Complete |
-| TOKN-02 | Phase 3 | Pending |
-| TOKN-03 | Phase 3 | Pending |
-| TOKN-04 | Phase 3 | Pending |
-| TOKN-05 | Phase 3 | Pending |
-| TOKN-06 | Phase 3 | Pending |
+| TOKN-02 | Phase 3 | Complete |
+| TOKN-03 | Phase 3 | Complete |
+| TOKN-04 | Phase 3 | Complete |
+| TOKN-05 | Phase 3 | Complete |
+| TOKN-06 | Phase 3 | Complete |
 | MINT-01 | Phase 4 | Pending |
 | MINT-02 | Phase 4 | Pending |
 | MINT-03 | Phase 4 | Pending |
