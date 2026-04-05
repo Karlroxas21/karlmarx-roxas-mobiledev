@@ -77,11 +77,10 @@ Plans:
   4. The deployer address holds 1,000,000 RXS immediately after deployment
   5. An address that just minted cannot mint again until the cooldown period elapses
   6. Each successful mint emits a TokensMinted(minter, amount) event
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
+- [ ] 04-01-PLAN.md -- Add mint function, constants, custom errors/event, cooldown mapping, constructor initial supply, and verify ABI completeness
 
 ### Phase 5: Deployment and Minting Tests
 **Goal**: Automated tests prove the contract deploys correctly and all minting behaviors (success, limits, cap, cooldown) work as specified
@@ -149,7 +148,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | 1. Project Scaffolding | 1/1 | Complete    | 2026-04-05 |
 | 2. Contract Foundation | 1/1 | Complete    | 2026-04-05 |
 | 3. ERC-20 Transfers and Approvals | 0/1 | Complete    | 2026-04-05 |
-| 4. Minting Mechanics | 0/0 | Not started | - |
+| 4. Minting Mechanics | 0/1 | Not started | - |
 | 5. Deployment and Minting Tests | 0/0 | Not started | - |
 | 6. Transfer and Boundary Tests | 0/0 | Not started | - |
 | 7. Sepolia Deployment | 0/0 | Not started | - |
