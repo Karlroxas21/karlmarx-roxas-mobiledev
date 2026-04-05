@@ -148,6 +148,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | 3. ERC-20 Transfers and Approvals | 0/1 | Complete    | 2026-04-05 |
 | 4. Minting Mechanics | 0/1 | Complete    | 2026-04-05 |
 | 5. Deployment and Minting Tests | 1/1 | Complete    | 2026-04-05 |
-| 6. Transfer and Boundary Tests | 1/1 | Complete   | 2026-04-05 |
+| 6. Transfer and Boundary Tests | 1/1 | Complete    | 2026-04-05 |
 | 7. Sepolia Deployment | 0/0 | Not started | - |
 | 8. Etherscan Verification | 0/0 | Not started | - |
