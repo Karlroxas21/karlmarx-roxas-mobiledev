@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Hardhat artifacts and cache
+artifacts/
+cache/
+typechain-types/
+
+# Hardhat Ignition deployment state
+ignition/deployments/
+
+# Environment and secrets
+.env
+.env.local
+
+# Coverage reports
+coverage/
+coverage.json
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
