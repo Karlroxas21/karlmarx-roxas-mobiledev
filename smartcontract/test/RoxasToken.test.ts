@@ -10,6 +10,28 @@ async function deployFixture() {
   return { token, owner, user1, user2 };
 }
 
+async function nearCapFixture() {
+  const signers = await ethers.getSigners();
+  const token = await ethers.deployContract("RoxasToken");
+  const mintAmount = ethers.parseEther("1000");
+  const cap = await token.cap();
+
+  // Mint with all signers in rounds until within 1000 RXS of cap
+  while ((cap - (await token.totalSupply())) > mintAmount) {
+    const remaining = cap - (await token.totalSupply());
+    const mintsThisRound = Math.min(
+      signers.length,
+      Number(remaining / mintAmount)
+    );
+    for (let i = 0; i < mintsThisRound; i++) {
+      await token.connect(signers[i]).mint(mintAmount);
+    }
+    await networkHelpers.time.increase(61);
+  }
+
+  return { token, signers };
+}
+
 describe("RoxasToken", function () {
   describe("Deployment", function () {
     it("should have the correct name", async function () {
@@ -111,6 +133,57 @@ describe("RoxasToken", function () {
       );
       await networkHelpers.time.increase(61);
       expect(await token.cooldownRemaining(user1.address)).to.equal(0n);
+    });
+  });
+
+  describe("Cap enforcement", function () {
+    this.timeout(120_000);
+
+    it("should revert when mint would exceed cap", async function () {
+      const { token, signers } =
+        await networkHelpers.loadFixture(nearCapFixture);
+      const cap = await token.cap();
+      const totalSupply = await token.totalSupply();
+      const remaining = cap - totalSupply;
+
+      // remaining is <= 1000 RXS at this point
+      // Advance time so signers can mint again after the fixture loop
+      await networkHelpers.time.increase(61);
+
+      // If there is remaining space, fill it exactly first
+      if (remaining > 0n) {
+        await token.connect(signers[0]).mint(remaining);
+        await networkHelpers.time.increase(61);
+      }
+
+      // Now totalSupply == cap, any mint should revert
+      await expect(
+        token.connect(signers[1]).mint(ethers.parseEther("1"))
+      ).to.be.revertedWithCustomError(token, "ERC20ExceededCap");
+    });
+
+    it("should allow minting exactly to the cap", async function () {
+      const { token, signers } =
+        await networkHelpers.loadFixture(nearCapFixture);
+      const cap = await token.cap();
+      const totalSupply = await token.totalSupply();
+      const remaining = cap - totalSupply;
+
+      // Advance time so signers can mint again
+      await networkHelpers.time.increase(61);
+
+      // Mint exactly the remaining amount to reach cap
+      if (remaining > 0n) {
+        await token.connect(signers[0]).mint(remaining);
+      }
+
+      expect(await token.totalSupply()).to.equal(cap);
+
+      // Any further mint should revert
+      await networkHelpers.time.increase(61);
+      await expect(
+        token.connect(signers[1]).mint(ethers.parseEther("1"))
+      ).to.be.revertedWithCustomError(token, "ERC20ExceededCap");
     });
   });
 });
