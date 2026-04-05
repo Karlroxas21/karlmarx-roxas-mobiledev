@@ -47,7 +47,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Deployment
 
-- [ ] **DEPL-01**: Hardhat Ignition module deploys RoxasToken to Sepolia testnet
+- [x] **DEPL-01**: Hardhat Ignition module deploys RoxasToken to Sepolia testnet
 - [ ] **DEPL-02**: Contract source is verified on Etherscan after deployment
 
 ## v2 Requirements
@@ -110,7 +110,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TEST-07 | Phase 6 | Pending |
 | TEST-08 | Phase 6 | Pending |
 | TEST-09 | Phase 6 | Pending |
-| DEPL-01 | Phase 7 | Pending |
+| DEPL-01 | Phase 7 | Complete |
 | DEPL-02 | Phase 8 | Pending |
 
 **Coverage:**
