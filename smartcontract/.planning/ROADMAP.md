@@ -49,7 +49,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 02-01-PLAN.md -- Create RoxasToken.sol with ERC20+ERC20Capped inheritance, update .gitignore, compile and verify TypeChain generation
+- [x] 02-01-PLAN.md -- Create RoxasToken.sol with ERC20+ERC20Capped inheritance, update .gitignore, compile and verify TypeChain generation
 
 ### Phase 3: ERC-20 Transfers and Approvals
 **Goal**: The contract implements the full ERC-20 transfer and approval interface so tokens can move between any addresses
@@ -61,10 +61,10 @@ Plans:
   3. An approved address can move tokens on behalf of the owner via transferFrom() and balances update
   4. Every token movement emits a Transfer event with correct from, to, and value fields
   5. Every approval change emits an Approval event with correct owner, spender, and value fields
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 03-01: TBD
+- [ ] 03-01-PLAN.md -- Compile contract and verify ABI contains all ERC-20 transfer/approval functions and events (verification-only, no code changes)
 
 ### Phase 4: Minting Mechanics
 **Goal**: Anyone can mint RXS tokens through a public mint function, constrained by per-transaction limit, hard cap, cooldown, and with initial supply minted to deployer
@@ -147,8 +147,8 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Project Scaffolding | 1/1 | Complete    | 2026-04-05 |
-| 2. Contract Foundation | 0/1 | Complete    | 2026-04-05 |
-| 3. ERC-20 Transfers and Approvals | 0/0 | Not started | - |
+| 2. Contract Foundation | 1/1 | Complete    | 2026-04-05 |
+| 3. ERC-20 Transfers and Approvals | 0/1 | Not started | - |
 | 4. Minting Mechanics | 0/0 | Not started | - |
 | 5. Deployment and Minting Tests | 0/0 | Not started | - |
 | 6. Transfer and Boundary Tests | 0/0 | Not started | - |
